@@ -1,6 +1,6 @@
 git init
-git config --global user.name 'zl03'
-git congig --global user.mail 'zl03@163.com'
+git config --global user.name 'dc03'
+git congig --global user.mail 'dc03@163.com'
 
 git remote add origin 'git@github.com:bing0109/HTML5.git'
 

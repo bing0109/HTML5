@@ -1,8 +1,151 @@
 ﻿<html>
 	<head>
-		<title>link a</title>
+		<title>1203晚复习HTML</title>
 	</head>
 	<body>
-		<h3>这是标准的网页d</h3>
+		<ol type=1>
+			<li>
+				<h3>HTML基本结构</h3>
+				<font size=3>请查看源码结构</font>
+				<!--
+				<html>
+					<head>
+					</head>
+					<body>
+					</body>
+				/html>
+				-->
+			</li>
+			<li>
+				<h3>标题的标识h1-h6</h3>
+				<h1>h1级别的标题</h1>
+				<h2>h2级别的标题</h2>
+				<h3>h3级别的标题</h3>
+				<h4>h4级别的标题</h4>
+				<h5>h5级别的标题</h5>
+				<h6>h6级别的标题</h6>
+				</br>
+			</li>
+			<li>
+				<h3>图片标签img</h3>
+				<font size=3>img标签是html的两个单标签之一，可设置高height和宽width</font><br>
+				<img src='../img/20181203110051.png' width=400 height=200>
+				</br>
+			</li>
+			<li>
+				<h3>居中标签center</h3>
+				<font size=3><center>我是居中标签center的效果</center></font>
+			</li>
+			<li>
+				<h3>图片或链接路径</h3>
+				<font size=3>相对路径：相对于网页位置的一个路径</br>对路径：文件在服务器上的绝对地址</br>当前路径	./</br>父级目录	../</br></font><br>
+			</li>
+			<li>
+				<h3>字体font</h3>
+				<font size=3>有三个参数：字体颜色color、字体大小size、字体类型face</font><br><br>
+				<ul type=disc>
+					<li><font size=3><b>字体颜色color</b></font><br>
+						<font size=2>有两种表示方式：</font><br>
+						<ul type=squre>
+							<li><font color='#ab0595'>单纯标识：red、blue、lightred 浅、darkred 深</font></li>
+							<li><font color='red'>RGB标识：用#+6位16进制字符表示，每两位表示三原色数值，例如#99ab9d</font></li>
+						</ul>
+					</li><br>
+					<li>
+						<font size=3><b>字体大小size</b></font><br>
+						<font size=2>字体大小是数值1-7标识，1最小，7最大</font><br>
+					</li><br>
+					<li>
+						<font size=3><b>字体类型face</b></font><br>
+						<font size=2 face='楷体'>注意：浏览者系统中需要有相关的字体才能显示效果，否则还是显示成默认的宋体</font><br>
+					</li><br>
+				</ul>
+			</li>
+			<li>
+				<h3>分割线hr</h3>
+				<font size=3>分割线用hr标签，可设置宽度width</font><br>
+				<hr></hr><br>
+				<hr width=800></hr><br>
+			</li>
+			<li>
+				<h3>空格& nbsp</h3>
+				<font size=3>空格用& nbsp表示，多个空格就写多个& nbsp（注意：&和nbsp之间没空格）</font><br><br>
+			</li>
+			<li>
+				<h3>链接--a标签</h3>
+				<font size=3><a href='../index.html'>这是首页链接</a></font><br>
+			</li>
+			<li>
+				<h3>加粗--b标签</h3>
+				<font size=3>这是<b>加粗</b></font><br>
+			</li>
+			<li>
+				<h3>斜体--i标签</h3>
+				<font size=3>这是<i>斜体字</i></font><br>
+			</li>
+			<li>
+				<h3>下划线--u标签</h3>
+				<font size=3>这是<u>下划线</u></font><br>
+			</li>
+			<li>
+				<h3>有序列表--ol li</h3>
+				<font size=3>有两个参数type，start</font>
+				<ol type'a'>
+					<li><font size=3>type：标识5种顺序序号，1、a、A、i、I</font></li>
+					<li><font size=3>start：标识起始位置，默认为1</font></li>
+				</ol>
+			</li>
+			<li>
+				<h3>无序列表--ul li</h3>
+				<font size=3>Type：标识列表前面的那个符号的样式</font>
+				<ul>
+					<li><font size=3>Type=”disc”实心圆点，默认值</font></li>
+					<li><font size=3>Type=”squre”	方块</font></li>
+					<li><font size=3>Type=”circle”	空心圆</font></li>
+					<li><font size=3>默认是实心圆点<b>？？？？？？？？？？？？？</b></font></li>
+				</ul>
+			</li><br>
+			<li>
+				<h3>页面注册元素</h3>
+				<font size=3>Type：标识列表前面的那个符号的样式</font>
+				<ol type=a>
+					<li><font size=3>单选框：input type='radio'</font></li>
+					<li><font size=3>复选框：input type='checkbox'</font></li>
+					<li><font size=3>选择框：下拉列表。select/option</font></li>
+					<li><font size=3>文本框：input type='text'</font></li>
+					<li><font size=3>密码框：input type='password'</font></li>
+					<li><font size=3>按钮：button</font></li>
+				</ol>
+			</li>
+			<li>
+				<h3>元素标签总结</h3>
+				<ol type=i>
+					<li><font size=3>块状元素，统招一行的：</font></li>
+						<ul>
+							<li><font size=3>标题：h1--h6 </font></li>
+							<li><font size=3>分割线：hr</font></li>
+							<li><font size=3>无序列表：ul li</font></li>
+							<li><font size=3>有序列表：ol li</font></li>
+							<li><font size=3>居中：center</font></li>
+							<li><font size=3>换行：br</font></li>
+						</ul>
+					<li><font size=3>行内元素，可与其他元素共享一行</font></li>
+					<ul>
+							<li><font size=3>链接：a</font></li>
+							<li><font size=3>图片：img</font></li>
+							<li><font size=3>输入：input框</font></li>
+							<li><font size=3>空格：&nbsp</font></li>
+							<li><font size=3>加粗：b</font></li>
+							<li><font size=3>斜体：i</font></li>
+							<li><font size=3>下划线：u</font></li>
+							<li><font size=3>字体：font (face color size)</font></li>
+						</ul>
+
+				</ol>
+			</li>
+		</ol>
+		<br><br><br><br><br>
+		
+		
 	</body>
 </html>
