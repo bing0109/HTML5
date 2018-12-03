@@ -1,0 +1,14 @@
+git init
+git config --global user.name 'zl03'
+git congig --global user.mail 'zl03@163.com'
+
+git remote add origin 'git@github.com:bing0109/HTML5.git'
+
+
+git remote -v
+
+
+git remote rm origin
+git config --global uesr.name 'testuser'
+git config --global user.mail 'testmail@qq.com'
+
