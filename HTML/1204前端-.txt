@@ -1,0 +1,228 @@
+问题
+	selected、checked是否必须有字段值--有该属性（不管属性值）就表示勾选了，没有该属性就不勾选
+	不同写法的button按钮的作用--见具体网页案例
+	上传文件的按钮--html定义的就这样，要修改的话要后台
+	下拉多选框怎么实现---要插件
+	各属性值用单引号、双引号的区别--没区别
+	框架集target不在一个目录下能找到么--实测可以
+
+input输入框
+	type="text" 文本框
+	type="password" 密码框
+	type="radio" 单选框
+	type="checkbox"复选框
+	
+	所有的input都有个value属性，设置后表示提交给后台的值，一般用于单选、复选、下拉框，用于选择后提交给后台，
+	如果用于文本、密码、邮箱类的输入框，就会显示出来
+		
+	单选框或复选框带熟悉checked='checked'，就标识默认选中所设置的选项
+	
+	<input 属性或其他内容>具体内容</input>可以简写成<input 属性或其他内容 />具体内容
+	
+select下拉框
+	<select>
+		<option></option>
+		<option></option>
+	</select>
+
+		option里面带selected标识被选中的是哪一个元素
+
+textarea多行文本框
+	<textarea cols=20 rows=10>
+		文本内容
+	</textarea>
+	
+		cols 文本框的列数
+		rows 文本框显示的行数，不够就显示滚动条
+		
+	
+按钮的两种方式
+	<button>按钮上的文字</button>
+	<input type='button' value='按钮上的文字'>
+		
+	
+带提交动作的提交按钮
+	<input type='submit' value="提交表单"/>
+	
+	带提交动作 type='submit'，并且把要提交的内容和提交按钮用form标签包起来，用form管理
+	提交按钮的作用：把带有value熟悉的input内容提交到指定地址
+	提交到哪里：form里面的action熟悉<form action='acb.html'>
+
+
+带清除信息的按钮
+	<input type='reset' value='重置信息'/>
+	清除添加和修改的信息
+	默认的设置不会清除掉(eg:设置的checked，placeholder)
+	
+	
+	
+form标签****************	
+	***表单数据能被接收的条件：
+		1、表单元素必须被form包含
+		2、form必须有action='提交的地址'
+		3、form包含的元素必须有name熟悉
+		4、form里面的单选框，复选框必须有value
+		5、提交按钮有熟悉type="submit"
+		
+		其他：统一区域的单选框或复选框都用同一个name
+		
+		以上内容设置后，提交的内容全部明文显示在地址栏，这有不安全的因素，为此form提供了method熟悉
+		method定义提交时的方法：
+			get		form表单提交的默认情况下是 明文发送(不加密)，发送有大小限制（上传文字类）
+			post	提交的信息不会明文显示，暗纹发送，同时也做了加密，没有大小限制（上传视频、图像）
+	
+
+
+
+placeholder
+	作用，给文本框加入体验性的提示
+	<input type='text' placeholder='请输入8位的英文用户名'>
+
+
+
+分步表单
+	隐藏框
+		input type="hidden"
+		作用：把用户不需要看到，但需要提交的表单数据
+
+
+以上都是HTML4的input
+
+HTML5提供了新的input:
+	<input type='file'>文件上传的按钮
+	<input type='range'>滑动块
+	<input type='color'>颜色
+	<input type='email'>邮箱
+	<input type='ulr'>网站
+	
+	邮箱和网站输入框有输入值的话，提交时会校验其格式
+
+
+总结
+	1、常见的input有15个，10个是html4的，5个是html5的
+		熟悉：
+		name、value是共有的，
+			name必须要有
+			radio/checkbox必须有value
+			
+		placeholder=''	文本框/密码框的提示文本
+		checked/checked='checked' 用在radio/checkbox的默认值
+		selected/selected='selected' 用在select/option上，标识别选中的选项
+
+
+
+
+
+表格布局：
+	布局：html元素合理的放在一起
+	
+	一、标准的表格：
+		<table>
+			<tr>
+				<td></td>
+			</tr>
+		</table>
+		以上设定了一个表格
+
+		<tr>	行/表行
+		<td>	表列、表元、单元格（需放在tr标签里面）
+
+		table里的border属性表示表格线
+		
+		没有内容的表格是个缩略图
+		
+		所有的内容都写在td标签里面
+		
+		第一行表格td的width熟悉会影响到同列的其他行的width
+
+	
+	以上是比较规矩的表格
+	
+	二、不规矩的表格
+		行跨度
+			表格中某个单元格的高度是基本单元格的整数倍
+			rowspan=值
+			单元格从属于上面那行
+
+		列跨度
+			表格中某个单元格的宽度是基本单元格的整数倍
+			colspan=值
+
+
+	标准的表格布局，是标准表格结合行跨度、列跨度形成
+
+
+
+
+
+	html的背景标签
+		background	背景图片
+		bgcolor		背景色
+		bgsound		背景音乐
+			<table background='图片路径' bgcolor='背景色' bgsound='背景音乐路径'>
+		
+		基本能给所有的标签加背景图、背景色、背景音乐
+		
+		
+框架集
+	（了解一下，已经过时了）
+	点击链接时，上面菜单栏、左侧导航栏不动，中间页面内容刷新
+	frameset
+	框架frame
+	
+	作用：实现网页的局部刷新
+	
+	要点：
+		1、frameset定义在head和body的外面
+		2、frameset上下分用rows、左右分是用cols
+		3、frameset里面的frame加name熟悉，最终name就是做的a链接的target值
+			<a href='网页链接' target='right'	right就是frameset里面frame的名字
+			target是a链接点后显示页面的地址，target='blank'表示在浏览器新标签页打开网页，target=frame的名字的话，在对应的frame里面去显示网页
+		4、border表示框线的宽度
+		
+
+
+
+HTML四大项：
+	标签：块状、行内（掌握）
+	表格布局:table tr td colspan rowspan（掌握）
+	表单：15个元素（掌握）
+	无序列表和有序列表（重点，常用）
+	框架集（了解）
+	
+	DIV+CSS（重点，难点）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
