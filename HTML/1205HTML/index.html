@@ -1,0 +1,127 @@
+<html>
+	<head>
+		<title>CSS基础</title>
+		<style>
+			p{
+				font-family:仿宋;
+				font-size:20px;
+				color:purple;
+			}
+			h1{
+				color:red;
+				font-family:楷体;
+			}
+			
+			.ss{
+				font-family:汉仪颜楷繁;
+				font-size:30px;
+			}
+			.hh{
+				font-size:40px;
+				color:blue
+			}
+			
+			#ss{
+				color:green;
+				font-family:经典繁行书
+			}
+			.ziti{
+				font-family:汉仪中楷简;
+				font-size:25px;
+				color:green;
+				text-decoration:underline;
+				font-weight:bold;
+				font-style:italic;
+				text-align:center;
+			}
+			.a1{
+				text-decoration:none;
+				color:red;
+				font-family:方正铁筋隶书简体;
+			}
+			
+			#beijing{
+				/*
+				background-color:#74ab5638;
+				background-image:url(./zajindan/jindan.gif);
+				background-position:20% 30%;
+				background-repeat:no-repeat;
+				上面4个属性可合并写成如下形式：*/
+				background:yellow url(./zajindan/jindan.gif) 30% 40% repeat-y;			
+				
+				background-size:20% 20%;
+				width:300px;
+				height:200px;
+			}
+			
+			td{
+				width:150px;
+				height:100px;
+			}
+			
+			.biankuang{
+				/*
+				border-style:solid;
+				border-width:5px;
+				border-color:#8563425;
+				上面3个属性可合并写成如下：*/
+				border:solid 5px #eba302;
+				
+				border-radius:100px;
+			}
+			
+			.biankuang1{
+				border-radius:250px/250px;
+				border-color:red;
+			}
+			.biankuang2{
+				border-radius:50%/50%;
+			}
+			.biankuang3{
+				border-radius:30%/20%;
+			}
+			.biankuang4{
+				border-radius:50%/50%;
+			}
+
+		</style>
+	</head>
+	<body>
+		<h1>我的网页，标签选择器</h1>
+		<p>这是一段文字，标签选择器</p>
+		<p class='ss'>这是二段文字，类选择器</p>
+		<p class='ss hh'>多个class选择器共同作用，相同属性的，后面的覆盖前面的</p>
+		<p id='ss' class='ss'>类选择器和id选择器共同作用，不同属性效果相互叠加，相同属性用id选择器的</p>
+		<p class='ziti'>字体属性,字体名称，字体大小，颜色，下划线，加粗，下划线，文字居中</p>
+		<a href='#'>普通的a链接</a><br><br>
+		<a class='a1' href='#'>去掉下划线的a链接</a><br><br>
+		<p class='ss'>background</p>
+		<table id='beijing' border=1>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>		
+			<tr>
+				<td></td>
+				<td>
+					<table width=120 height=70 border=1>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			</table><br>
+			
+			<p class='ss'>边框</p>
+			<img class="biankuang" src='4.jpg' width=300 height=300/><br>
+			<p class='ss'>圆形边框</p>
+			<img class='biankuang biankuang1' src='6.jpg' width=400 height=400><br>
+			<img class='biankuang biankuang2' src='6.jpg' width=400 height=400><br>	
+			<P class='ss'>椭圆边框</p>
+			<img class='biankuang biankuang3' src='7.jpg' width=600 height=400><br>
+			<img onclick="this.className='biankuang biankuang1'" class='biankuang biankuang4' src='7.jpg' width=600 height=400><br>
+	</body>
+</html>

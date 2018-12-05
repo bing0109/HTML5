@@ -1,0 +1,271 @@
+昨日回归：
+
+	表格布局的特点：
+		1、空白地方可以加个单元格<td width=100></td>
+		2、表格可以嵌套
+		移动端布局跟表格布局思路相同
+		
+	补充：
+		p标签
+			文章的正文标签 	
+		
+		
+W3C（万维网联盟）
+	提出网页结构标准，提出网页组成：结构、表现、行为
+		结构：哪里放文字，哪里放图片，哪里放视频						HTML（其中font就基本不用）
+		表现：文字要什么字体，什么颜色，什么背景，有没有边框、修饰		CSS
+		行为：即动作，如点击后有什么反应								js
+
+
+
+CSS
+	全称 Cascading Style Sheet	层叠样式表
+	
+	CSS简单示例：
+
+		字体		font-family:楷体;	需系统中已存在的字体
+		字体大小	font-size:25		单位：像素(px)。可以无限大
+		字体颜色	color
+
+
+	写法
+		第一种：标签选择器
+			
+			把html中药进行修饰的元素标签名字选出来，写在<head></head>中间的<style></style>之间，后面接大括号{}，把熟悉句子写到{}里面
+			
+			要注意属性句子的格式：
+				属性名:值或大小;
+					大小要加单位px
+				语句用英文冒号（:）分割，英文分号（;）结束
+				值可以不带引号，也可以带英文的单引号或双引号
+					
+			字体涉及3个熟悉：
+				font-family:'华文行楷';
+				font-size:30px;				一定要带单位px（像素）
+				color:red;
+
+
+		第二种：类选择器
+				选择器指能够把html元素选择出来的技术
+				
+			类选择器指的是我们定义的class名字，class类的意思
+			
+			定义的方法在<style></style>中间用 .名字 （自定义的名字，建议英文，不要以数字开头），后面跟{}，在{}写入相关的css属性语句；
+				eg：
+					.ss{
+						font-size:20px
+					}
+				定义后，在html元素中相对的表现形式进行引用，引用方式是在html的标签元素中加上 class='ss'
+				eg：
+					<p class='ss'></p>
+				
+			两个相同的类选择器可以一起使用，用 空格 隔开，最终效果叠加，如果有相同属性，后面的覆盖前面的
+				eg：
+					<p class='ss hh'></p>
+						最终是ss和hh效果的叠加，属性相同则hh覆盖ss的
+						
+						
+			
+				
+		第三种：id选择器
+			
+				定义的方法是在<style></style>中间用 #名字 （自定义的名字，建议英文，不要以数字开头），后面跟{}，在{}写入相关的css属性语句；
+				eg：
+					#ss{
+						font-size:20px
+					}
+				定义后，在html元素中相对的表现形式进行引用，引用方式引用方式是在html的标签元素中加上 id='ss'
+				eg：
+					<p id='ss'></p>
+					
+				与类选择器不同，id选择器只能单个使用，不能跟多个，id='ss hh'是没有任何效果的
+				
+
+		标签选择器、id选择器、类选择器 的区别：
+			1、类选择器可以两个一起使用，用 空格 隔开，id选择器不行
+			2、优先级如下：	id选择器 > class选择器 > 标签选择器
+				三个选择器有重复属性时，具体效果取决于其优先级
+				
+			
+		优先级如下：
+			id选择器 > class选择器 > 标签选择器
+
+
+		
+		基于以上总结，需了解的内容：
+			1、三个选择器的定义和引用方式
+			2、三个选取的优先级
+			3、id选择器与class选择器的区别
+
+
+
+砸金蛋示例：
+	思路：
+		1、首先做布局：
+			表格布局：中规中矩的4*4的表格
+		2、布局中用两个标签选择器:
+				body    td
+		3、如果让所有的td当中被点击的td背景发生变化，需要用到id或class选择器
+		4、先用class 选择器
+			网页中的html元素发生点击事件
+				onclick------>click指点击,on在.....时候，onclick在点击的时候
+
+			当前的，this
+			如果在onclick去设置 class选择器, className.class选择器的名字
+			注意：如果在标签后面直接设置 class选择器，写 class="名字"
+			
+		5、用id选择器来解决上面的问题:
+			发生onclick事件 <td onclick="">
+			发生在当前的td上<td onclick="this.id选择器的名字
+	
+	
+	背景：background:black		background:'./pic/1.jpg'
+	高度：height:20px
+	宽度：width:20px
+
+	
+
+
+知识点：
+	1.html里面写注释是		<!--注释内容-->
+	2.style里面写注释是		/*注释内容*/
+
+
+
+
+CSS属性：
+	字体：
+		字体名称：		font-family		
+		字体大小：		font-size		(px值)
+		字体颜色：		color			(red,blue...)
+		下划线：		text-decoration:underline	(underline,none)
+		加粗：			font-weight:bold
+		倾斜：			font-styleL:italic
+		文字居中：		text-align:center		(center,right,left,justify(justify用法特殊，要网上搜一下http://www.cnblogs.com/lzkwin/archive/2012/11/08/2761667.html))
+
+			text-decoration:none可以去掉a链接的下划线
+
+	
+	背景：
+	background
+		背景颜色：
+			background-color:
+			
+		背景图片：
+			background-image:url()
+				eg：background-image:url(图片地址)
+			
+		背景是否重复：
+			background-repeat:
+				no-repeat	不重复
+				repeat		重复（默认值）
+				repeat-x	横向重复
+				repeat-y	纵向重复
+				
+		背景位置：
+			background-position:
+				px值
+				百分比
+				center等
+		
+		背景尺寸（HTML5的）：
+			background-size：
+				px值
+				百分比
+				cover等
+				
+		背景的前4个属性可以合并写：
+				background-color:#74ab5638;
+				background-image:url(./zajindan/jindan.gif);
+				background-position:20% 30%;
+				background-repeat:repeat-y;
+				上面4个属性可合并写成如下形式：
+					background:#74ab5638 url(./zajindan/jindan.gif) 20% 30% repeat-y;
+				
+				
+	边框：
+		border
+		边框样式：
+			border-style:
+				solid	实线
+				dotted	点线
+				dashed	虚线
+				double	双线
+			
+		边框粗细：
+			border-width:
+				px值
+			
+		边框颜色：	
+			border-color:
+				red...
+				#eba30265
+
+
+		圆角（HTML5的）：
+			border-radius:
+				px值			（圆角）
+				px值/px值		（椭圆角）
+				百分比			（可自适应尺寸）
+				百分比/百分比	（自适应椭圆角）
+				
+				可以利用圆角功能画 圆形、椭圆等边框
+
+		边框的前3个属性可以合并写：
+				border-style:dotted;
+				border-width:5px;
+				border-color:red;
+				上面3个属性可合并写成如下：
+					border:dotted 5px red;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

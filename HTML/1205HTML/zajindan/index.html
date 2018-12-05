@@ -1,0 +1,68 @@
+<html>
+	<head>
+		<title>砸金蛋</title>
+		<style>
+			body{
+				background:blue;
+			}
+			td{
+				width:210px;
+				height:160px;
+				background:url(./jindan.gif);
+				background-size:50px 100px;
+				background-repeat:no-repeat;
+				background-position:left;
+			}
+			/*background的几种属性的不同写法:
+			background-size:(50px 20px,60% 40%,cover)
+			background-repeat:(repeat,no-repeat)
+			background-position:(center,left,right,top,bottom,let top,20% 40%,60px 100px)
+			*/
+			.za1{
+				background:url(./kongdan.gif);
+				background-size:cover;
+			}
+			.za2{
+				background:url(./jinhua.gif);
+				background-size:cover;
+			}
+			#za1{
+				background:url(./kongdan.gif);
+				background-size:cover;
+
+			}
+			#za2{
+				background:url(./jinhua.gif);
+				background-size:cover;
+			}
+		</style>
+	</head>
+	<body>
+		<table border=1>
+			<tr>
+				<td onclick="this.className='za1'"></td>
+				<td onclick="this.className='za2'"></td>
+				<td onclick="this.id='za2'"></td>
+				<td onclick="this.id='za1'"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</body>
+</html>
