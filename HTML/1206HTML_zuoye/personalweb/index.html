@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<title>my personal website</title>
+		<style>
+			*{
+				margin:0px;
+				padding:0px;
+			}
+			
+			#mydiv{
+				width:740px;
+				height:470px;
+				background:url('background.gif') repeat-x;
+				background-size:36px 100%;
+				position:relative;
+				margin:10px auto;
+				padding:30px;
+			}
+			#mydiv div{
+				float:left;
+				height:100%;
+				padding-top:40px;
+				padding-right:20px;
+				text-align:center;
+				border:solid 0px red;
+			}
+			
+			#mydiv #div_first{
+				width:64px;
+			}
+			
+			#mydiv #div_second{
+				width:92px;
+			}
+			#mydiv #div_third{
+				width:231px;
+				position:relative;
+			}
+			#mydiv #div_4th{
+				width:186px;
+			}
+			#mydiv #div_5th{
+				width:63px;
+			}
+			#mydiv #div_4th #div_4th_1{
+				width:165px;
+				height:310px;
+				margin-top:40px;
+				margin-right:0px;
+				border:solid 1px black;
+			}
+			#mydiv #div_third #div_3th_1{
+				clear:both;
+				height:108px;
+				padding:0px;
+			}
+			#mydiv #div_third #div_3th_2{
+				width:150px;
+				height:50%;
+				text-align:right;
+				padding-right:0px;
+				/*float:right;*/
+				/*上面注释的一句用下面的语句也可以达到效果，但需要先把父div设置成relative*/
+				position:absolute;
+				right:20px;
+				top:150px;
+
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id='mydiv'>
+			
+			<div id='div_first'>
+				<img src='photo-1.jpg'>
+			</div>
+			<div id='div_second'>
+				<img src='photo-2.jpg'>
+			</div>
+			<div id='div_third'>
+				<div id='div_3th_1'><img src='photo-3.jpg'></div>
+				<div id='div_3th_2'><img src='logo.png'></div>
+			</div>
+			<div id='div_4th'>
+				<div id='div_4th_1'>
+				</div>
+			</div>
+			<div id='div_5th'>
+				<img src='photo-4.jpg'>
+			</div>
+			
+		</div>
+	<body>
+</html>

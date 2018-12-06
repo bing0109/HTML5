@@ -140,7 +140,7 @@ CSS属性：
 		字体颜色：		color			(red,blue...)
 		下划线：		text-decoration:underline	(underline,none)
 		加粗：			font-weight:bold
-		倾斜：			font-styleL:italic
+		倾斜：			font-stylel:italic
 		文字居中：		text-align:center		(center,right,left,justify(justify用法特殊，要网上搜一下http://www.cnblogs.com/lzkwin/archive/2012/11/08/2761667.html))
 
 			text-decoration:none可以去掉a链接的下划线
@@ -165,19 +165,19 @@ CSS属性：
 		背景位置：
 			background-position:
 				px值
-				百分比
+				百分比	(以背景图片尺寸的百分比计算)
 				center等
 		
 		背景尺寸（HTML5的）：
 			background-size：
 				px值
-				百分比
+				百分比	(以背景图片所在盒子（如body、table、div等）的百分比计算)
 				cover等
 				
 		背景的前4个属性可以合并写：
 				background-color:#74ab5638;
 				background-image:url(./zajindan/jindan.gif);
-				background-position:20% 30%;
+				background-position:20% 30%;	
 				background-repeat:repeat-y;
 				上面4个属性可合并写成如下形式：
 					background:#74ab5638 url(./zajindan/jindan.gif) 20% 30% repeat-y;

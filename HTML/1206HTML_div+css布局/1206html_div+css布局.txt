@@ -1,0 +1,155 @@
+
+
+DIV+CSS布局
+	div
+		html标签，盒子
+		
+	html网页可形象的理解为盒子
+	
+	DIV是html的块状元素
+	
+	盒子要素：
+		（四要素，六要素（包含宽和高））
+		margin	外边距：两个盒子之间的距离
+		padding	内边距：盒子里的内容与盒子边线的内容，盒子里面的填充物
+		content	内容：盒子里面的元素
+		border	边框：盒子的边
+		width	宽：
+		height	高：
+		
+		margin后的边距设置值是从上边距开始，顺时针旋转
+			margin跟4个参数：上、右、下、左
+			margin跟3个参数：上、左右、下
+			margin跟2个参数：上下、左右
+			margin跟1个参数：上下左右
+			
+		还可以用方位单词：
+			margin-top		上
+			margin-bottom	下
+			margin-left		左
+			margin-right	右
+
+		padding的参数设置与margin一样；
+
+
+		body ul等元素也有margin和padding，也可以通过设置style修改他们
+			也可以设置*style来修改所有元素的margin和padding
+			<style>
+				*{
+					margin:0;
+					padding:0;
+				}
+			</style>
+		
+			body的margin默认是8px
+				
+		
+		div的width、height是指盒子内容的宽度和高度
+		整个div的大小是设置的margin、border、padding、width、height的和
+			
+				
+
+无序列表ul去圆点
+	方法一：
+		<ul type='none'></ul>
+	方法二：
+		<style>
+			ul{
+				list-style:none;
+			}
+		</style>
+
+		
+		
+把块状元素变成行内元素：
+	方法一：浮动
+		右浮动	float:right;
+		左浮动	float:left;
+			浮动的相关说明：
+				1、作用是把块状元素变成行内元素
+				2、变成行内元素后，要看外面盒子大小，外面盒子小，里面小盒子宽度之和大于外面盒子的宽度的话，最后一个就会换行（掉块）
+			
+	其他方法：
+		网上搜下
+	
+	
+
+
+精灵图
+	各种小图片放一起，一次性完成加载
+	
+	
+	
+实际前端工作过程中，会有一些通用的基础样式设置，可以设置一个通用于所有页面的基础样式base.css
+	https://blog.csdn.net/sinat_17775997/article/details/80797777
+	
+
+设置盒子时注意：
+	1、盒子的width、height必须要有；
+	2、盒子正常自己独占一行，如果要在一行显示多个盒子，可以用浮动float:left
+	
+	
+伪类动作：
+	html元素的鼠标动作分为4种：
+		正常状态：	link
+		鼠标经过时：hover
+		鼠标点击时：active
+		鼠标点击后：visited
+		
+		写状态：a:link表示a标签发生正常状态
+				a:hover表示a标签发生鼠标经过状态
+
+
+
+CSS定位：
+	position：
+
+		static		默认
+		relative	相对定位
+		absolute	绝对定位
+		fixed		固定定位
+		inherit		继承定位
+	总共25种，下面介绍3种
+
+		relative	相对定位：不脱离文档流
+		absolute	绝对定位：脱离文档流
+			可以用left、top、bottom、right来定义位置，此时盒子模型不变（如果用margin-top等来定位，盒子大小会改变）
+			定义成absolute后，脱离文档流，就可能出现层叠现象，此时有个层的属性z-index
+				z-index:10表示当前处于第10层；数值越大，表示所处层次越靠上；
+		
+		fixed		固定定位
+			相对于屏幕位置不变，拉滚动条，其在屏幕上的位置也不变
+
+
+		static		默认的值，用margin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	

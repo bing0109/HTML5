@@ -1,0 +1,139 @@
+﻿<html>
+	<head>
+		<title>导航</title>
+		<style>
+			/*公共部分*/
+			*{
+				padding:0;
+				margin:0 auto;
+			}
+			a{
+				text-decoration:none;
+				color:black;
+			}
+			ul{
+				list-style:none;
+			}
+			ul li{
+				float:left;
+			}
+			/* 公共部分结束*/
+			ul li{
+				margin-right:10px;
+				width:60px;
+				height:18px;
+				padding-top:55px;
+				background:url(images/nav.png) no-repeat;
+				text-align:center;
+				font-size:12px;
+			}
+			/*#mydiv里面的div的样式*/
+			#mydiv div{
+				float:left;
+			}
+			#mydiv{
+				width:1100px;
+				height:100px;
+			}
+			/*#mydiv #left和#mydiv #right语句一样,用逗号隔开*/
+			#mydiv #left,#mydiv #right{
+				width:33%;
+				height:100px;
+				
+			}
+			#mydiv #right{
+				width:40%;
+				height:100px;
+			}
+			#mydiv #middle{
+				width:27%;
+				height:100px;
+			}
+			#mydiv #left ul #lo0:hover{
+				background-position:0px -70px;
+			}
+			#mydiv #left ul #lo1{
+				background-position:-60px 0;
+			}
+			
+			#mydiv #left ul #lo1:hover{
+				background-position:-60px -70px;
+			}
+			#mydiv #left ul #lo2{
+				background-position:-125px 0;
+			}
+			#mydiv #left ul #lo2:hover{
+				background-position:-125px -70px;
+			}
+			#mydiv #left ul #lo3{
+				background-position:-188px 0;
+			}
+			#mydiv #left ul #lo3:hover{
+				background-position:-188px -70px;
+			}
+			#mydiv #left ul #lo4{
+				background-position:-252px 0;
+			}
+			#mydiv #left ul #lo4:hover{
+				background-position:-252px -70px;
+			}
+			#mydiv #right ul #lo5{
+				background-position:-327px 0;
+			}
+			#mydiv #right ul #lo5:hover{
+				background-position:-327px -70px;
+			}
+			#mydiv #right ul #lo6{
+				background-position:-392px 0;
+			}
+			#mydiv #right ul #lo6:hover{
+				background-position:-392px -70px;
+			}
+			#mydiv #right ul #lo7{
+				background-position:-462px 0;
+			}
+			#mydiv #right ul #lo7:hover{
+				background-position:-462px -70px;
+			}
+			#mydiv #right ul #lo8{
+				background-position:-522px 0;
+			}
+			#mydiv #right ul #lo8:hover{
+				background-position:-522px -70px;
+			}
+			#mydiv #right ul #lo9{
+				background-position:-587px 0;
+			}
+			#mydiv #right ul #lo9:hover{
+				background-position:-587px -70px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="mydiv">
+			<div id="left" >
+				<ul>
+					<li id="lo0"><a href="#">美食</a></li>
+					<li id="lo1"><a href="#">夜店</a></li>
+					<li id="lo2"><a href="#">购物</a></li>
+					<li id="lo3"><a href="#">文化</a></li>
+					<li id="lo4"><a href="#">休闲</a></li>
+				</ul>
+			</div>
+
+			<div id="middle">
+				<img src="images/logo.png"/>
+			</div>
+
+			<div id="right">
+				<ul>
+					<li id="lo5">烧客空间</li>
+					<li id="lo6">知道分子</li>
+					<li id="lo7">白吃白拿</li>
+					<li id="lo8">烧客论坛</li>
+					<li id="lo9">企类俱乐部</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

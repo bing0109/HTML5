@@ -1,0 +1,174 @@
+<html>
+	<head>
+		<title>网站导航</title>
+		
+		<style>
+			/*基础样式*/
+			*{
+				margin:0 auto;
+				padding:0;
+				border:0;
+			}
+			ul{
+				list-style:none;
+			}
+			ul li{
+				float:left
+			}
+			a{
+				text-decoration:none;
+				color:black;
+			}
+			/*基础样式结束*/
+						
+			a{
+				font-family:微软雅黑;
+				font-size:12px;
+				text-align:center;
+			}
+			ul li{
+				text-align:center;
+				width:48px;
+				height:22px;
+				padding-top:48px;
+				padding-right:16px;
+				background-image:url('nav.png');
+				background-repeat:no-repeat;
+			}
+			
+			#mydiv{
+				width:910px;
+				height:70px;
+			}
+						
+			/*mydiv里面的div*/
+			#mydiv div{
+				float:left;
+			}
+			
+			/*#mydiv里面的#leftdiv和#mydiv里面的#rightdiv，表示他俩的语句相同，用逗号隔开*/
+			#mydiv #leftdiv,#mydiv #rightdiv{
+				width:320px;
+				height:70px;
+			}
+			
+			/*这里#mydiv里面的#rightdiv 会覆盖 上面的 #mydiv里面的#rightdiv */
+			#mydiv #rightdiv{
+				width:330px;
+				height:70px;
+			}
+			
+			#mydiv #middlediv{
+				width:220;
+				height:60px;
+				margin:0px 28px 0px 12px;
+				background-image:url('logo.png');
+				background-size:cover;
+			}
+
+			#mydiv #rightdiv ul .li_right{
+				padding-right:0px;
+				width:64px;
+			}
+			
+			#mydiv ul #li1{
+				background-position:0px 0px;
+			}
+			#mydiv ul #li1:hover{
+				background-position:-0px -70px;
+			}
+			
+			#mydiv ul #li2{
+				background-position:-64px 0px;
+			}
+			#mydiv ul #li2:hover{
+				background-position:-64px -70px;
+			}
+			
+			#mydiv ul #li3{
+				background-position:-132px 0;
+			}
+			#mydiv ul #li3:hover{
+				background-position:-130px -70px;
+			}
+			
+			#mydiv ul #li4{
+				background-position:-196px 0;
+			}
+			#mydiv ul #li4:hover{
+				background-position:-196px -70px;
+			}
+			
+			#mydiv ul #li5{
+				background-position:-260px 0;
+			}
+			#mydiv ul #li5:hover{
+				background-position:-260px -70px;
+			}
+
+			#mydiv ul #li6{
+				background-position:-324px 0;
+			}
+			#mydiv ul #li6:hover{
+				background-position:-324px -70px;
+			}
+
+			#mydiv ul #li7{
+				background-position:-388px 0;
+			}
+			#mydiv ul #li7:hover{
+				background-position:-388px -70px;
+			}
+
+			#mydiv ul #li8{
+				background-position:-452px 0;
+			}
+			#mydiv ul #li8:hover{
+				background-position:-452px -70px;
+			}
+
+			#mydiv ul #li9{
+				background-position:-524px 0;
+			}
+			#mydiv ul #li9:hover{
+				background-position:-524px -70px;
+			}
+			
+			/*下面由于要修改width，而ur上一级的#rightdiv比ur级别高，所以要加上#rightdiv，以免修改不生效*/
+			#mydiv #rightdiv ul #li10{
+				background-position:-590px 0;
+				width:65px;
+			}
+			#mydiv #rightdiv ul #li10:hover{
+				background-position:-590px -70px;
+			}
+
+			
+		</style>
+	</head>
+	<body>
+		<div id='mydiv'>
+			<div id='leftdiv'>
+				<ul>
+					<li id='li1'><a href='#'>美食</a></li>
+					<li id='li2'><a href='#'>夜店</a></li>
+					<li id='li3'><a href='#'>购物</a></li>
+					<li id='li4'><a href='#'>文化</a></li>
+					<li id='li5'><a href='#'>休闲</a></li>
+				</ul>
+			</div>
+			<div id='middlediv'>
+			
+			</div>
+			<div id='rightdiv'>
+				<ul>
+					<li class='li_right' id='li6'><a href='#'>烧客空间</a></li>
+					<li class='li_right' id='li7'><a href='#'>知道分子</a></li>
+					<li class='li_right' id='li8'><a href='#'>白吃白拿</a></li>
+					<li class='li_right' id='li9'><a href='#'>烧客论坛</a></li>
+					<li class='li_right' id='li10'><a href='#'>企业俱乐部</a></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
