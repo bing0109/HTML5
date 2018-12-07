@@ -1,0 +1,34 @@
+﻿<html>
+	<head>
+		
+	</head>
+	<body>
+		<form>
+			用户名:<input type="text" id="u"/><br/>
+			密码:<input type="password" id="p"/><br/>
+			<button type="button" id="btn" >登录</button>
+		</form>
+		<script>
+			/*点击button后发生的动作功能是什么*/
+			document.getElementById('btn').onclick=function(){
+				/*自己设定的用户登录合法的用户名，合法的密码*/
+				user="admin"
+				pass="admin"
+				/*获取用户输入的数据*/
+				users=document.getElementById("u").value
+				passes=document.getElementById("p").value
+				/*判断一下用户输入的数据和我之前设定的数据是否相等*/
+				if(user==users){
+					if(pass==passes){
+						document.write('合法用户');
+					}else{
+						document.write('非法用户');
+					}
+				}else{
+					document.write('非法用户');
+				}
+				
+			}
+		</script>
+	</body>
+</html>

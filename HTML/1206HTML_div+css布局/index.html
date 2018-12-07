@@ -13,13 +13,15 @@
 				background-color:red;
 				margin:40px 30px 20px 10px;
 				padding:10px 20px 30px 40px;
-				border:0px;
+				border:1px;
 				border-style:double;
 				border-color:blue;
 				background-image:url("../backgroundpic/4.jpg");
 				background-position:1/11 -10%;
 				background-repeat:no-repeat;
 				background-size:200px 200px;
+				z-index:1;
+				position:relative;
 			}
 			ul{
 				margin:0px;
@@ -27,8 +29,16 @@
 				position:absolute;
 				top:500px;
 				left:413px;
-				z-index:0;		????/
+				z-index:0;		/*????*/
 			}
+			
+			#div2{
+				position:fixed;
+				right:10%;
+				top:100px;
+				z-index:0;
+			}
+			
 		</style>
 	</head>
 	<body>
@@ -36,9 +46,12 @@
 		<div>
 			<image src='../backgroundpic/1.jpg' width=100% height=100%>
 		</div>
-		<div>
+		<div id='div2'>
 			
 		</div>
+		<div></div>
+		<div></div>
+		<div></div>
 		<ul>
 			<li>内容1</li>
 			<li>内容2</li>

@@ -1,0 +1,91 @@
+<html>
+	<head>
+		<title>登录</title>
+		<!--输入用户名密码并与后台对比，做出正确的反应-->
+		<style>
+			*{
+				margin:0px;
+				padding:0px;
+			}
+			
+			div{
+				width:400px;
+				height:180px;
+				margin:100px auto;
+				padding-top:50px;
+				background:#33f6e6;
+				text-align:center;
+			}
+			font{
+				font-family:汉仪中楷简;
+				font-size:18px;
+				color:blue;
+				font-weight:bold;
+			}
+			input{
+				width:150px;
+				height:25px;
+				border-radius:5px;
+			}
+			button{
+				width:50px;
+				height:25px;
+				border-radius:5px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<form>
+			<div>
+				<font>用户名：</font><input type='text' id='usr'/><br><br>
+				<font>密&nbsp&nbsp码：</font><input type='password' id='pw'/><br><br>
+				<button id='btn'><font>提交</font></button>
+			</div>
+		</form>
+
+		<script>
+			/*后台正确的用户名密码*/
+			user='admin'
+			password='123'
+
+			document.getElementById('btn').onclick = function(){
+				/*下面两个值要写在function里面，点击之后获取，写在外面就是页面加载完之后就获取了，此时会是空值；*/
+				input_user = document.getElementById('usr').value
+				input_pwd = document.getElementById('pw').value
+				
+				if (input_user == user){
+						if (input_pwd == password) {
+							alert('congratulations! longin success!')
+						}
+						else {
+							alert('sorry, your input password is wrong!')
+						}
+					} else{
+						alert('sorry ,your input username is wrong!')
+					}
+				}
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

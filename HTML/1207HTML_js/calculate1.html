@@ -1,0 +1,205 @@
+<html>
+	<head>
+		<title>计算器1</title>
+		<!--
+		制作小型计算器：
+			 在页面上输入两个数，页面有输入两个数的文本框
+			下面有+ - * /四个按钮
+			当点击+,计算两数之和
+			当点击-.计算两数之差 
+			当点击乘，计算两数之积
+			当点击/,计算两数之商
+		-->
+		<style>
+			*{
+			margin:0px;
+			padding:0px;
+			}
+			
+			button,div #calculates #resetbnt{
+				width:24px;
+				height:24px;
+				margin:0px 10px;
+			}
+			font{
+				font-family:楷体;
+				font-weight:blod;
+				font-size:18px;
+			}
+			
+			div{
+				width:400px;
+				height:200px;
+				text-align:center;
+				margin:10px auto;
+				background-color:gray;
+				border:solid 0px red;
+			}
+			div #inputnums{
+				padding-top:10px;
+				width:auto;
+				height:70px;
+			}
+			
+			div #calculates{
+				width:auto;
+				height:24px;
+				text-align:center; /*行内元素居中方法，块状元素要用margin居中*/
+				padding:10px 0px;
+			}
+			
+			div #results{
+				width:auto;
+				height:20px;
+			}
+			
+			div #results #results_content{
+				border:solid 1px red;
+				width:300px;
+				height:24px;
+				margin:0px auto;
+				placeholder:"这里显示计算结果。";   /*没生效，这个属性时html的，只能放在input标签里面*/
+			}
+			
+			div form #calculates input{
+				padding:0px;
+				margin:0px 10px;
+				width:24px;
+				height:24px;
+				font-family:楷体;
+				font-weight:blod;
+				font-size:18px;
+			}
+			div form #calculates #resetbnt{
+				width:48px;
+			}
+			
+		
+		</style>
+	</head>
+	<body>
+		<div>
+			<form>
+				<div id='inputnums'>
+					<font>请输入第1个数字：</font><input type='text' id='num_1st' placeholder='请输入第1个数字'/><br><br>
+					<font>请输入第2个数字：</font><input type='text' id='num_2st' placeholder='请输入第2个数字'/>
+				
+				</div>
+				<div id='calculates'>
+				<!--	<button id='jia'><font>+</font></button>
+					<button id='jian'><font>-</font></button>
+					<button id='chen'><font>*</font></button>
+					<button id='chu'><font>/</font></button>
+				-->
+					<input type='button' id='jia' value='+'/>
+					<input type='button' id='jian' value='-'/>
+					<input type='button' id='chen' value='*'/>
+					<input type='button' id='chu' value='/'/>
+					<input type='reset' id='resetbnt' value='重置'/>
+					
+				</div>
+
+				<div id='results'>
+					<input id='results_content' placeholder="这里显示计算结果。"/>
+
+				</div>
+			</form>
+		</div>
+	
+	
+		<script>
+		var num1 = document.getElementById('num_1st')
+		var num2 = document.getElementById('num_2st')
+		var result_text = document.getElementById('results_content')
+		
+		
+		isdigital = function(){
+			if(num1.value==''){
+				if(num2.value==''){
+					result_text.value = '请输入数字1和数字2！'
+					return false
+				}
+				else{
+					result_text.value = '请输入数字1！'
+					return false
+				}
+			}
+			else{
+				if(num2.value==''){
+					result_text.value = '请输入数字2！'
+					return false
+				}
+				else{
+					return true
+				}
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		document.getElementById('jia').onclick = function(){
+			if (isdigital() == true){
+				result_text.value = num1.value + ' + ' + num2.value + ' = ' + ((Number(num1.value)) + Number((num2.value)))
+			}
+			else{
+				isdigital()
+			}
+		}
+		
+		document.getElementById('jian').onclick = function(){
+			if (isdigital()==true){
+				result_text.value = num1.value + ' - ' + num2.value + ' = ' + ((Number(num1.value)) - Number((num2.value)))
+			}
+			else{
+				isdigital()
+			}
+		}
+		
+		document.getElementById('chen').onclick = function(){
+			if (isdigital()==true){
+				result_text.value = num1.value + ' * ' + num2.value + ' = ' + ((Number(num1.value)) * Number((num2.value)))
+			}
+			else{
+				isdigital()
+			}
+		}
+		
+		document.getElementById('chu').onclick = function(){
+			if (isdigital()==true){
+				if (Number(num2.value) == 0){
+					result_text.value = '除数不能为0，请重新输入！'
+				}
+				else{
+					result_text.value = num1.value + ' * ' + num2.value + ' = ' + ((Number(num1.value)) / Number((num2.value)))
+				}
+			}
+			else{
+				isdigital()
+			}
+		}
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
