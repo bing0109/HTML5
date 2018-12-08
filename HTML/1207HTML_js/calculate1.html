@@ -28,11 +28,12 @@
 			}
 			
 			div{
-				width:400px;
-				height:200px;
+				width:450px;
+				height:250px;
 				text-align:center;
-				margin:10px auto;
-				background-color:gray;
+				margin:30px auto;
+				background:url('back.jpg') no-repeat;
+				background-size:100% 100%;
 				border:solid 0px red;
 			}
 			div #inputnums{
@@ -55,10 +56,11 @@
 			
 			div #results #results_content{
 				border:solid 1px red;
-				width:300px;
+				width:320px;
 				height:24px;
 				margin:0px auto;
 				placeholder:"这里显示计算结果。";   /*没生效，这个属性时html的，只能放在input标签里面*/
+				font-weight:bold;
 			}
 			
 			div form #calculates input{
@@ -112,84 +114,59 @@
 		var num2 = document.getElementById('num_2st')
 		var result_text = document.getElementById('results_content')
 		
-		
-		isdigital = function(){
-			if(num1.value==''){
-				if(num2.value==''){
-					result_text.value = '请输入数字1和数字2！'
-					return false
+		culculate_process = function(num1_input,num2_input,bnt_id){
+			var re_match = /^[+-]?\d+\.?\d*$/
+			var number1 = re_match.exec(num1_input.value)
+			var number2 = re_match.exec(num2_input.value)
+			if (number1==null && number2!=null){
+				result_text.value = '请输入正确的第1个数字，并注意不要有多余空格！'
+			}else{
+			if(number1!=null && number2==null){
+				result_text.value = '请输入正确的第2个数字，并注意不要有多余空格！'
+			}else{
+			if(number1==null && number2==null){
+				result_text.value = '请输入两个正确的数字，并注意不要有多余空格！'
+				}else{
+				if(bnt_id=='jia'){
+					result_text.value = number1 + ' + ' + number2 + ' = ' + (Number(number1)+Number(number2))
 				}
-				else{
-					result_text.value = '请输入数字1！'
-					return false
+				if(bnt_id=='jian'){
+					result_text.value = number1 + ' - ' + number2 + ' = ' + (Number(number1)-Number(number2))
 				}
-			}
-			else{
-				if(num2.value==''){
-					result_text.value = '请输入数字2！'
-					return false
+				if(bnt_id=='chen'){
+					result_text.value = number1 + ' * ' + number2 + ' = ' + (Number(number1)*Number(number2))
 				}
-				else{
-					return true
+				if(bnt_id=='chu'){
+					if(Number(number2)!=0){
+						result_text.value = number1 + ' / ' + number2 + ' = ' + (Number(number1)/Number(number2))
+					}else{
+						result_text.value = '除数不能为0，请重新输入第2个数字！'
 				}
-			}
-		}
-		
-		
-		
-		
-		
-		
+				}
+				}
+				}
+				}		
+				}
+
 		
 		document.getElementById('jia').onclick = function(){
-			if (isdigital() == true){
-				result_text.value = num1.value + ' + ' + num2.value + ' = ' + ((Number(num1.value)) + Number((num2.value)))
-			}
-			else{
-				isdigital()
-			}
+			culculate_process(num1,num2,'jia')
 		}
 		
 		document.getElementById('jian').onclick = function(){
-			if (isdigital()==true){
-				result_text.value = num1.value + ' - ' + num2.value + ' = ' + ((Number(num1.value)) - Number((num2.value)))
-			}
-			else{
-				isdigital()
-			}
+			culculate_process(num1,num2,'jian')
 		}
 		
 		document.getElementById('chen').onclick = function(){
-			if (isdigital()==true){
-				result_text.value = num1.value + ' * ' + num2.value + ' = ' + ((Number(num1.value)) * Number((num2.value)))
-			}
-			else{
-				isdigital()
-			}
+			culculate_process(num1,num2,'chen')
 		}
 		
 		document.getElementById('chu').onclick = function(){
-			if (isdigital()==true){
-				if (Number(num2.value) == 0){
-					result_text.value = '除数不能为0，请重新输入！'
-				}
-				else{
-					result_text.value = num1.value + ' * ' + num2.value + ' = ' + ((Number(num1.value)) / Number((num2.value)))
-				}
-			}
-			else{
-				isdigital()
-			}
+			culculate_process(num1,num2,'chu')
 		}
 		</script>
 	</body>
 </html>
-
-
-
-
-
-
 
 
 
