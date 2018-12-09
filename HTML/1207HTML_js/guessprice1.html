@@ -1,0 +1,134 @@
+<html>
+	<head>
+		<title>猜价格1</title>
+		<!--
+			页面上显示一个你设定的物品和价格文本框:
+			后台自己设定一个价格，在价格文本框中用户输入价格，输入大了，显示（“你猜大了") 输入的值与后台价格小了，显示（你猜小了,如果正好相等，显示“你猜对了”
+		-->
+		
+		<style>
+			*{
+				margin:0px;
+				padding:0px;
+			}
+			font,input,p{
+				font-family:汉仪中楷简;
+				font-size:18px;
+				color:blue;
+				font-weight:bold;
+			}
+			input{
+				width:150px;
+				height:30px;
+				border-radius:5px;
+				border:solid 2px gray;
+				font-family:楷体;
+				color:black;
+			}
+			
+			div{
+				width:500px;
+				height:500px;
+				border:solid 0px blue;
+				background:#b0e24b;
+				margin:50px auto;
+				position:relative;
+				padding-top:20px;
+			}
+			
+			div #goods{
+				height:280px;
+				width:auto;
+				margin:0px 30px;
+				padding:0px;
+				text-align:center;
+				background-image:url('1.jpg');
+				/*background-color:#b0e24b;*/
+				background-repeat:no-repeat;
+				background-size:100% 100%;
+				
+			}
+			
+			div #confirm_price{
+				height:150px;
+				width:auto;
+				margin:0px;
+				padding-top:20px;
+				text-align:center;
+			}
+			
+			img{
+				height:280px;
+			}
+			p{
+				width:100%;
+				height:30px;
+				margin:0px auto;
+				font-family:楷体;
+				color:black;
+
+			}
+			
+			div #goods #goods_left,div #goods #goods_right{
+				height:100%;
+				width:50%;
+				margin:0px;
+				padding:0px;
+				float:left;
+				opacity:0;	/*opactity会让所有子级标签以及内容都跟随一起透明,范围是0~1*/
+			}
+			
+			
+			
+		</style>
+	</head>
+	<body>
+		<div>
+			<div id='goods'>
+				<!--<img src='1.jpg' alt='小米'>    alt是在图片加载不出来时，临时显示的内容-->
+				<div id='goods_left'></div>
+				<div id='goods_right'></div>
+			</div>
+			<div id='confirm_price'>
+				<font>请输入图片产品的价格（单位：元）：</font><input type='text' id='price'/>
+				<br><br>
+				<input type='button' value='我要猜价格' id='btn'><br><br>
+				<p id='gussesresult'>
+				
+				</p>
+				
+			</div>
+		</div>
+	
+	
+		<script>
+			var right_price = 1200;
+			
+			/*下面这么写，就是一个方法了，不用写在function中，需要用的时候可以调取他的属性值*/
+			var input_price = document.getElementById('price')
+			var result = document.getElementById('gussesresult')
+						
+			document.getElementById('btn').onclick = function(){
+				console.log("---------"+input_price.value)
+				if(right_price==input_price.value){
+					result.innerHTML = '恭喜你，猜对了！'
+				}
+				else{
+					result.innerText = '很遗憾，你猜错了，请重新猜价格！'
+				}
+			}
+			
+			document.getElementById('goods_right').onclick = function(){
+				console.log('---------'+document.getElementById('goods').style.backgroundImage)
+				document.getElementById('goods').style.backgroundImage = 'url(2.jpg)'
+				console.log('---------'+document.getElementById('goods').style.backgroundImage)
+			}
+			
+			/*
+			需优化点：
+				1、连续猜对或连续猜错，提示信息看起来没变化，要有点变化才好；
+				2、能猜多张图片的价格
+			*/
+		</script>
+	</body>
+</html>

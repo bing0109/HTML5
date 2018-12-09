@@ -118,6 +118,9 @@
 			var re_match = /^[+-]?\d+\.?\d*$/
 			var number1 = re_match.exec(num1_input.value)
 			var number2 = re_match.exec(num2_input.value)
+			console.log('------'+number1)
+			console.log('------'+number2)
+			
 			if (number1==null && number2!=null){
 				result_text.value = '请输入正确的第1个数字，并注意不要有多余空格！'
 			}else{
