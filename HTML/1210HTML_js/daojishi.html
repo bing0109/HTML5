@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>for循环</title>
+	</head>
+	<body>
+		<h1 id='sec'>10</h1>
+		<button id='btn'>开始倒计时</button>
+
+		<script>
+		
+			document.getElementById('btn').onclick=function(){
+				a=10
+				t=setInterval(function(){
+					a = a-1
+					document.getElementById('sec').innerText=a
+					console.log('a='+a)
+					
+					/*下面的if是停止倒计时的*/
+					if(a==0){
+						clearInterval(t)
+					}
+				
+				},1000)
+			}
+		
+		
+		</script>
+	</body>
+
+</html>

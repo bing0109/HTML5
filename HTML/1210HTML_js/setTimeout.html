@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>延时函数</title>
+	</head>
+	<body>
+		<h1>例子1，控制台打印出10次数字10</h1>
+		<script>
+			for(i=0;i<10;i++){
+				setTimeout(function(){
+					console.log('eg1:'+i)
+				},1000);
+			}
+		</script>
+		<p>
+		这个案例脚本结果是在控制台输出10次10；
+		</p>
+		<br>
+		
+		
+		<h1>例子2，循环外设置日志，控制台打印出1次数字11</h1>
+		<script>
+			for(j=0;j<11;j++){
+				setTimeout(function(){
+				},1000);
+			}
+			console.log('eg2:'+j)
+		</script>
+		<p>
+		</p>
+		<br>
+		
+		<h1>例子3，加let关键字，循环外设置日志，控制台提示报错</h1>
+		<script>
+			for(let m=0;m<11;m++){
+				setTimeout(function(){
+				},1000);
+			}
+			console.log('eg3:'+m)
+		</script>
+		<p>
+		</p>
+		<br>
+		
+		<h1>例子4，加let关键字，循环内设置日志，控制台打印出1-9</h1>
+		<script>
+			for(let n=0;n<10;n++){
+				setTimeout(function(){
+					console.log('eg4:'+n)
+				},1000);
+			}
+			
+		</script>
+		<p>
+		</p>
+		<br>
+		
+		
+	</body>
+
+</html>
