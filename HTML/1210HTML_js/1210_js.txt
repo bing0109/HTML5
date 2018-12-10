@@ -1,0 +1,152 @@
+	前端
+
+if 条件
+	if(条件表达式){
+
+}
+
+
+if (a==1){
+
+}else if (a==2){
+}else if (a==3){
+}else{
+
+}
+
+linux环境下web搭建
+	安装一个apache2（web环境程序）
+	sudo apt install apache2 
+	http://localhost
+	cd /var/www/html	apatch放网页的地方,web工作目录
+
+	apt-get可以缩写成apt	
+
+	linux下设计网页需要在head里面加个<meta charset='utf8'>来表面是utf8编码
+		<head>
+			<meta charset='utf8'>	
+		</head>
+
+
+switch开关语句
+	switch结构
+
+		switch(变量名){
+			case 值1：语句;break;
+			case 值2：语句;break;
+			case 值3：语句;break;
+			default:break;
+		}
+
+	eg：输入成绩（A、B、C、D、E）分别显示优秀、良好、及格等。。。
+               <script>
+						a = prompt('请输入一个成绩代号：')
+                        switch(a){
+                                case "A":alert("优秀");break;
+                                case "B":alert("良好");break;
+                                case "C":alert("一般");break;
+                        }
+                </script>
+
+	说明：
+		case	入口
+		break	退出switch语句
+
+	if和switch的区别：
+		if(a=='A'){}
+		else if(a=='B'){}
+		else if(a=='C'){}
+		else{}
+
+		同样的逻辑，if要判断3次，switch只需要判断1次，switch效率高点
+
+	选择：		
+		条件表达式是一个值的时候，建议采用switch
+		条件表达式是一个范围的时候，建议采用if
+
+
+	python没有switch，python中字典相当于switch。
+
+
+三元运算符（冒号运算符）
+	条件表达式？语句1：语句2
+		eg：4>6 ? 1+2:2+3
+	问号前面的表达式为true，则执行冒号前面的语句；为false则执行冒号后面的语句
+		上例中结果输出3
+
+	eg2：‘4’+2>'7'? 1-1:3-2	输出1	（字符串比的话，就是取最低位的字符进行比较）
+	eg3：‘4’+2>7 ? 1-1:3-2	输出0（也可能跟浏览器有关）
+
+
+
+
+循环结构
+	意义：把重复语句换一种写法
+
+	eg重复弹出alert框10次
+
+	for循环：
+		for（变量初值；变量条件；变量增加方式）{
+			语句（要重复的部分）
+		}
+
+	
+	eg：
+		for(i=1;i<11;i=i+1){
+			alert(i)
+		}
+	
+	eg2:求1-100的和
+		sum = 0
+		for(i=1;i<101;i=i+1){
+			sum = sum + 1
+		}
+		console.log('sum='+sum)	=========>控制台打印日志
+
+
+
+	eg3:斐波拉契数列
+		a=1
+		b=1
+		for(i=2;i<50)	
+
+
+百僧吃百馍
+	大和尚小和尚100人，共有100个馍,大和尚1个吃3个馍，小和尚3个人吃一个馍，问有大和尚多少个，小和尚多少个?
+
+	&& 同时满足两个条件
+	a==123 && b==234
+	等效于
+	if(a==123){
+		if(b==234)
+	}
+	
+		<h1>百僧吃百馍</h1>
+		<script>
+		for(i=1;i<100;i=i+1){
+			for(j=1;j<100;j++){
+				if(i+j==100 && (3*i + j/3) ==100){
+					console.log(i,j)
+				}
+		}				
+		}
+		</script>
+
+
+
+
+
+javascript延时的函数(定时器)
+	setInterval
+
+
+
+
+
+
+
+小知识点整理：
+1、console.log(日志内容)		=======》浏览器控制台打印日志
+2、&&表示两个条件同时满足、||表示两个条件是或的关系
+3、js循环中i++等价于i=i+1；python中的写法是i+=2或i=i+2；
+
