@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<meta charset='utf8'>
+		<title></title>
+		<style>
+		
+		</style>
+	</head>
+	<body>
+		
+		<script>
+			console.log('111111');
+			
+			setTimeout(function(){
+				console.log('222222')	   
+				},200);
+				
+			console.log('3333333');
+			
+			p=new Promise(function(succ,fail){
+				setTimeout(function(){
+				console.log('66666666')
+				succ('777777777777')
+				},10)
+			});
+			
+			p.then(function(data){
+				console.log('888888888')
+				console.log(data)
+			})
+						
+			setTimeout(function(){
+				console.log('4444444444')
+			},0);
+			
+
+			console.log('555555555')
+			
+			
+			/*
+			说明：
+			结果为：
+				11111111111111
+				33333333
+				55555555555
+				4444444444444
+				66666666666666
+				888888888888
+				777777777
+				22222222222
+				程序执行时，会先忽视setTimeout程序，先执行其他的，就先打印出来了1,3,5
+				其他的执行完后，回过头再看之前忽略了的setTimeout，4的等待时间是0，6/8/7等待10ms，2等待200ms，所以顺序是4 6 8 7 2
+			
+			*/
+			
+		</script>
+	
+	</body>
+</html>

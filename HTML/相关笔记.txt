@@ -1,0 +1,39 @@
+
+
+
+margin auto与text-align:center的区别：
+	1、text-align:center设置为文本或img标签等一些内联对象（或与之类似的元素）的居中。
+		div设置后，其中的子div或其他子元素也会居中显示
+	2、margin:0 auto是设置块状元素（或与之类似的元素）的居中。
+	
+	3、有朋友在操作的时候，将margin:0 auto;的选择器混淆了，应该是作用对象，如div，p，而不是body。如果设置：body { margin:0 auto; }将不会达到任何效果，除非你定义body的宽度，那将会让body内的元素产生位置变化。如我们设置body宽度为500px。对p段落不作任何设置，我们最大化窗口将会看到段落并非处于窗口的最左上角。
+	4、我们设置段落 p {text-align:center;} 将要实现的并不是段落本身的对齐方式，而是段落内元素居中对齐。
+	5、我们设置图片标签img {margin:0 auto;} ，我们就犯了一个小错误，img类于内联对象，不可以设置图片img标签的margin属性，如果你一定想要设置，那么首先要将它的属性转变为块元素，如下面的代码：img {display:block; margin:0 auto;}
+	6、设置float:right/left后，上面两个设置就都不能居中了
+		http://blog.sina.com.cn/s/blog_830edcf30101f3tw.html
+		这个链接提供的三种方法都死了，还是不能成功居中
+		<center></center>也不行
+？？？？、？？？？？？？？？？？？？？？？？？？？？
+
+
+
+
+
+
+Linux解压文件到指定目录
+https://blog.csdn.net/u012856866/article/details/76057871
+
+
+
+
+
+	
+安装使用aria2下载百度网盘内容
+	可无需客户端，直接下载网盘里面的内容（ubuntu）
+	https://blog.csdn.net/wudi1107/article/details/80728891
+
+
+Win7旗舰版和10 x64虚拟机镜像 下载直接使用
+	https://www.52pojie.cn/forum.php?mod=viewthread&tid=661215&page=1&authorid=606832
+
+	https://blog.csdn.net/yujiangpeng007/article/details/77531512

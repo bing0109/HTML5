@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<meta charset='utf8'>
+		<title></title>
+		<style>
+		
+		</style>
+	</head>
+	<body>
+		
+		<script>
+			console.log('11111111111111');
+			
+			setTimeout(function(){
+				console.log('22222222222')
+			},200);
+			
+			console.log('33333333');
+			
+			setTimeout(function(){
+				console.log('4444444444444')
+			},0)
+			
+			console.log('55555555555')
+			
+			/*
+			说明：
+			结果为：
+				11111111111111
+				33333333
+				55555555555
+				4444444444444
+				22222222222
+				程序执行时，会先忽视setTimeout程序，先执行其他的，就先打印出来了1,3,5
+				其他的执行完后，回过头再看之前忽略了的，4的等待时间是0，比2的200段，所以先执行4，再执行2
+			
+			*/
+			
+		</script>
+	
+	</body>
+</html>

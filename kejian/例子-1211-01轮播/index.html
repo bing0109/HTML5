@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<meta charset=utf8>
+		<title>轮播</title>
+		<style>
+			#outer{
+				width:320px;
+				height:213px;
+				overflow:hidden;
+				position:relative;
+			}
+			#inner{
+				width:1280px;
+				height:213px;
+				position:absolute;
+				left:-100px;
+			}
+			ul{
+				padding-left:0px;
+				list-style:none;
+			}
+			ul li{
+				float:left;
+			}
+			img{
+				width:320px;
+				height:213px;
+			}
+			#indicator{
+				position:absolute;
+				bottom:10px;
+				right:50px;
+			}
+			#indicator ul li{
+				margin-left:10px;
+				width:20px;
+				height:20px;
+				border-radius:10px;
+				background:white;
+				text-align:center;
+				line-height:20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="outer">
+			<div id="inner">
+				<ul>
+					<li><img src="a.jpg"/></li>
+					<li><img src="b.jpg"/></li>
+					<li><img src="c.jpg"/></li>
+					<li><img src="a.jpg"/></li>
+				</ul>
+			</div>
+			<div id="indicator">
+				<ul>	
+					<li>1</li>
+					<li>2</li>
+					<li>3</li>
+				</ul>
+			</div>
+		</div>
+		<script>
+			pic=document.getElementById("inner");
+			indicator=document.getElementById("indicator");
+			lis=indicator.getElementsByTagName("li");
+			left=0;
+			t=setInterval(function(){
+				left-=10;
+				if(left<-960){
+					left=0;
+				}
+				if(left%320==0){
+					clearInterval(t);
+					setTimeout(function(){
+						abc()
+					},2000)
+				}
+				pic.style.left=left+"px";
+			},100);
+			function abc(){
+						
+				t=setInterval(function(){
+				left-=10;
+				if(left<-960){
+					left=0;
+				}
+				if(left%320==0){
+					clearInterval(t);
+					setTimeout(function(){
+						abc()
+					},2000)
+				}
+					pic.style.left=left+"px";
+				},100);
+			}
+			for(let i=0;i<lis.length;i++){
+				lis[i].onclick=function(){
+					left=i*-320;
+					pic.style.left=left+"px";
+					clearInterval(t);
+					setTimeout(function(){
+						abc();
+					},2000);
+				}
+			}
+		</script>
+	</body>
+</html>

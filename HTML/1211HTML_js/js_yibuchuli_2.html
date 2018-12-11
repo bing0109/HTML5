@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<meta charset='utf8'>
+		<title></title>
+		<style>
+		
+		</style>
+	</head>
+	<body>
+		
+		<script>
+			console.log('111111');
+			
+			setTimeout(function(){
+				console.log('222222')	   
+				},200);
+				
+			console.log('3333333');
+			
+			p=new Promise(function(succ,fail){
+				console.log('66666666')		/*这样会相当于python中初始化的内容，不阻碍执行，js不跳过*/
+				succ('777777777777')		/*表示成功的话发生什么语句，也是js会跳过的代码*/
+			});
+			
+			p.then(function(data){			/*data是succ传进来的内容*/
+				console.log('888888888')
+				console.log(data)			/*将succ的代码执行出来*/
+			})
+						
+			setTimeout(function(){
+				console.log('4444444444')
+			},0);
+			
+
+			console.log('555555555')
+			
+			
+			/*
+			说明：
+			结果为：
+				11111111111111
+				33333333
+				66666666666666
+				888888888888
+				777777777
+				55555555555
+				4444444444444
+				22222222222
+				程序执行时，会先忽视setTimeout程序，先执行其他的，就先打印出来了1,3,6，5
+				Promise优先于setTimeout执行，就依次出来8,7
+				其他的执行完后，回过头再看之前忽略了的setTimeout，4的等待时间是0，比2的200段，所以先执行4，再执行2
+			
+			*/
+			
+		</script>
+	
+	</body>
+</html>

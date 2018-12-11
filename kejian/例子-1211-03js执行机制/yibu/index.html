@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<meta charset=utf8>
+		<title>js执行机制</title>
+	</head>
+	<body>
+		<script>
+			console.log("1111111111");
+			setTimeout(function(){
+				console.log("222222222");
+			},200);
+			console.log("3333333333");
+			p=new Promise(function(suc,fail){
+				setTimeout(function(){
+				
+				console.log("6666666666666");
+				suc("777777777777777");
+				},10);
+			});
+			p.then(function(data){
+				console.log("88888888888");
+				console.log(data);
+			});
+			setTimeout(function(){
+				console.log("4444444444");
+			},0)
+			console.log("5555555555");
+		</script>
+	</body>
+</html>

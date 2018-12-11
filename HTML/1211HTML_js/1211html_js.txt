@@ -1,0 +1,87 @@
+
+getElementById('id名称')
+getElementsByTagName('标签名称')
+getElementsByClassName('类名称')
+
+
+
+
+setTimeout
+setInterval
+	1、setInterval做一个时间记录器
+		times=new Date()	获取当前时间，存储在变量times里面
+		times.getFullYear()	获取年份
+		times.getMonth()	获取月份
+		times.getDate()		获取日期
+		times.getHours()	获取小时数
+		times.getMinutes()	获取分钟数
+		times.getSeconds()	获取秒数
+		
+		用冒号运算符格式化获取到的小时数
+		hours = times.getHours()>9?times.getHours():'0'+times.getHours()
+		
+		
+
+
+轮播
+	网站的特效，基本技术
+	CSS3属性：超出部分隐藏
+		overflow:hidden;
+	
+	轮播思路：
+		1、布局
+			一个小盒子套一个大盒子，
+			小盒子：1宽高是一个图片的大小，position:relative,overflow:hidden;
+			大盒子：宽高是图片数量+1的宽带，高度和图片的高度一致，最后一张是第一张图片 position:absolute,定义float:left;
+			大盒子包含的ul li：ul去圆点，list-style:none;li在一行，需要float:left;
+		
+		2、代码逻辑
+			setInteral定时器控制大盒子的left值不断做减去一个步长；
+				注意：1.left减到图片长度的负值时，要回到0值；
+					 2.left值%图片长度，进行clearInterval停止计时器，最后再用setTimeout调用以上的代码逻辑，可以将这段代码逻辑放在函数中去调用；
+					 
+		3、轮播按钮的实现：
+			1.div里面包含ul li
+				把div设置成position;absolute;
+				ul li设置宽=高，border-radius=宽/2，margin把li撑开，text-align文本对齐，line-height行间距（设置与文字大小一样就看起来上下居中）
+				line-height=高，文本就会垂直居中
+			2.获取该div下所有的li，用for循环遍历每一个元素，为其添加点击事件，注意闭包，用let关键字
+				for (let i=0;i<lis.lenght;i++){
+					lis[i].onclick=function(){
+					}
+				}
+				点击事件内步实现的逻辑是重新计算left值，把inner容器停在left的值上，最后调用setTimeout等2秒后重新启动执行上面的轮播函数abc()
+			
+			
+			
+	
+	
+	乘除	考虑解决倍数问题；
+	取余%	考虑解决是不是整数倍的问题，移动是否到位的问题等；
+	
+	
+	js函数：
+		function abc(){
+		}
+		
+	面试基本都问思路、逻辑、原理，要重点理清楚
+	
+	
+	
+js执行机制
+	js是一个单线程。（同时只能运行一个程序）
+		如果是单线程，很容易阻塞。
+		
+	js用 异步 的方法解决线程问题；
+		同步，命令代码按顺序执行
+		异步，按照代码自己的逻辑走
+	
+	promise	事先预判
+	
+	**重要****先处理主线程不影响阻塞的内容，紧接着处理promise(小事件)，再处理setTimeout、setInterval(大事件) *************
+	
+	注意，js的setTimeout和setInterval设置的等待时间不一定完全准确，也受程序执行影响，如设置一个setTimeout等待2s，但不阻塞的主干程序就执行了3s，那么就会等主干执行完后，再继续执行setTimeout
+	
+	
+	
+		

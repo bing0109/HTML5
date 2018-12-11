@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<meta charset=utf8>
+		<title>时间显示</title>
+	</head>
+	<body>
+		<h1 id="h1"></h1>
+		<script>
+			setInterval(function(){
+				
+			
+				times=new Date();
+				year=times.getFullYear()
+				month=times.getMonth()
+				day=times.getDate()
+				hour=times.getHours()>9?times.getHours():"0"+times.getHours();
+				minute=times.getMinutes()>9?times.getMinutes():"0"+times.getMinutes();
+				second=times.getSeconds()>9?times.getSeconds():"0"+times.getSeconds();
+				strs=year+"年"+month+"月"+day+"日   "+hour+":"+minute+":"+second;
+				document.getElementById("h1").innerText=strs;
+			},1000);
+		</script>
+	</body>
+</html>
