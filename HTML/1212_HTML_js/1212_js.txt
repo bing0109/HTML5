@@ -1,0 +1,264 @@
+js数组
+
+	存储多种类型的一个变量，一个数值的列表
+	a=10 b='a'
+	c = [10,20,30,'a','b','c',true,false]
+	
+	d=document.getElementByTagName('li')
+	d[0]	d[2]
+	引用的时候，下标是从0开始的
+	
+	方法：
+		增
+			前增加		unshift()		数组名.unshift(增加的元素)
+			
+			后增加		push()			数组名.push(增加的元素)
+			
+			中间增加	splice()
+				数组名.splice(索引的位置,删除元素的个数,增加的元素)
+				a.splice(3,0,4,5,6)
+				a.splice(2,4,'a','b','c')
+		
+		删
+			前面删		shift()			数组名.shift()
+				只能一个一个删除
+				
+			后面删		pop()			数组名.pop()
+				只能删除最后面一个元素
+			
+			中间删		splice()		数组名.splice(索引值，删除几项)
+				
+		
+		改
+			数组名[索引下标]=修改后的值
+			a[2]=30
+			a[a.lenth-1]='abc'	修改最后一个元素
+		
+		查
+			indexOf			正向查询	
+				从左向右，找到第一个符合查询条件的元素
+				
+			lastIndexOf		反向查询	
+				从右向左，找到第一个符合查询条件的元素
+				
+				a.indexOf(要查找的元素)		返回要查找元素的索引
+				a.lastIndexOf(要查找的元素)
+				
+				如果元素在数组中查询不到，则查询结果是-1
+				
+				若indexOf和lastIndexOf查出来的结果一样，表示该元素在数组中要么没有，要么有且只有1个
+				
+				
+		其他
+			数组反向	reverse
+				把数组中的元素反向
+				数组名.reverse()
+			
+			把数组转换成字符串	join
+				a.join()	默认把a的元素用逗号连接，以字符串输出
+				a.join('')	把a的元素直接连在一起，以字符串输出
+				a.join(';')	把a的元素用;连接，以字符串输出
+			
+		
+			把两个数组连在一起	concat
+				数组1.concat(数组2)		把数组2接在数组1后面，产生一个新数组
+			
+			从某个位置产生一个子数组	slice
+				数组1.slice(索引1,索引2)	数组1从 索引1 至 索引2-1 的元素重新产生一个数组
+					左开右闭
+					
+			字符串转数组	split
+				字符串.split()
+				
+					split()		空	默认是把整个字符串作为新数组的一个元素；
+					split("")		把字符串的每个字符都分开作为数组的元素
+					split('a')		以字符串‘a'分割字符串，被分割厚度字符作为数组的元素
+		
+注意：
+	浏览器console中点击倒三角展开查看数组元素时，调用的是内存里面的数组，如果数组已经被改变，看到的可能就与横向收起时展示的不一样。
+
+
+
+
+js基本数据类型：
+	Number		数值
+	Boolean		布尔
+	String		字符串
+	null		空值
+	undefined	未定义
+	Array		数组
+	Object		对象
+	
+	
+	
+js内置的对象
+	Math数学
+		Math.random()	随机数
+		Math.floor()	向下取整	Math.floor(3.4)=3	Math.floor(-3.4)=-4
+		Math.ceil()		向上取整	Math.ceil(3.4)=4	Math.ceil(-3.4)=-3
+		Math.round()	四舍五入		
+		Math.sqrt()		开方
+		Math.sum()		求和
+		Math.average()	求平均数
+	
+
+	window对象
+		open()
+			应用，弹出式广告
+		close()
+		
+		window.close()只能关闭window.open()出来的窗口，a链接出来的窗口，一般关闭不了。
+
+
+	location对象
+		即地址栏
+		获取地址，location.href
+		改变地址栏链接：location.href='新地址'
+
+
+	history对象
+		历史对象，浏览器左上角的 前进一页，后退一页
+		
+		history.forward()	前进一页
+		history.back()		后退一页
+		history.go()		前进或后退，前进go()里面写正数，后退写负数
+			history.go(3)	前进3页
+		
+
+	navigator导航对象
+		userAgent	表示用户访问的平台信息和浏览器相关信息
+			可以判断用户使用的是pc还是手机，是android还是iPhone
+			
+			if userAgent.indexOf('Android')==true		Android手机
+			if userAgent.index('IOS')==true			苹果手机
+			if userAgent.index('IPhone')==true		苹果平板ipad
+			
+			前端兼容的就是根据这些来判断的
+
+
+
+JavaScript方法：
+	onclick	点击时间
+	onmousemove	鼠标移动
+	onmouseover	鼠标经过了本元素或其子元素
+	onmouseout	鼠标离开了本元素或其子元素
+	onmouseenter 鼠标经过了本元素
+	onmouseleave 鼠标离开了本元素
+	onmousedown	鼠标按下
+	onmouseup	鼠标抬起
+	onkeydown	键盘按下
+	
+	onblur		失去焦点
+	onfocus		获取焦点
+		焦点可以理解为操作的对象，这两个是常用在文本框上的事件
+
+	1206学的
+	hover	鼠标经过时，效果等同于onmouseenter，onmouseleave
+	active	鼠标点击时，
+	visited	鼠标点击后
+		参考：https://www.cnblogs.com/suixianglu/p/5701242.html
+
+
+js有兴趣自研
+	面向对象
+	canvas	前段游戏开发
+	ES6
+	
+
+	
+******重要************************
+前段和后盾通信的技术：
+AJAX
+	Asynchronous JavaScript and XML
+
+		
+	XML和HTML
+		1.两者格式一样
+		2.XML里面的表情都是自己定义的
+		3.HTML表情是系统提供的
+		
+		eg xml文档：
+			<?xml version=1.0 ?>
+				<books>
+					<book>
+						<name>abc</name>
+						<author>def</author>
+					</book>
+					<book>
+						<name>abc1</name>
+						<author>def1</author>
+					</book>
+				<books>
+
+	网络提供的数据格式有两中：XML、json
+		json即字典
+			b = {'a':'123sa','b','23adsf'}
+			b['a']='123sa'
+	
+	http://www.webxml.com.cn/zh_cn/index.aspx
+	聚合数据：https://www.idataapi.cn/
+	
+	
+	ajax的功能：
+		1、异步
+		2、局部刷新
+
+	原生的ajax写法：
+		对象：XMLHTPrequest	（xhr 简记：小黄人）
+		
+		步骤：
+			1. xhr=new XMLHttpRequest()
+			2. xhr.open('GET','请求的url地址',true)	/*true是异步，打开这个地址，false没有意义*/
+			3. xhr.send()							/*发送这个地址*/
+			4. xhr.onreadystatechange=function(){
+					if(xhr.status==200 && xhr.readyState==4){
+						结果在xhr.responseText里面
+					}
+			    }
+
+		原生的ajax有兼容性问题，一般不用，而是用jquery框架
+	
+	
+	jQuery框架
+		使用：在官网http://jquery.com/下载jquery相关代码，保存在本地，并在网页中引用
+			<script src="jquery.js"></script>
+	
+		脚本中调用方法
+		$.ajax({
+			url:'请求地址',					 /*要请求的地址，要用http或https协议*/
+			type:'',						/*GET或POST*/
+			dataType:'',					/*返回的数据类型，一般是xml、json、text*/
+			success:function(data){			/*请求返回成功的函数*/
+				成功结果在data里			
+			},
+			error:function(err){			/*请求返回失败的函数*/
+				失败的结果在error里
+			}
+		})
+	
+
+	网页如果想获取不是本网站的数据，不允许跨站请求，会报错：
+		已拦截跨源请求：同源策略禁止读取位于 https://api.douban.com/v2/book/isbn/9787115253699 的远程资源。（原因：CORS 头缺少 'Access-Control-Allow-Origin'）。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

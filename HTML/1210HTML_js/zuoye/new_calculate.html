@@ -1,0 +1,171 @@
+<html>
+	<head>
+		<meta charset='utf8'>
+		<title>新计算器</title>
+		<style>
+			*{
+				margin:0px;
+				padding:0px;
+			}
+			.out{
+				margin:10px auto;
+				width:270px;
+				height:350px;
+				border:solid 2px gray;
+				border-radius:5px;
+				position:relative;
+				background:url('../../1207HTML_js/back.jpg');
+				background-size:cover;
+
+			}
+			.out #caltitle{
+				width:220px;
+				height:50px;
+				margin:0px auto;
+				text-align:center;
+			}
+			.out #num{
+				width:150px;
+				height:200px;
+				position:absolute;
+				left:0px;
+				bottom:0px;
+			}
+			.out #opt{
+				width:50px;
+				height:200px;
+				position:absolute;
+				right:0px;
+				bottom:0px;
+			}
+			.out #cal{
+				width:210px;
+				height:90px;
+				position:absolute;
+				top:50px;
+				margin:5px
+			}
+			.out #other{
+				width:50px;
+				height:200px;
+				position:absolute;
+				left:150px;
+				bottom:0px;
+				margin:0px 10px;
+			}
+			
+			ul{
+				float:left;
+				list-style:none;
+			}
+			ul li,.out #cal #result{
+				font-size:30px;
+				font-weight:blod;
+				text-align:center;
+				line-height:40px;
+				width:40px;
+				height:40px;
+				float:left;
+				border:solid 0px gray;
+				border-radius:5px;
+				margin:5px;
+				background:gray;
+			}
+			.out #cal #result{
+				width:260px;
+				height:80px;
+				font-size:20px;
+				text-align:left;
+				line-height:20px;
+				margin:0px;
+				padding:5px;
+				background:white;
+			}
+			
+		</style>
+	</head>
+	
+	<body>
+		<div class='out'>
+			<div id='caltitle'>
+				<h1>计算器</h1>
+			</div>
+			<div id='cal'>
+				<textarea id='result'>
+					212334adf
+				</textarea>
+			</div>
+			<div id='num'>
+				<ul>
+					<li>1</li>
+					<li>2</li>
+					<li>3</li>
+					<li>4</li>
+					<li>5</li>
+					<li>6</li>
+					<li>7</li>
+					<li>8</li>
+					<li>9</li>
+					<li>0</li>
+					<li>.</li>
+
+				</ul>
+			</div>
+			<div id='other'>
+				<ul>
+					<li>C</li>
+					<li>x</li>
+					<li>=</li>
+
+				</ul>
+			</div>
+			<div id='opt'>
+				<ul>
+					<li>+</li>
+					<li>-</li>
+					<li>*</li>
+					<li>/</li>
+				</ul>
+			</div>
+		</div>
+		
+		<script>
+			console.log(document.getElementById('result').value)
+			console.log(eval('2+2.5+-6/-3'))
+			
+		</script>
+		
+	</body>
+</html>
+
+
+
+<!--
+1.点击除等号以外的按钮都会向输入框内追加内容
+2.不能连续输入两个运算符，后输入的覆盖先输入的,除非是跟负数符号-，但最多跟一个
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

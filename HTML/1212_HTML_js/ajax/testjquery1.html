@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>jquerytest1</title>
+		<meta charset='utf8'>
+		<script src='jquery.js'></script>
+	</head>
+	<body>
+		<h3>jquery跨站请求报错，数据类型为json<h3>
+		<h4 id='h4'></h4>
+		<h5 id='h51'></h5>
+		<h5 id='h52'></h5>
+		<h5 id='h53'></h5>
+		<script>
+			$.ajax({
+				url:'https://api.douban.com/v2/book/isbn/9787115253699',
+				type:'GET',
+				dataType:'json',
+				success:function(data){
+					document.getElementById("h4").innerText=data.author_intro;
+			},
+				error:function(data){
+					console.log(data)
+					/*document.getElementById("h51").innerText=XMLHttpRequest.status;
+					document.getElementById("h52").innerText=XMLHttpRequest.readyState;
+					document.getElementById("h53").innerText=textStatus;*/
+			}
+			})	
+		</script>
+	</body>
+</html>

@@ -85,19 +85,18 @@
 			left = 0
 			lunbo_pic = document.getElementById('inside')
 			
-			function lb(s_left,click=0){
-				left = s_left
-				if(click==0){
-				t = setInterval(function(){
+			function lb(s_left){
+			left = s_left				
+				t=setInterval(function(){
 					if(left%320==0){
 						clearInterval(t)
-						setTimeout(function(){
+						t2=setTimeout(function(){
 							lb(left,0)
 						},2000)
 					};
-					
+
 					left = left - 1
-					
+
 					if(left>=-960){
 						lunbo_pic.style.left = left + 'px';
 					}
@@ -107,27 +106,22 @@
 					}
 				},20);
 				console.log(left)
-				}
-				else{
-					return;
-				}
-			};
+				};
 			
-			defaultrun = lb(0,0);
+			var defaultrun = lb(0);
 			
 			var indecators = new Array()
 			indecator = document.getElementById('yuandian')
 			indecators = indecator.getElementsByTagName('li')
-			console.log(indecators[0].textContent)
+			/*console.log(indecators[0].textContent)*/
 			
 			for(let i=0;i<indecators.length;i=i+1){
 				indecators[i].onclick=function(){
-					defaultrun = lb(0,1)
-					lb(i*(-320),0)
+					clearInterval(t)
+					clearInterval(t2)
+					lb(i*(-320))
 				}
 			}
-			
-		
 		</script>
 	
 	</body>

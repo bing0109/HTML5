@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<meta charset='utf8'>
+		<title>js数组</title>
+		<style>
+		
+		</style>
+	</head>
+	<body>
+		<script>
+			console.log('--------增----------')
+
+			a=[10,20,30,'a','b','c',true,false]
+			console.log(a)
+			console.log(a[2])
+			a.unshift(40,50,50)	/*数组最前面增加元素*/
+			console.log(a)
+			a.push(60,70,'cdb')	/*数组最后面增加元素*/
+			console.log(a)
+			a.splice(2,0,80,'d','e')	/*数组索引为2的地方增加元素80,'d','e'*/
+			console.log(a)
+			
+			console.log('--------删----------')
+			a.shift()
+			console.log(a)
+			a.pop()
+			console.log(a)
+			a.splice(3,0)
+			console.log(a)
+			
+			console.log('--------改----------')
+			a[1]=100
+			a[a.length-1]='me'
+			console.log(a)
+			a.splice(4,1,'gai')
+			console.log(a)
+			
+			console.log('--------查----------')
+			index1 = a.indexOf('b')
+			index2 = a.lastIndexOf('b')
+			index3 = a.indexOf('h')
+			index4 = a.lastIndexOf(200)
+			console.log(index1,index2,index3,index4)
+			
+			console.log('--------数组翻转----------')
+			b = a.reverse()
+			console.log(a)		/*自己也翻转了？*/
+			console.log(b)
+			console.log('--------数组转换成字符串----------')
+			d = b.join()
+			e = b.join('')
+			f = b.join('.')
+			console.log(d)
+			console.log(e)
+			console.log(f)
+			
+			console.log('--------数组从某个位置产生新数组----------')
+			g = b.slice(2,6)
+			console.log(g)		/*左开右闭*/
+			
+			console.log('--------字符串转换成数组----------')
+			h = 'abceefadejiadfjiaer'
+			i = h.split()
+			j = h.split('')
+			k = h.split('a')
+			console.log(i)
+			console.log(j)
+			console.log(k)
+			console.log('--------把两个数组连接在一起----------')
+			l = i.concat(k)
+			console.log(l)
+			
+			
+			
+			
+		</script>
+		
+	</body>
+</html>
