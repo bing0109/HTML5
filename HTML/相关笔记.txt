@@ -16,16 +16,19 @@ margin auto与text-align:center的区别：
 ？？？？、？？？？？？？？？？？？？？？？？？？？？
 
 
-
-
+JS eval()函数详解
+eval函数永远计算并执行以字符串表示的js代码
+http://www.365mini.com/page/javascript-global_eval.htm
 
 
 Linux解压文件到指定目录
 https://blog.csdn.net/u012856866/article/details/76057871
 
+bootstrap教程
+http://www.runoob.com/bootstrap/bootstrap-tutorial.html
 
-
-
+bootstrap一个页面有两个轮播，要改写下其中一个div的id
+https://bbs.csdn.net/topics/390516949
 
 	
 安装使用aria2下载百度网盘内容

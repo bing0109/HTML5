@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<meta charset='utf8'>
+		<title>jquery选择对象，设置属性，动画特效</title>
+		<style>
+		
+		</style>
+		<script src='jquery.js'>
+		</script>
+	</head>
+	<body>
+		<h1>jquery选择对象，设置属性，动画特效</h1>
+
+		<h3 id='aaa'>h3标签，这是一行初始的数据</h3>
+		<h4>h4标签，这是一行初始的数据</h4>
+		<h5>h5标签，第一个h5标签；</h5>
+		<h5>h5标签，第二个h5标签；</h5>
+		<p id='cssstyle'>可以通过$(选择器).css({key:'value'})改变标签的css样式</p>
+		<p class='p1'>通过jquery改变css样式，对于原来是用-连起来的组合词，需要把-去掉，后面单词的首字母改成大写，如background-color要改写成backgroundColor</p>
+		
+		<table>
+			<tr>
+				<td>1234567890</td>
+				<td>1234567890</td>
+				<td>1234567890</td>
+			</tr>	
+			<tr>
+				<td>1234567890</td>
+				<td>1234567890</td>
+				<td>1234567890</td>
+			</tr>	
+			<tr>
+				<td>1234567890</td>
+				<td>1234567890</td>
+				<td>1234567890</td>
+			</tr>	
+			<tr>
+				<td>1234567890</td>
+				<td>1234567890</td>
+				<td>1234567890</td>
+			</tr>	
+		</table>
+		<input type='text' /><br>
+		<img id='img1' src=''><br>
+		<img id='img2' src=''>
+		
+		<script>
+			console.log($('#aaa').text())
+			$('#aaa').text('这是h3标签，通过id修改');
+			console.log($('h4').text())
+			$('h4').text('这是h4标签，通过标签名改的文本');
+			console.log($('h5').text())
+			$('h5').text('h5标签，通过标签选择器一次性可以修改多个标签')
+			console.log($('h5:eq(1)').text())
+			$('h5:eq(1)').text("h5标签，通过$('标签:eq(索引值)')即可获取指定标签的第 索引值 个标签")
+			
+			/*jquery设置css样式*/
+			$('h5:eq(1)').css({color:'red'})
+			$('#cssstyle').css({color:'blue'})
+			$('.p1').css({backgroundColor:'green'})
+			
+			/*设置表格奇偶行背景色不一样*/
+			$('td').css({border:'0px solid gray'})
+			$('tr:odd').css({backgroundColor:'red'})
+			$('tr:even').css({backgroundColor:'blue'})
+			
+			/*输入框的值用val设置*/
+			$('input').val('输入框的值用val()设置')
+				/*下面这种写法不生效
+				$('input').css({value:'输入框的值用val(1)设置'})
+				*/
+			
+			/*img标签的操作*/
+			$('img').attr('src','../backgroundpic/9.jpg')
+				/*下面这种写法不生效
+				$('img').css({src:'../backgroundpic/9.jpg'})
+				*/
+			
+			/*animate动画特效*/
+			$('#img2').animate({width:'200px',height:'200px'},3000)
+			$('#img2').animate({width:'50px'},2000)
+			$('#img1').animate({opacity:'0.2'},5000)
+			
+		</script>
+		
+	</body>
+</html>

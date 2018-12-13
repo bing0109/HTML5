@@ -1,0 +1,191 @@
+jQuery
+	曾经很流行，当前已经不是主流了,17年后就变成了一个辅助的工具，VOE组件式开成主流
+	
+	前端还是需要掌握，比较重要的内容
+	
+	js代码中，$指的就是jquery
+	
+	引用jquery
+		1、从jquery官网复制jquery代码保存在本地，命名为jquery.js	(https://code.jquery.com/jquery-3.3.1.js)
+		2、在html的head里面按如下方法引用
+			<script src='jquery.js'></script>
+
+	从选择器选择元素：
+	$(选择器)
+		$('#id')	用id选择器
+		$('标签')
+			$('标签')会选择到全部指定标签，可以通过eq来设置第几个
+				$('标签:eq(索引值)')即可获取指定标签的第 索引值 个标签
+				eq表示等于的意思
+				
+	$(选择器).text()		
+		选择的是标签之间的文本，text()括号里面有内容就表示设置
+			等效于js的 innerText
+		
+	$(选择器).css({key:'value'})	
+		设置元素的CSS样式
+			等效于js的style.
+			
+		其中，key的写法要注意
+			若key原来是用-连起来的组合词，需要把-去掉，后面单词的首字母改成大写，如background-color要改写成backgroundColor
+		
+			
+		console.log($('#aaa').text())			控制台里面打印出id为aaa的标签的文字内容。
+		$('#aaa').text('这是h3标签，通过id修改');	修改id为aaa的文字内容为：'这是h3标签，通过id修改'
+		
+		设置表格的时候，可以分奇数行和偶数行，从0开始，第一行为偶数行
+			奇数行：odd		tr:odd
+			偶数行：even	tr:even
+			
+	设置属性：
+	$(选择器).attr('属性名称','属性值')
+		$('img').attr('src','a.jpg')
+			将img标签的src属性的值设置为'a.jpg'
+		等效于js的 .属性名称=''
+
+	设置输入文本框的值 val()
+		<input value=''/>
+		$('input').val('输入框的值用val()设置')
+		
+		
+
+
+animate 动画
+	$(选择器).animate({值对（动画要改变的属性和值）},毫秒)
+	
+		等效于js通过setInterval和setTimeout设置出来的效果
+
+	$('img').animate({width:'1000px'},3000)
+		图片在3s内从原尺寸逐渐扩展到1000px（宽高同比放大缩小）
+		
+	$('img').animate({opacity:0},2000)
+		图片在2s内透明度逐渐变成0，最终图片完全透明
+		
+		
+
+
+
+做前端的三项技术
+	1、盒子模型思路（布局的思路，bootstrap）
+	2、jquery调用ajax（前后端通信方式）
+	3、js、jquery的一些简单操作，如改文本，css，属性等
+	理论：js执行机制，轮播的思路
+
+
+
+bootstrap框架
+	bootstrap最开始出来是v2版本，最新的已经v4了，当前用的最多的是v3版本的
+	
+	适用于移动端，可以做出pc端和移动端都兼容的一套网站
+	
+	http://www.bootcss.com/
+	
+	
+	响应式，移动设备优先的栅格系统
+		响应式：根据屏幕的宽度，当宽度到一定数字时发生变化
+		自适应：屏幕的宽度缩小一点，里面的内容就发生变化
+		
+	所有的屏幕bootstrap系统都会自动分为12列
+	
+	把屏幕分为四个分类：
+		分类	简称		举例
+		超小	xs		 小屏幕手机
+		小	sm		 当前普通手机
+		中	md		 平盘
+		大	lg		 电脑
+		
+	缺点：bootstrap做不了上下之间的距离	
+		
+	
+	布局（bootstrap主要用于做布局，前后端都可以用）
+		
+		移动设备优先
+		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+			b表示自动获得手机宽度，同时里面的图片不进行缩放
+			还有个参数user-scale=1.0，表示不允许手动缩放图片
+	
+		class='container' 表示整体水平居中
+		class='container' 表示整体水平居中
+		class='col-xs-2'  表示占2列
+		calss='col-xs-offset-2' 表示空2列，这2列没有元素，只是空出来
+		class='active' 当前被选中、显示的内容
+
+	bootstrap做轮播的思路：
+		1、指示器（圆点）用ol列表，里面的li必须指定data-target后面跟轮播id，必须有data-slide-to=图片索引
+		2、图片轮播，包裹轮播所有图片的div需要定义class='carousel-inner',里层放具体图片的div class='item'，设置当前显示class='active'
+		3、左右箭头，bootstrap图标文字，必须data-slide='prev'表示上一张，data-slide='next'表示下一张；
+			a链接的href必须指向轮播的id
+
+
+	组件：一般都是样式，没特效和动作；
+	插件：一般有动作、特效；
+		在bootstrap上找的时候要注意两者区别。
+
+	<span>标签，中间可以把文字扩起来，文字不换行
+		<p>标签的会换号
+	
+	
+	class='pull-right' 相当于 float:right;
+	class='pull-left' 相当于 float:left;
+
+
+	JavaScript插件-工具提示：
+		data-toggle="tooltip" data-placement="left" title="Tooltip on left"
+			data-toggle	表示当前使用的插件名称是tooltip工具提示
+			data-placement	表示工具提示的提示框在元素的哪一个方向，top bottom left right
+			title	表示 工具提示出来的内容是什么
+
+
+	网页一加载就要执行
+		可用于启动特效或插件
+	$(function(){
+		脚本代码
+	});
+		这是jquery技术，表示只要网页一加载就要执行的代码
+
+		$(fucntion(){
+			$('#tool1').tooltip()
+		})
+		上面的代码表示 启动id为tool1的元素的tooltip功能
+		说明：有些特效是要启动后才能生效的，就需要在<script></script>里面写类似如上的代码
+	
+	
+	JavaScript插件-弹出框
+		data-toggle="popover" title="Popover title" datat-content="And here's some amazing content"
+			data-toggle 表示当前使用的插件-弹出框的名称
+			title	表示弹出看的题目
+			data-content	表示弹出框的内容
+			data-placement	表示弹出框的位置，left right top bottom
+
+		$(function(){
+			$('#tooltipbtn').popover()			/*启动tooltipbtn的弹框功能*/
+		})
+	
+	
+	分页组件
+		
+	
+	路径导航
+		类似home/library/Data的样式以前叫面包屑，现在叫路径导航。
+		
+		
+
+
+bootstrap主要要记忆的：
+	1、12格栅格系统
+	2、分成xs sm md lg四个设备
+	3、单个html元素的样式，找bootstrap全局的css样式
+	4、2格或多个html元素的样式组合的样式，找bootstrap的组件
+	5、动作（轮播，工具提示，弹出框等）找插件
+
+
+
+
+
+
+
+
+
+
+
+
