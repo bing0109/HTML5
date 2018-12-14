@@ -1,0 +1,268 @@
+VUE
+	当前最火的前段技术
+	面向组件开发的框架
+	
+安装环境
+	依赖node.js
+
+	linux
+		sudo apt-get install nodejs
+		sudo apt-get install nodejs-legacy
+			检查安装
+			node -v	查看版本成功就表示安装成功
+		安装Vue脚手架
+			sudo apt-get install -g vue-cli
+				要加个-g，表示全局可用，不加的话，除了在安装目录下，其他地方用不了vue
+			
+			另两种安装方法:
+				1.自动的软件包：npm -v
+					npm node 模块管理包
+					npm install vue-cli
+					
+				2.cnpm，国内的自动软件管理包
+					npm install cnpm
+					cnpm install -g vue-cli
+
+	window
+		直接下载nodejs安装包就行
+		后面的vue也是通过命令行安装
+
+安装遇到的问题：
+	1、安装后系统不识别vue命令
+		原因是：安装的时候没家全局参数 -g
+
+	2、安装过程中报错
+		原因1：网络太差
+
+	3、初始化项目报错
+		zelin@zelin-HP-EliteBook-8440p:~$ vue init webpack mydemo
+		/usr/local/lib/node_modules/vue-cli/bin/vue-init:60
+		let template = program.args[0]
+		^^^
+		SyntaxError: Block-scoped declarations (let, const, function, class) not yet supported outside strict mode
+			at exports.runInThisContext (vm.js:53:16)
+	
+		原因1：网络太差或没联网
+		原因2：node版本太低
+			zelin@zelin-HP-EliteBook-8440p:~$ npm install -g n n stable
+			zelin@zelin-HP-EliteBook-8440p:~$ sudo n latest
+				 install : node-v11.4.0
+				   mkdir : /usr/local/n/versions/node/11.4.0
+				   fetch : https://nodejs.org/dist/v11.4.0/node-v11.4.0-linux-x64.tar.gz
+			######################################################################## 100.0%
+			   installed : v11.4.0
+			zelin@zelin-HP-EliteBook-8440p:~$ node -v
+			v4.2.6
+			zelin@zelin-HP-EliteBook-8440p:~$ sudo npm install -g nodejs
+			+ nodejs@0.0.0
+			added 1 package in 1.999s
+			zelin@zelin-HP-EliteBook-8440p:~$ node -v
+			v11.4.0
+
+
+
+
+产生vue项目
+	vue init webpack 项目名称
+		eg:vue init webpack mydemo
+	创建项目时，
+	
+			~$ vue init webpack myvuedemo
+
+			? Project name myvuedemo
+			? Project description A Vue.js project
+			? Author zl03 <zl03.qq.com>
+			? Vue build standalone
+			? Install vue-router? Yes
+			? Use ESLint to lint your code? No
+			? Set up unit tests No
+			? Setup e2e tests with Nightwatch? No
+			? Should we run `npm install` for you after the project has been created? (recommended) npm
+
+			   vue-cli · Generated "myvuedemo".
+
+
+			# Installing project dependencies ...
+			# ========================
+
+			npm WARN deprecated browserslist@2.11.3: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
+			npm WARN deprecated bfj-node4@5.3.1: Switch to the `bfj` package for fixes and new features!
+			npm WARN deprecated browserslist@1.7.7: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
+
+			> uglifyjs-webpack-plugin@0.4.6 postinstall /home/zelin/myvuedemo/node_modules/webpack/node_modules/uglifyjs-webpack-plugin
+			> node lib/post_install.js
+
+			npm notice created a lockfile as package-lock.json. You should commit this file.
+			npm WARN ajv-keywords@3.2.0 requires a peer of ajv@^6.0.0 but none is installed. You must install peer dependencies yourself.
+			npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+			npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+			added 1127 packages from 647 contributors and audited 10642 packages in 61.02s
+			found 2 vulnerabilities (1 moderate, 1 high)
+			  run `npm audit fix` to fix them, or `npm audit` for details
+
+			# Project initialization finished!
+			# ========================
+
+			To get started:
+
+			  cd myvuedemo
+			  npm run dev
+
+			Documentation can be found at https://vuejs-templates.github.io/webpack
+
+
+	项目首页
+		cd myvuedemo
+		npm run dev		执行vue的项目
+		http://localhost:8080/#/
+		访问成功表示项目创建成功
+	
+	
+前端工具
+	webstorm sublime Hbuilder
+	
+	webstorm
+		1、安装依赖于java
+			~$ java -version
+			~$ sudo apt-get install openjdk-8-jre-headless
+
+		2、官网下载webstorm安装包
+			https://www.jetbrains.com/webstorm/download/#section=linux
+
+		3、安装过程：
+			解压
+				tar zxvf WebStorm-172.3544.10.tar.gz
+			移动
+				sudo mv WebStorm-172.3544.10/ /opt/WebStorm-172.3544.10/
+			创建链接（可选）
+				sudo ln -s /opt/WebStorm-172.3544.10/ /opt/WebStorm
+			启动
+				/opt/WebStorm/bin/webstorm.sh
+				或者在bin目录下/opt/WebStorm-183.4588.47/bin$ sudo sh webstorm.sh 
+
+
+
+
+VUE里面重要的文件
+	1.package.json		项目中要用到的模块
+		另有需要用的模块放在dependencies节点下
+		
+	2.src是工作目录
+
+	3.src下的APP.vue	是入口文件，即第一个访问网页
+
+		vue文件的扩展名都是.vue
+	
+		所有vue文件分成三个部分：
+			<template></template>	html代码部分
+			<script></script>		js脚步部分
+				script里面必须要写 
+					export default{
+						组件名称	//意思是导出这个组件，会被其他地方引用
+					}
+					
+			<styel></style>			这里写CSS样式部分
+
+	4.src下的components文件夹
+		里面有个HelloWorld.vue，初始网页，可以在里面新建项目
+		
+	5.src下的assets文件夹下放素材（图片，视频，音频）
+
+	6.src/router文件夹下的index.js，路由(切换移动端的内容页面，在路由文件桌地址和页面的对应关系)
+	
+
+
+vue链接方法
+	不再用a链接了
+	<router-link to='链接地址'>链接文本</router-link>
+		to后面接链接的地址，地址要写router目录下index.js文件中定义的path名字
+		
+
+vue里的循环和条件
+	<v-if	条件
+	<v-for	循环
+	
+	v-for的操作
+		data(){
+			return{
+				msg:'welcom to your vue.js APP'
+			}
+		}
+		
+		变量值要写到data(){}里面的return里面
+		变量输出就在<template></template>里面的标签里面，并用两个{{}}括起来（好像在标签里面不用括起来，在表情外面要括起来）
+		script里面的data()是数据的来源，可以在里面的data()写变量
+		v-for='s in arr'表示arr里面的所有元素，s是数组里面的元素
+		v-if='变量名' 变量名是布尔类型，控制元素的条件，根据条件决定是否显示元素
+
+
+
+组件式开发：
+	1.新项目
+	2.把原来的网站改造成vue组件式网站
+		打开目录src/component
+		新建一个vue组件
+		把原页面html部分放在template里面
+		把css部分放在<style>里面，把其中灰色的内容删除（灰色是没用到的）
+		路由：改造index.js，设置path，component：组件名称，设置import导入组件（impor header from '../components/Header.vue'）
+		访问的时候要加#，如 http://localhost:8080/#/header
+		vue要求template里面必须有一个盒子，且最外层只有一个盒子
+		加控件
+			<template></template>里面加<div></div>
+				在div里加上组件，几个组件都可以
+			加完组件后，在
+				export default{
+					conponents{
+						把组件名称写进去，不同的组件用引文逗号,隔开
+					}	
+				}
+			在export上面导入组件	import 组件名 from './文件名'
+
+	v-if 必须在data(){return{}}设置一个true，为false变量，用 from './文件名'
+	v-for='ss in slist' 这里slit是data(){return{}}里面列表名字
+	
+	变量输出{{}}
+	
+	vue-router怎么用
+		在router.js写路由规则：path,component
+		<router-link to="path的地址">作链接
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
