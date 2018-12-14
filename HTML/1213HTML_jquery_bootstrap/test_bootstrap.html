@@ -23,6 +23,9 @@
 				background-color: red;
 				border-bottom:solid 3px green;
 			}
+			#carousel-example-generic img{
+				width:100%;
+			}
 		
 		</style>
 	</head>
@@ -140,26 +143,59 @@
 			<div class='col-xs-6'>
 				<h3>内容块一的标题</h3>
 				<!--class='img-circle'让图片变成圆边，与border-radius效果类似-->
-				<a href='#'><img src='img/avatar.jpg' class='img-circle' id='tooltipimg' data-toggle="tooltip" data-placement="top" title="王浩"></a>
+				<a href='#'><img src='img/avatar.jpg' class='img-circle' id='tooltipimg1' data-toggle="tooltip" data-placement="top" title="王浩"></a>
 				<span>2013-01-12</span>
 				<span>农场婚礼</span>
 				
 				<div class="btn-group pull-right" role="group" aria-label="...">
-					<button type="button" id='tooltipbtn' class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="这是一场婚礼" title='农场婚礼'><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
-					<button type="button" id='tooltipbtn' class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="" title=''><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
-					
+					<button type="button" id='tooltipbtn1' class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="这是一场婚礼" title='农场婚礼'><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+					<button type="button" id='tooltipbtn' class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="" title=''><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+				</div>
+			</div>
+			
+			<div class='col-xs-6'>
+				<h3>内容块二的标题</h3>
+				<!--class='img-circle'让图片变成圆边，与border-radius效果类似-->
+				<a href='#'><img src='img/avatar.jpg' class='img-circle' id='tooltipimg2' data-toggle="tooltip" data-placement="top" title="王浩"></a>
+				<span>2013-01-12</span>
+				<span>农场婚礼</span>
 				
-					
-
-					
+				<div class="btn-group pull-right" role="group" aria-label="...">
+					<button type="button" id='tooltipbtn2' class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="这是一场婚礼" title='农场婚礼'><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+					<button type="button" id='tooltipbtn' class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="" title=''><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
 				</div>
 			</div>
 		</div>
 		
+		<div class='container'>
+			<div class='col-xs-12'>
+				<nav aria-label="...">
+				  <ul class="pager">
+					<li class='pull-left'><a href="#">Previous</a></li>
+					<li class='pull-right'><a href="#">Next</a></li>
+				  </ul>
+				</nav>
+			</div>
+		</div>
+		
+		<div class='container'>
+			<div class='col-xs-12'>
+				<ol class="breadcrumb">
+				  <li class="active"><a href="#">Home</a></li>
+				  <li><a href="http://www.baidu.com">Library</a></li>
+				  <li><a href='#'>Data</a></li>
+				</ol>
+			</div>
+		</div>
+		
+		
+		
 		<script>
 			$(function(){
-				$('#tooltipimg').tooltip()			/*启动tooltipimg的工具提示功能*/
-				$('#tooltipbtn').popover()			/*启动tooltipbtn的弹框功能*/
+				$('#tooltipimg1').tooltip()			/*启动tooltipimg1的工具提示功能*/
+				$('#tooltipimg2').tooltip()			/*启动tooltipimg2的工具提示功能*/
+				$('#tooltipbtn1').popover()			/*启动tooltipbtn1的弹框功能*/
+				$('#tooltipbtn2').popover()			/*启动tooltipbtn2的弹框功能*/
 			})
 		</script>
 		
