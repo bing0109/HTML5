@@ -34,7 +34,23 @@ https://bbs.csdn.net/topics/390516949
 VUE
 https://cn.vuejs.org/v2/guide/
 
-	
+
+VUE引入bootstrap和jquery
+https://www.cnblogs.com/haiyan123/p/8472057.html
+https://www.cnblogs.com/haimishasha/p/6556410.html
+
+vue.js a标签href里有变量，函数拼接问题
+https://blog.csdn.net/mning199201/article/details/81355882
+
+
+VUE
+Vue 互相不关联的组件能自动调用，如页面a的组件a个alter，但页面b刷新的时候也可以弹出来?????
+
+vue 组件之间传值
+https://study.163.com/course/courseLearn.htm?courseId=1004711010#/learn/video?lessonId=1049467200&courseId=1004711010
+
+
+
 安装使用aria2下载百度网盘内容
 	可无需客户端，直接下载网盘里面的内容（ubuntu）
 	https://blog.csdn.net/wudi1107/article/details/80728891
