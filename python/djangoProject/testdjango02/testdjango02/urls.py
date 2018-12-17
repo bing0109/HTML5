@@ -20,6 +20,6 @@ from testuser2 import views
 
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
-	url(r'user2/', views.index),
-	url(r'user2_2/', views.index2),
+    url(r'user2_2/', views.index2),
+    url(r'user2_1', views.index)
 ]
