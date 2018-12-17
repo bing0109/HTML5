@@ -1,0 +1,227 @@
+
+1.mvc模式
+	一种开发模式，分工合作，便于维护
+	
+	model		模型	-----放数据的，数据库
+	view		视图	-----用户界面，视图
+	controller	控制器	-----逻辑
+
+
+面试的时候基本都问工作原理
+	百度--django工作原理图
+
+2.django
+	mvt模型
+		model		模型
+		view		视图，放逻辑方法，操作数据库，找模板
+		template	模板
+
+
+	原理:
+		用户发出请求一个地址，这个地址要到django框架的urls.py里面找一个对应关系，这个对应关系表示请求的地址和访问方法的对于，即根据请求的地址找到可以处理请求的方法，这个方法包含3部分的操作：1、操作models.py对数据库实现增删改查；2、对这些数据逻辑控制代码；3、找到返回用户请求的对应模板template，找到template之后，返回给用户，这个模板就是html文件
+
+
+3.django的安装
+	pip3 install django
+	产生有问题的话就:
+	    atp install python3-django
+
+4.django根据原理建立基本的网站
+	1、产生django的项目
+		django-admin startproject 项目名称（mydjango）
+	2、进入mydjango
+		cd mydjango
+	3、建立模块应用
+		django-admin startapp 应用名称(testuser)
+		注意：这个命令一定要在项目文件夹下执行
+		    eg:django-admin startapp testuser
+		        完成后，会在项目文件夹mydjango目录下多了一个testuser应用的文件夹
+	4、认识基本结构
+		manage.py不用编辑，但会用这个文件运行程序，相当于程序的管理文件
+
+		在项目文件夹mydjango中
+			settings.py	是配置文件，我们会在这里设置、修改配置
+			urls.py		地址配置文件
+			wsgi.py	底层文件，不用关心
+		在应用文件夹testuser中
+			models.py	模型文件
+			views.py	视图文件
+
+        myfirstdjango
+        ├── manage.py
+        ├── myfirstdjango
+        │   ├── __init__.py
+        │   ├── settings.py
+        │   ├── urls.py
+        │   └── wsgi.py
+        └── testuser
+            ├── admin.py
+            ├── __init__.py
+            ├── migrations
+            │   └── __init__.py
+            ├── models.py
+            ├── tests.py
+            └── views.py
+
+
+
+	5、模型的操作
+		1、为django创建数据库
+		    登录mysql数据库
+		    create database myfirstdjango default charset=utf8;
+		2、设置django
+			（1）settings.py
+				INSTALLED_APPS=[
+						加上刚才建立应用的名字
+					]
+				设置django连接的数据库的相关信息
+                DATABASES = {
+                    'default': {
+                        # 'ENGINE': 'django.db.backends.sqlite3',
+                        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+                        'ENGINE': 'django.db.backends.mysql',   后缀sqlite3改成mysql
+                        'HOST':'localhost',
+                        'PORT':'3306',                          数据库端口，写成数字或字符串都行，面试的时候注意不要说3306，默认的端口容易被攻击，基本项目都会把这个端口给改了
+                        'USER':'root',
+                        'PASSWORD':'root',
+                        'NAME': 'mydfirstjango'                 5.1中为django创建的数据库名称
+                    }
+
+                    注意：每句后面都要带英文逗号,
+                         'PASSWORD'后面是字符串，没密码就输入两个单引号''
+
+        3、建表：
+            给django项目建表
+            修改应用文件夹下models.py文件，建类
+                class 类名(继承于modles.Model):
+                    username varchar(20)    把数据的数据类型换成django类型
+                    models.CharField(max_length=20)
+            eg：
+                class User(models.Model):
+                    username = models.CharField(max_length=20)
+                    password = models.CharField(max_length=20)
+
+
+
+
+        4、让django自动在数据库下产生表
+            a. 在manage.py所在的目录下运行
+                python3 manage.py makemigrations
+                如果有报错:django.core.exceptions.ImproperlyConfigured: Error loading MySQLdb module.
+                是因为python2用的MySQLdb，python3用的pymysql
+                解决办法：
+                    在项目文件夹下，修改 __init__.py，加上两句话，并保存
+                        import pymysql
+                        pymysql.install_as_MySQLdb()
+                            上面两句表示把pymysql当MySQLdb使用
+
+                    修改完成后，再次在在manage.py所在的目录下运行python3 manage.py makemigrations
+                    成功的话有如下返回
+                    :~/django1217/testdjango01$ python manage.py makemigrations
+                    Migrations for 'testuser':
+                      testuser/migrations/0001_initial.py
+                        - Create model User
+
+
+            b. 再执行下面的语句写入数据库
+                python3 manage.py migrate
+                执行成功会有一堆ok返回出来
+
+                django创建的表的特点：
+                    1.表名默认是引用的名字_类名
+                    2.如果没有id字段，也会自己增加一个id字段，id是关键字，自增长的
+
+
+        5、views和template之间的关系
+            a.先在urls.py里建立一个地址的映射，即地址与方法的对应关系
+                在urls.py里面加类似下面的一句语句:
+                    url('user/',views.index)         表示当用户使用user/地址时，会从views.py里面找index方法，执行index方法里面的语句
+                    导包：
+                        from django.conf.urls import url
+                        from testuser import views
+
+            b.再在views.py文件中，定义方法
+                def index():
+                    ...
+
+                注意：这个方法的名字要与urls.py中views.后面接的方法名字一样
+                    参数request表示用户请求的内容
+                    def index():
+                        所定义的方法必须返回HttpResponse(响应)，必须由模板（即html文件）才能返回
+
+                    具体的可以先看下下面的步骤d
+
+
+            c.在项目文件夹下，找到manage.py文件，执行
+                python3 manage.py runserver
+
+
+
+            d.建模板
+                1）指定模板路径：
+                    项目文件夹修改setting.py文件中TEMPLATES=[]中的DIRS字段
+                            'DIRS': [os.path.join(BASE_DIR,'templates')],
+
+
+                2）在项目文件夹下新建一个templates目录
+                    mkdir templates
+
+                3）在templates目录下新建网页
+                    vi index.html
+
+                4）在views.py文件中，设置返回的内容
+                    def index(request):
+                        return render(request, 'index.html')
+
+                    返回的render函数，
+                        第一个是参数请求，表示根据当前的请求返回的页面
+                        第二个是返回的页面文件名称（index.html），路径templates不用加了，已经在settings.py里面设置了的
+
+
+                5)上述准备工作搞完后，就可以执行步骤c的命令，看下网页的返回了
+                    http://localhost:8000/user/
+
+
+
+
+
+其他：
+    1.django的端口默认是8000，后面直接跟端口号就可以改成其他的端口
+    $ python manage.py runserver 8002
+
+
+
+*/5 * * * * cp -r `ls /home/zelin/django1217/ | grep -v venv | xargs` /var/www/html/myProject/HTML5/python/djangoProject/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

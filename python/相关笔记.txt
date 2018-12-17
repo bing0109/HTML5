@@ -1,0 +1,5 @@
+Linux进入虚拟环境的命令
+source venv/bin/activate
+
+查看django的runserver命令帮助
+python manage.py help runserver
