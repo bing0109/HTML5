@@ -1,2 +1,4 @@
 tool/
 python/djangoProject/venv
+*.pyc
+.idea/
