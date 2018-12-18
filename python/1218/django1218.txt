@@ -1,0 +1,166 @@
+回顾
+	model是的建立
+	views和templates建立联系
+
+今日	
+	3、models、views、templates建立联系
+		views操作：
+			1）return templates的模板
+			2）操作models
+			3）逻辑判断
+	
+案例
+	前端：用户名和密码框，提交到后台
+	后台：对用户名和密码进行判断，是否是合法用户
+
+
+步骤：
+	1）产生mysql数据库
+		create database djangotest03_db default Charset='utf8';
+	2）创建django项目
+		$ django-admin djangotest03_login
+	3）进入到项目文件夹，建立应用
+		$ django-admin djangotest03_app
+	4）修改设置，项目文件夹下settings.py
+		a. INSTALLED_APPS
+		b. DATABASES
+		c. TEMPLATES---DIR:[]
+
+	5）定义models.py
+		定义class
+		定义字段 username、password
+		类型 CharField(max_length=20)	(必须要有)
+	6）导入pymysql
+		项目文件夹下，__init__.py
+		import pymysql
+		pymysql.install_as_MySQLdb()
+	
+	7）同步数据库
+		项目文件夹下
+		python manage.py makemigrations
+		python manage.py migrate
+	8）构造数据库数据
+		insert into 表名 values(value1,value2)
+	9）制作网页
+		新建templates目录，并在里面制作html网页
+			定义from标签，action属性
+			定义提交按钮,type='submit'
+
+	10）定义一个地址去显示这个登录页面
+		urls.py		定义个地址
+		views.py	定义个方法
+
+	11）执行程序，查看登录页面的效果
+		python3 manager.py runserver
+		
+		http://localhost:8000/login/
+	
+	12）还需要一个地址，对form表单提交的数据进行处理
+		在urls.py里面设置
+	13）对应的还要有个views.py里面的另一个方法
+		在views.py里面设置
+	14）分析views里面的逻辑
+		判断用户在界面上输入的用户名和密码，是否与后台数据库相匹配
+		A）取到前台传过来的用户名和密码
+			1）前端页面每一个元素都要有name属性，都在request参数中
+			2）表单提交的方式是什么
+				a.跟后台接收有关系
+				b.用户输入的各种请求信息只要带name的，都在request里面
+					request.提交方式(POST/GET).get(name对应的名字)
+					eg：username=request.POST.get('username')
+					注意：POST大写；
+						get('username')与前端页面元素定义的name名称相同
+
+				c.注意：表单访问如果有错误的话（跨站访问引起），就把settings.py里面的中间件MIDDLWARE节点下crsf相关的内容注释掉
+				d.注意：前端form表单要注意定义 action='地址'
+
+				e.测试是否接收成功
+					views里面定义return HttpResponse('ok '+ )
+				
+				
+		B）从数据库取出用户名和密码
+			1.django通过类和数据库产生联系，操作类就可以操作数据库
+			2.ORM关系模型（对应关系映射模型）
+			3.User.objects相当于select * from User;
+			  User.objects.get(pk=1),pk表示主键，get相当于where，
+				其获取的结果是个对象，有属性
+				针对本案例有id,username,password三个属性
+
+		C）验证两者是否匹配
+			if判断语句
+
+
+	注册一个用户
+		（1）templates建立一个注册的页面；
+		（2）在urls.py给注册页面一个地址；
+		（3）在views.py给显示注册页面写个方法；
+		（4）注册的动作要提交到后台，并在后台进行验证
+			还需要在urls.py里面给个地址，并在views.py里写个方法
+		（5）方法里面处理注册的逻辑
+			a）获取前台传过来的数据
+				username=request.POST.get('username')
+				password=request.POSR.get('password')
+			b）写入数据库
+				数据库产生新数据，对应django应该产生一个新对象
+				user=User()
+				user.username=username
+				user.password=password
+				user.save()
+				return HttpResponse('注册成功')
+				注意：
+				1.user.username表示user对象里面的属性，=后面的username是a）中获取前端数据的变量
+				2.user.save()保存，相当于掉用 insert into的sql语句
+				3.views.py里面的方法必须返回HttpResponse()对象，或返回render()对象，返回render时，必须返回网页。
+			c）返回‘注册成功’提示
+				return HttpResponse('注册成功')
+		（6）把网页注册表单<form>标签的action属性地址写上，与urls.py里面定义的要一致
+		
+	14）扩展，注册后，用注册的用户名密码登录
+		原来写的是 User.objects.get(pk=1)
+		可以改写为 User.objects.get(username=username)
+			前面的username是字段名，后面的username是变量名
+			get方法后面的条件是一个等号（=）的话，等号左边永远是字段名（models.py写的那个类里面属性名称），get右边永远是值或变量名；
+
+		get方法，如果在数据库里面如果存在记录，就不报错，直接得到结果，如果没有这个记录，就会报错，抛异常
+			try:
+			except Exception:
+	
+调试：
+	在疑似报错的地方print
+
+
+登录和注册总结：
+	1、凡是和表单有关系开发：
+		a.都有两个地址，一个是显示表单的地址，一个是表单提交的地址；
+		b.from标签的action属性必须要填写 表单提交 的地址，表单里面的元素一定要有name属性
+		c.与表单有关的基本都于model.s类有关系，目前学到的查和存
+			查：User.objects.get()，可能由报错，要用try except
+			存：save()方法
+			另外，字段变量关系要搞清楚
+
+	2、查询数据库时，不用实例化User对象，
+		get查到的数据只会查询一个出来
+			User.objects.get(username=input_user)		查询到的是一个对象
+			User.objects.get(username=input_user).password	查询到的对象的password属性值
+		values可以获取一个列表出来
+			db_user = User.objects.values('username')
+			得到的结果是[{'username': 'abc'}, {'username': 'qwe'}]
+
+	3、写入数据时，要先实例化一个User对象
+		users = User()
+		users.username = input_user
+		users.password = input_pswd
+		users.save()
+
+作业：
+1.注册的时候，后台处理 密码和确认密码
+2.用户名不能重复
+
+3.小项目：
+	汉译英，英译汉
+	词库自己定
+	提醒：输入的时候可能会有空格或其他符号，要求也能正确翻译
+
+
+
+

@@ -3,3 +3,10 @@ source venv/bin/activate
 
 查看django的runserver命令帮助
 python manage.py help runserver
+
+Linux Ubuntu 下 vim 假死:
+https://blog.csdn.net/huanghxyz/article/details/78986014
+vim中假死问题的解决，往往出现在切换窗口回来，发现vim对任何键都没有反应。
+按下 Ctrl + Q 解决，意思是”恢复向终端输出”；
+按下 Ctrl + S 进入“假死”，意思是“阻断向终端输出”。
+另：Ctrl + S 是 Windows 的文档保存快捷键，刚接触 Linux 会很容易造成这种情况。

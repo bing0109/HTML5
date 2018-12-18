@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>翻译</title>
+</head>
+<body>
+    <form action="/translate_submit/" method="get">
+        中&nbsp文：<input type="text" name="cn" placeholder="请输入中文内容" /><br><br>
+        english:<input type="text" name="en" placeholder="please input english text" /><br><br>
+        <input type="radio" name="language" value="cntoen" checked="checked" />中译英<input type="radio" name="language" value="entocn" />英译中<br><br>
+        <button type="submit" value="start_translate" name="translate">翻译</button>
+        <button type="submit" value="submit_translate" name="translate">提交中英文翻译</button>
+    </form>
+</body>
+</html>
