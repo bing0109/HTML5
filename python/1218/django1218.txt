@@ -140,7 +140,7 @@
 
 	2、查询数据库时，不用实例化User对象，
 		get查到的数据只会查询一个出来
-			User.objects.get(username=input_user)		查询到的是一个对象
+			User.objects.get(username=input_user)		查询到的是一个对象，当查不到或查到多个数据的时候会报错，要用try函数
 			User.objects.get(username=input_user).password	查询到的对象的password属性值
 		values可以获取一个列表出来
 			db_user = User.objects.values('username')

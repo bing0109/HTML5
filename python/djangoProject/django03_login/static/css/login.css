@@ -1,0 +1,75 @@
+header{
+	background:url(../images/logo.png) no-repeat 10% 50%;
+	text-align:right;
+	width:100%;
+	height:150px;
+	line-height:150px;
+	padding-right:40px;
+	
+}
+main{
+	width:100%;
+	height:500px;
+	padding:50px 50px;
+	background:linear-gradient(to bottom,darkblue,lightblue);
+}
+main #left_main{
+	float:left;
+	width:70%;
+}
+main #left_main img{
+		display:block;
+		margin:0 auto;
+}
+main #right_main{
+	float:left;
+	width:30%;
+	background-color:white;
+	height:429px;
+}
+main #right_main form{
+	width:80%;
+	margin:0 auto;
+}
+main #right_main form .login_box{
+	margin-top:10px;
+	margin-bottom:10px;
+	border:1px solid #999;
+	padding:5px;
+}
+main #right_main form i{
+	color:gray;
+}
+main #right_main form .login_box input{
+	width:75%;
+	border:none;
+	margin-left:10px;
+	font-size:24px;
+}
+main #right_main form #vcode{
+		width:75%;
+		font-size:24px;
+		
+}
+main #right_main form #btn{
+	width:100%;
+	height:50px;
+	border:none;
+	background:darkblue;
+	color:white;
+	font-size:24px;
+}
+main #right_main form #btn:hover{
+	background:lightblue;
+}
+main #right_main  #dl{
+	
+	font-size:26px;
+	color:darkblue;
+	padding:20px;
+	padding-bottom:15px;
+	border-bottom:1px solid darkblue;
+}
+main #right_main #dlp{
+	padding-left:50px;
+}

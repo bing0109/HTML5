@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>	
+	<head>
+		<meta charset="utf8">
+		<title>药房网</title>
+		<meta name="keywords" content="药房网，手机买药,仁和药业">
+		<meta name="description" content="仁和药房网(原药房网)是仁和药业旗下网上药店,药房网官方商城是国家药监局认证的正规网上药房,药房网实体药店供货配送,100%正品保证">
+		<link rel="stylesheet" href="/static/css/base.css">
+		<link rel="stylesheet" href="/static/css/register.css">
+		<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+	</head>
+	<body>
+		<header>
+			已有账号，<a href="/login/">请登录</a>
+		</header>
+		<main>
+			
+				<p id="dlp"><a id="dl" href="#">帐户注册</a></p>
+				<hr/>
+				<form action="/register_handler/" method="post">
+					<span>用户名:</span><input name="us" type="text" class="login_box" placeholder="建议使用你常用的邮箱" name="username"/><br/>
+						
+					<span>设置密码:</span><input name="pw" type="password" class="login_box" placeholder="6-20字符，可使用字母、数字" name="password"/><br/>
+					<span>确认密码:</span><input name="pw_confirm" type="password" class="login_box" placeholder="请再次输入密码" name="repassword"/>		<br/>
+					<span>验证码:</span><input id="vcode" type="text" placeholder="请输入验证码"/><img src="images/vcode.jpg"/><br/>
+					<p><a href="#">看不清，换一张</a></p><br/>
+					<input type="checkbox"/>《仁和药房网用户协议》<br/>
+					<button id="btn" type="submit">注册</button>
+				</form>
+			
+		</main>
+	</body>
+</html>

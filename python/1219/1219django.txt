@@ -1,0 +1,125 @@
+django第三课
+
+1、前端设置好的页面，拷贝到templates里面，只有html网页有效，其他文件无效
+	a、css、js、image等网页中需要的文件或图片是属于静态资源，放在专门的文件夹下--static(需自己在项目文件夹下新建一下)
+	b、并在settings.py里面设置一下static的指向路径
+		STATIC_URL='/static/'				#静态文件的前缀
+		STATICFILES_DIRS=[				#静态文件的路径
+			os.path.join(BASE_DIR, 'static')
+		]
+
+	c、最后修改下templates中html中图片等静态资源的路径
+
+
+2、密码
+	数据库存储以密文的方式存储
+	
+	1.内置md5加密，加密后转换成32位字符串
+	2、导入加密库 hashlib，通过哈希表的方法加密
+		from hashlib import md5
+		pw = request.POST.get('password')
+		md = md5()
+		md.upadte(pw.encode('utf8'))	#指定一下pw的编码方式，否则可能报错
+		pw_md = md.hexdigest()
+		user = User()
+		user.password = pw_md
+		user.save()
+		
+		解码：decode(str,'utf8')	把str按utf8的形式进行解码
+		编码：encode(str,'utf8')	把str按utf8进行编码
+
+
+3、为当前项目创建用户，django创建的
+	python3 manag.py createsuperuser
+	在myslq-auth_user表中，会存储这个用户和密码，密码应该是经过算法加密后再次进行加密处理(如切片等)的
+
+
+补充：
+	在线解密网站 https://www.cmd5.com/
+	直接通过内置编码加密方法的密码可以通过上述网站很快解密，一般会把内置的加密再次按一定规则处理后再次处理
+	
+4、修改表结构
+	在models.py里面修改字段定义
+	在项目文件夹下，执行 
+		python3 manage.py makemigrations
+		python3 manage.py migrate
+
+
+5、注意：
+	1、get	
+		User.objects.get(user='username')
+		如果数据库中有 多个username 或 没有username 都会报错
+
+	2、filter
+		过滤结果是一个集合
+		users = User.objects.filter(user='username')
+		结果是一个对象列表的集合，没有结果就是一个空
+		eg:
+		print(db_users)
+		输出：	<QuerySet [<User: User object (12)>]>
+		print(db_users.values())
+		输出：	<QuerySet [{'username': 'avc', 'password': '123', 'id': 12}, {'username': 'avc', 'password': '123', 'id': 13}]>
+		print(db_users.values('username'))
+		输出：	<QuerySet [{'username': 'avc'}, {'username': 'avc'}, {'username': 'avc'}]> 
+
+
+		
+
+6、补充
+https://zhidao.baidu.com/question/2261750440744644468.html
+MD5 并不是加密算法，而是摘要算法。加密算法是可逆的，摘要算法是理论上不可逆的。如果说MD5是加密算法，那还不如称他是超级压缩算法呢，因为你输入任意长度的明文给他，结果都是一个定长，128位，加密后为128位（bit），按照16进制（4位一个16进制数）编码后，就成了32个字符，而不是32位。
+md5加密文件一般都是校对用的，不是用来看的。
+
+
+
+7、两次密码是否相等的验证逻辑
+	1、在templates的模板里面，给两个密码框加上name属性
+	2、回到应用文件夹下，修改view.py，逻辑如下
+		a.获取两个密码框的密码，request.POST.get()
+		b、对比两个密码
+			if pw == repw:
+				return HttpResponse('成功')
+			else:
+				return HttpResponse('失败')
+
+
+
+8、重复用户不允许注册的逻辑
+	1、获取注册输入的用户名，request.POST.get()
+	2、数据库中查找该用户是否存在，
+		两种方法
+		a.利用User.objects.get()方法查询0个或多个元素会报错的特点
+			try:
+				user = User.objects.get(username=input_user)
+				return HttpResponse('用户名已注册')
+			except Exception:
+				...用户名密码写入数据库...
+				return HttpResponse('注册成功')
+
+		b.用filter过滤
+			us=User.objects.filter(username=input_user).values('username')
+			获得的是一个列表集合
+				us = <QuerySet [{},{},{}]>
+			再可以根据获得的列表集合进行数据提取
+			if len(us) != 0:
+				return HttpResponse('用户名已注册')
+			else:
+				return HttpResponse('注册成功')
+
+
+
+9、补充作业
+注册成功，回到登录页面
+登录成功，制作一个登录成功后的页面
+
+
+
+
+
+
+
+
+			
+
+
+
