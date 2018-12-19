@@ -82,6 +82,24 @@ m位正整数
 
 # 3、一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）
 
+class Anm():
+    def __init__(self, n, m):
+        self.m = int(m)
+        self.n = int(n)
+    def cal_anm(self):
+        a = 1
+        b = 1
+
+        for i in range((self.n-self.m+1), self.n+1):
+            a *= i
+        for i in range(1, (self.m+1)):
+            b *= i
+        print(a,b,'---2525--')
+        return a/b
+
+
+
+
 
 def calcu4(n):
     l = []
@@ -91,6 +109,9 @@ def calcu4(n):
             l.append([k, (n-k)/2])
 
     for i in l:
-        a = 0
-        for j in range(i[0]+i[1]):
+        a = Anm(i[0]+i[1], i[1])
+        num += a.cal_anm()
+    print(l)
+    return int(num)
 
+print(calcu4(14), '----444----')
