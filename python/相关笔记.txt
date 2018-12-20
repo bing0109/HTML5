@@ -23,3 +23,23 @@ MD5摘要算法
 https://zhidao.baidu.com/question/2261750440744644468.html
 MD5 并不是加密算法，而是摘要算法。加密算法是可逆的，摘要算法是理论上不可逆的。如果说MD5是加密算法，那还不如称他是超级压缩算法呢，因为你输入任意长度的明文给他，结果都是一个定长，128位，加密后为128位（bit），按照16进制（4位一个16进制数）编码后，就成了32个字符，而不是32位。
 md5加密文件一般都是校对用的，不是用来看的。
+
+
+django-关于manage.py migrate无效的问题
+	https://blog.csdn.net/qq_25730711/article/details/60327344
+	解决方案
+	python manage.py dbshell 进到数据库中，执行delete from django_migrations where app='your_appname';
+	python manage.py makemigrations(若migrations文件未删除，可不执行这一步)
+	python manage.py migrate 好啦，大功告成
+
+
+创建表时的问题:
+	python3 manage.py makemigrations 
+	python3 manage.py migrate
+	无法在数据库中生成models.py里面设计的表时，或修改后执行$ python3 manage.py makemigrations返回No changes detected
+
+	先执行		python3 manage.py makemigrations 应用名称
+	再次执行	python3 manage.py migrate
+
+	还有一些其他原因参考下面的链接:
+		https://blog.csdn.net/hanglinux/article/details/75645756

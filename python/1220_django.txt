@@ -1,0 +1,271 @@
+
+models
+	里面主要是数据的模型。ORM关系模型（Oringal Relational Mapping,对象映射关系）
+	
+	数据类型
+		CharField(max_length=20)			字符串类型，需设置长度
+		IntegerField()					整形，默认长度11
+		DateTimeField(auto_now=True)			日期时间型，auto_now=True表示可以使用当前时间，当前时间会自动加上
+		DateField()					日期型，只有日期
+		TimeField()					时间型，只有时间
+		BolleanField(default=True)			布尔型，default=True表示默认输入是True
+		ImageField(upload_to='media/')			图片，upload_to='media/'表示图片上传到服务器上的地址，用相对路径，项目根目录下的media目录
+		EmailField()					邮箱
+		DecimalField(max_digits=5,decimal_places=2)	小数，max_digits表示数字的总位数，decimal_places表示小数部分的位数，小数点不占位数
+		FileField(upload_to='')				文件，解释同图片
+		
+
+	利用django提供的上传平台来上传内容
+		1.要先创建用户
+			python3 manage.py createsuperuser
+
+				$ python3 manage.py createsuperuser
+				Username (leave blank to use 'zelin'): bing
+				Email address: bing@163.com
+				Password: 
+				Password (again): 123
+				Superuser created successfully.
+
+
+		2、应用文件夹下，修改admin.py
+			from .models import Info
+			admin.site.register(Info)
+			说明:Info是model.py里面定义的类名（数据库表名后缀）
+
+		3、创建、修改完成后，登录http://localhost:8000/admin/
+			在urls.py里面有默认的的一条admin的记录
+			登录admin后台，最好用最新的django版本，pip或django从较低版本升级，pip、pip3都装django后就容易出现问题，需要卸载后重新安装django，只安装一个django
+				创建项目后，观察url.py中urlpatterns = [path('admin/', admin.site.urls),]，这样的应该就没问题，
+							urlpatterns = [url(r'^admin/', include(admin.site.urls)),]这样的应该就有问题，admin后台会登录不上
+
+
+			settings.py里面可以设置语言
+				LANGUAGE_CODE = 'en-us'	可以改成中文 'zh-hans'
+				TIME_ZONE = 'UTC'	可以改成'Asia/Shanghai'
+
+数据库操作
+	可在命令符窗口练习
+		项目目录下
+		python3 manage.py shell
+
+	1）显示数据库所有记录
+		Info.objects.all()		返回一个对象
+	2)显示数据库里面所有记录的值
+		Info.objects.values()
+		Info.objects.all().values()	返回一个集合，里面是数据列表，包含所有的数据
+		Info.objects.all().values('字段名1','字段名2')	返回一个集合，里面是数据列表，只包含指定的字段
+
+	3）取id=1的记录
+		Info.objects.get(id=1)
+		Info.objects.get(pk=1)		返回一个集合对象，包含一条数据数据
+		Info.objects.get(pk=1).name()
+		Info.objects.get(pk=1).values()	报错
+	
+	4）查name='zhangsan'
+		Info.objects.filter(name='zhangsan')
+		Info.objects.filter(name='zhangsan').values()
+	
+	5）模糊查询
+		__startswith='zhang'	查询以‘zhang’开头的某个字段的值
+		__endswith='san'	查询以'san'结尾的数据
+		__contains='ang'	查询包含'ang'的数据，前、中、后包含都行
+
+		用法：字段名__startswith='zhang'	两个下划线
+		eg：
+		>>> EmpInfo.objects.all().values('name')
+		<QuerySet [{'name': '1234'}, {'name': '234'}, {'name': '0123'}]>
+		>>> EmpInfo.objects.filter(name__startswith='12').values('name')
+		<QuerySet [{'name': '1234'}]>
+		>>> EmpInfo.objects.filter(name__endswith='34').values('name')
+		<QuerySet [{'name': '1234'}, {'name': '234'}]>
+		>>> EmpInfo.objects.filter(name__contains='234').values('name')
+		<QuerySet [{'name': '1234'}, {'name': '234'}]>
+
+
+	6）数值比较
+		大于 gt		小于lt		大于等于gte		小于等于lte
+		
+			>>> EmpInfo.objects.all().values('age')
+			<QuerySet [{'age': 26}, {'age': 22}, {'age': 45}]>
+		查询age大于25的数据
+			>>> EmpInfo.objects.filter(age__gt=25).values('age')
+			<QuerySet [{'age': 26}, {'age': 45}]>
+		并列条件用,隔开
+			查询25<age<30的数据，
+			>>> EmpInfo.objects.filter(age__gt=25,age__lt=30).values('age')
+			<QuerySet [{'age': 26}]>
+		或：exclude()表示除外
+			查询age>30，或age<25的数据
+			>>> EmpInfo.objects.exclude(age__gte=25,age__lte=27).values('age')
+			<QuerySet [{'age': 22}, {'age': 45}]>
+
+
+	7）汇总
+		Min	最小
+		Max	最大
+		Sum	求和
+		Avg	求平均数
+		Count	计数
+		需要先导包 from django.db.models import *
+
+		>>> EmpInfo.objects.all().values('salary')
+		<QuerySet [{'salary': Decimal('19960.10')}, {'salary': Decimal('99999.00')}, {'salary': Decimal('99998.00')}]>
+		>>> EmpInfo.objects.aggregate(Max('salary'))
+		{'salary__max': Decimal('99999.00')}
+		平均值
+		>>> EmpInfo.objects.aggregate(Avg('salary'))
+		{'salary__avg': 73319.033333}
+		计数
+		>>> EmpInfo.objects.aggregate(Count('salary'))
+		{'salary__count': 3}
+		
+
+	8）分组
+		1、对于所有字段全是id的表格，都是django自动产生的，不需要在models.py里面定义
+		2、给表格自定义名称
+		   在models.py的类下面加上
+			class Meta:
+        			db_table = '自定义的表名'
+			默认情况下，django产生表名称是 应用名称_类名称
+
+		3、案例分析
+			# 出版社表
+			class Publisher(models.Model):
+			    name = models.CharField(max_length=20)
+			    addr = models.CharField(max_length=20)
+			    class Meta:
+				db_table = 'publisher'
+
+			# 书表
+			class Book(models.Model):
+			    title = models.CharField(max_length=20)
+			    price = models.DecimalField(max_digits=7, decimal_places=2)
+			    publish_day = models.DateField()
+			    class Meta:
+				db_tables = 'book'
+
+			# 作者
+			class Author(models.Model):
+			    name = models.CharField(max_length=20)
+			    class Meta:
+				db_table = 'author'
+
+			# 作者详细信息
+			class AuthorDetail(models.Model):
+			    addr = models.CharField(max_length=20)
+			    class Meta:
+				db_table = 'authordetail'
+
+			分析：
+			a.作者和信息之间是一对一
+			b.作者和书之间是多对多
+			c.出版社和书是一对多
+			
+			在django中：
+				一对一	用	OneToOneField
+				多对多	用	ManyToManyField
+				一对多	用	ForeignKey（外键，放在多的那个表里面）
+
+			
+			django的任何一个类中出现了外建、一对一，多对多这类关系时，它所对应的类可以找到这个类，这个类也可以找到对应的类
+			
+			eg:
+				book里面由字段外键是author的id
+				用book__author，可以在book里找author，两个表名直接加2个下划线
+				  author__book，在author里找book
+				
+				说明，django会自动给每个类产生一个小写字母的关联，
+					eg：class Book 对应 book
+					所以，models.py里面的类最好用大写开头
+
+
+			分组命令：annotate
+				django不能按照某个字段分组，只能按某个类的id分组
+			
+			查询涉及到分组时，考虑按什么分组，什么就是主体类
+				
+			eg1：统计每一本书的作者个数	
+				Book.objects.annotate(c=Count('author')).values('title','c')
+				'author'是django给Author这个类的小写的关联
+				'title'是Book表里面定义的一个字段
+			eg2：统计每作者写了几本书	
+				Author.objects.annotate(c=Count('book')).values('name','c')
+	
+			eg3：统计每个出版社出版的最便宜的书的价格
+				Publisher.objects.annotate(p=Min('book__price')).values('name','p')
+				'book_price'指的是book表里面的price字段，Publish可以找到book对象，book对象要找里面的字段，用2个下划线连起来就行
+			eg4：统计不止一个作者的图书
+				Book.objects.annotate(c=Count('author')).filter(c__gt=1).values('title','c')
+
+			eg5：根据一本图书作者数量多少进行排序
+				order_by排序
+				升序：Book.objects.annotate(c=Count('author')).order_by('c').values('title','c')
+				降序：Book.objects.annotate(c=Count('author')).order_by('-c').values('title','c')
+					降序在降序字段前面加个 - 就行
+
+
+
+
+
+
+
+	on_delete=models.CASCADE	用于一对多、外建约束时，说明要级联删除，即当删除主表的数据时候从表中的数据也随着一起删除
+	
+
+
+
+
+
+
+作业：
+from django.db import models
+
+	class Student(models.Model):
+    	"""学生表"""
+    		name = models.CharField(max_length=100)
+    		gender = models.SmallIntegerField()
+
+    		class Meta:
+        		db_table = 'student'
+
+	class Course(models.Model):
+    	"""课程表"""
+    		name = models.CharField(max_length=100)
+        teacher = models.ForeignKey("Teacher",on_delete=models.SET_NULL,null=True)
+    		class Meta:
+        		db_table = 'course'
+
+	class Score(models.Model):
+    	"""分数表"""
+    		student = models.ForeignKey("Student",on_delete=models.CASCADE)
+    		course = models.ForeignKey("Course",on_delete=models.CASCADE)
+    		number = models.FloatField()
+
+    		class Meta:
+        		db_table = 'score'
+
+	class Teacher(models.Model):
+    	"""老师表"""
+    		name = models.CharField(max_length=100)
+
+    		class Meta:
+        		db_table = 'teacher'
+使用之前学到过的操作实现下面的查询操作：
+1.	查询平均成绩大于60分的同学的id和平均成绩；
+2.	查询所有同学的id、姓名、选课的数量、总成绩；
+3.	查询姓“李”的老师的个数；
+4.	查询没学过“李老师”课的同学的id、姓名；
+5.	查询学过课程id为1和2的所有同学的id、姓名；
+6.	查询学过“黄老师”所教的“所有课”的同学的id、姓名；
+7.	查询所有课程成绩小于60分的同学的id和姓名；
+8.	查询没有学全所有课的同学的id、姓名；
+9.	查询所有学生的姓名、平均分，并且按照平均分从高到低排序；
+10.	查询各科成绩的最高和最低分，以如下形式显示：课程ID，课程名称，最高分，最低分；
+11.	查询没门课程的平均成绩，按照平均成绩进行排序；
+12.	统计总共有多少女生，多少男生；
+13.	将“黄老师”的每一门课程都在原来的基础之上加5分；
+14.	查询两门以上不及格的同学的id、姓名、以及不及格课程数；
+15.	查询每门课的选课人数；
+
+
+

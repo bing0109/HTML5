@@ -190,11 +190,16 @@
     $ python manage.py runserver 8002
 
 
+创建表时的问题:
+	python3 manage.py makemigrations 
+	python3 manage.py migrate
+	无法在数据库中生成models.py里面设计的表时，或修改后执行$ python3 manage.py makemigrations返回No changes detected
 
+	先执行		python3 manage.py makemigrations 应用名称
+	再次执行	python3 manage.py migrate
 
-
-
-
+	还有一些其他原因参考下面的链接:
+		https://blog.csdn.net/hanglinux/article/details/75645756
 
 
 

@@ -36,8 +36,10 @@ def calcu2(n):
         return result.pop()
 
 
-num = calcu2(50)
-print(num)
+num = calcu(25)
+print(num, '---num----')
+num2 = calcu2(25)
+print(num2, '---num2----')
 
 '''
 推导式
@@ -70,6 +72,7 @@ def calcu3(num):
         print(l)
         return l.pop()
 
+
 print(calcu3(17))
 
 '''
@@ -82,10 +85,12 @@ m位正整数
 
 # 3、一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）
 
+
 class Anm():
     def __init__(self, n, m):
         self.m = int(m)
         self.n = int(n)
+
     def cal_anm(self):
         a = 1
         b = 1
@@ -94,24 +99,32 @@ class Anm():
             a *= i
         for i in range(1, (self.m+1)):
             b *= i
-        print(a,b,'---2525--')
+        # print(a,b,'---2525--')
         return a/b
 
 
-
+'''
+上述类可直接用python自带的排列组合计算
+'''
+from itertools import permutations, combinations
+from scipy.special import perm, comb
+print(perm(20, 5), comb(10, 2), '-------perm,comb------')
+print(list(permutations([1, 2, 3, 4], 2)))
+print(list(combinations([1, 2, 3, 4], 2)))
 
 
 def calcu4(n):
-    l = []
-    num = 0
+    list4 = []
+    num4 = 0
     for k in range(0, n+1):
         if (n-k) % 2 == 0:
-            l.append([k, (n-k)/2])
+            list4.append([k, (n-k)/2])
 
-    for i in l:
+    for i in list4:
         a = Anm(i[0]+i[1], i[1])
-        num += a.cal_anm()
-    print(l)
-    return int(num)
+        num4 += a.cal_anm()
+    print(list4, '-----list-----')
+    return int(num4)
 
-print(calcu4(14), '----444----')
+
+print(calcu4(26), '----444----')
