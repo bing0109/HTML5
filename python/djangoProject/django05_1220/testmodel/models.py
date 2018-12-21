@@ -59,14 +59,18 @@ class Book(models.Model):
     title = models.CharField(max_length=20)
     price = models.DecimalField(max_digits=7, decimal_places=2)
     publish_day = models.DateField()
+    publish = models.ForeignKey(to='Publisher', on_delete=models.CASCADE)
+    hot_pric = models.DecimalField(max_digits=7, decimal_places=2, default=99.99)
 
     class Meta:
-        db_tables = 'book'
+        db_table = 'book'
 
 
 # 作者
 class Author(models.Model):
     name = models.CharField(max_length=20)
+    book = models.ManyToManyField(to='Book')
+    author_detail = models.OneToOneField(to='AuthorDetail', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'author'
@@ -75,17 +79,47 @@ class Author(models.Model):
 # 作者详细信息
 class AuthorDetail(models.Model):
     addr = models.CharField(max_length=20)
+    isdelete = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'authordetail'
 
 
+# 1220作业的表格
+class Student(models.Model):
+    """学生表"""
+    name = models.CharField(max_length=100)
+    gender = models.SmallIntegerField()
+
+    class Meta:
+        db_table = 'student'
 
 
+class Course(models.Model):
+    """课程表"""
+    name = models.CharField(max_length=100)
+    teacher = models.ForeignKey("Teacher", on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        db_table = 'course'
 
 
+class Score(models.Model):
+    """分数表"""
+    student = models.ForeignKey("Student", on_delete=models.CASCADE)
+    course = models.ForeignKey("Course", on_delete=models.CASCADE)
+    number = models.FloatField()
+
+    class Meta:
+        db_table = 'score'
 
 
+class Teacher(models.Model):
+    """老师表"""
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'teacher'
 
 
 

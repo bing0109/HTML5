@@ -1,0 +1,1 @@
+在这之前，由于python2的pip装了低版本的django，python3-pip3装了高版本的django，导致有问题，admin页面登录不了

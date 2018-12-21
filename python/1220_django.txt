@@ -98,9 +98,10 @@ models
 			查询age>30，或age<25的数据
 			>>> EmpInfo.objects.exclude(age__gte=25,age__lte=27).values('age')
 			<QuerySet [{'age': 22}, {'age': 45}]>
+		注意：没有 eq（等于）这样的表达，等于的话直接用 =
 
-
-	7）汇总
+		
+	7）汇总 aggregate
 		Min	最小
 		Max	最大
 		Sum	求和
@@ -120,7 +121,7 @@ models
 		{'salary__count': 3}
 		
 
-	8）分组
+	8）分组 annotate
 		1、对于所有字段全是id的表格，都是django自动产生的，不需要在models.py里面定义
 		2、给表格自定义名称
 		   在models.py的类下面加上
@@ -135,21 +136,21 @@ models
 			    addr = models.CharField(max_length=20)
 			    class Meta:
 				db_table = 'publisher'
-
 			# 书表
 			class Book(models.Model):
 			    title = models.CharField(max_length=20)
 			    price = models.DecimalField(max_digits=7, decimal_places=2)
 			    publish_day = models.DateField()
+			    publish = models.ForeignKey(to='Publisher', on_delete=models.CASCADE)
 			    class Meta:
-				db_tables = 'book'
-
+				db_table = 'book'
 			# 作者
 			class Author(models.Model):
 			    name = models.CharField(max_length=20)
+			    book = models.ManyToManyField(to='Book')
+			    author_detail = models.OneToOneField(to='AuthorDetail', on_delete=models.CASCADE)
 			    class Meta:
 				db_table = 'author'
-
 			# 作者详细信息
 			class AuthorDetail(models.Model):
 			    addr = models.CharField(max_length=20)
@@ -169,6 +170,9 @@ models
 			
 			django的任何一个类中出现了外建、一对一，多对多这类关系时，它所对应的类可以找到这个类，这个类也可以找到对应的类
 			
+			on_delete=models.CASCADE	用于一对多、外建约束时，说明要级联删除，即当删除主表的数据时候从表中的数据也随着一起删除
+
+
 			eg:
 				book里面由字段外键是author的id
 				用book__author，可以在book里找author，两个表名直接加2个下划线
@@ -188,12 +192,14 @@ models
 				Book.objects.annotate(c=Count('author')).values('title','c')
 				'author'是django给Author这个类的小写的关联
 				'title'是Book表里面定义的一个字段
+
 			eg2：统计每作者写了几本书	
 				Author.objects.annotate(c=Count('book')).values('name','c')
 	
 			eg3：统计每个出版社出版的最便宜的书的价格
 				Publisher.objects.annotate(p=Min('book__price')).values('name','p')
 				'book_price'指的是book表里面的price字段，Publish可以找到book对象，book对象要找里面的字段，用2个下划线连起来就行
+
 			eg4：统计不止一个作者的图书
 				Book.objects.annotate(c=Count('author')).filter(c__gt=1).values('title','c')
 
@@ -209,7 +215,7 @@ models
 
 
 
-	on_delete=models.CASCADE	用于一对多、外建约束时，说明要级联删除，即当删除主表的数据时候从表中的数据也随着一起删除
+	
 	
 
 
@@ -220,52 +226,164 @@ models
 作业：
 from django.db import models
 
-	class Student(models.Model):
-    	"""学生表"""
-    		name = models.CharField(max_length=100)
-    		gender = models.SmallIntegerField()
+class Student(models.Model):
+    """学生表"""
+        name = models.CharField(max_length=100)
+        gender = models.SmallIntegerField()
+        class Meta:
+            db_table = 'student'
 
-    		class Meta:
-        		db_table = 'student'
-
-	class Course(models.Model):
-    	"""课程表"""
-    		name = models.CharField(max_length=100)
+class Course(models.Model):
+    """课程表"""
+        name = models.CharField(max_length=100)
         teacher = models.ForeignKey("Teacher",on_delete=models.SET_NULL,null=True)
-    		class Meta:
-        		db_table = 'course'
+        class Meta:
+            db_table = 'course'
 
-	class Score(models.Model):
-    	"""分数表"""
-    		student = models.ForeignKey("Student",on_delete=models.CASCADE)
-    		course = models.ForeignKey("Course",on_delete=models.CASCADE)
-    		number = models.FloatField()
+class Score(models.Model):
+    """分数表"""
+        student = models.ForeignKey("Student",on_delete=models.CASCADE)
+        course = models.ForeignKey("Course",on_delete=models.CASCADE)
+        number = models.FloatField()
+        class Meta:
+            db_table = 'score'
 
-    		class Meta:
-        		db_table = 'score'
-
-	class Teacher(models.Model):
-    	"""老师表"""
-    		name = models.CharField(max_length=100)
-
-    		class Meta:
-        		db_table = 'teacher'
+class Teacher(models.Model):
+    """老师表"""
+        name = models.CharField(max_length=100)
+        class Meta:
+            db_table = 'teacher'
 使用之前学到过的操作实现下面的查询操作：
-1.	查询平均成绩大于60分的同学的id和平均成绩；
-2.	查询所有同学的id、姓名、选课的数量、总成绩；
-3.	查询姓“李”的老师的个数；
-4.	查询没学过“李老师”课的同学的id、姓名；
-5.	查询学过课程id为1和2的所有同学的id、姓名；
-6.	查询学过“黄老师”所教的“所有课”的同学的id、姓名；
-7.	查询所有课程成绩小于60分的同学的id和姓名；
-8.	查询没有学全所有课的同学的id、姓名；
-9.	查询所有学生的姓名、平均分，并且按照平均分从高到低排序；
-10.	查询各科成绩的最高和最低分，以如下形式显示：课程ID，课程名称，最高分，最低分；
-11.	查询没门课程的平均成绩，按照平均成绩进行排序；
-12.	统计总共有多少女生，多少男生；
-13.	将“黄老师”的每一门课程都在原来的基础之上加5分；
-14.	查询两门以上不及格的同学的id、姓名、以及不及格课程数；
-15.	查询每门课的选课人数；
+1.查询平均成绩大于60分的同学的id和平均成绩；
+	Student.objects.annotate(s=Avg('score__number')).filter(s__gt=60).values('id','s')
+
+2.查询所有同学的id、姓名、选课的数量、总成绩；
+	Student.objects.annotate(c=Count('score__course'),s=Sum('score__number')).values('id','name','c','s')
+
+3.查询姓“李”的老师的个数；
+	>>> Teacher.objects.filter(name__startswith='黄').annotate(c=Count('name')).values('c')		错误的做法
+	<QuerySet [{'c': 1}, {'c': 1}]>
+
+	>>> Teacher.objects.filter(name__startswith='李').count()	正确
+	1
+
+4.查询没学过“李老师”课的同学的id、姓名；
+	#错误 Student.objects.exclude(course__name__eq=(Course.objects.filter(teacher__name__startswith='李'))).values('id','name')
+	>>> Student.objects.exclude(score__course__teacher__name__startswith='李').values('id','name')
+	<QuerySet [{'id': 5, 'name': '李5学生'}, {'id': 12, 'name': '赵12学生'}, {'id': 14, 'name': '王14学生'}, {'id': 16, 'name': '王16学生'}]>
+
+
+5.查询学过课程id为1和2的所有同学的id、姓名；
+	#错误 Student.objects.filter(score__course__eq=(Course.objects.exclude(id__lt=1,id__gt=2))).values('id','name')
+	>>> Student.objects.filter(score__course__id=1).filter(score__course__id=2).values('name','id')
+	<QuerySet [{'id': 1, 'name': '李1学生'}, {'id': 2, 'name': '王2学生'}, {'id': 4, 'name': '刘4学生'}, {'id': 6, 'name': '陈6学生'}, {'id': 9, 'name': '陈9学生'}, {'id': 11, 'name': '李11学生'}, {'id': 13, 'name': '钱13学生'}, {'id': 15, 'name': '李15学生'}]>
+
+
+6.查询学过“黄老师”所教的“所有课”的同学的id、姓名；
+	#错误 Student.objects.filter(course__teacher__eq=((Teacher.objects.filter(name__eq='黄老师'))).values('id','name')
+	>>> Student.objects.filter(score__course__teacher__name__startswith='黄').annotate(c=Count('score__course')).filter(c=(Course.objects.filter(teacher__name__startswith='黄').count())).values('id','name')
+	<QuerySet [{'id': 1, 'name': '李1学生'}, {'id': 4, 'name': '刘4学生'}, {'id': 6, 'name': '陈6学生'}, {'id': 11, 'name': '李11学生'}, {'id': 12, 'name': '赵12学生'}]>
+
+
+7.查询所有课程成绩小于75分的同学的id和姓名；
+	>>> Student.objects.annotate(s=Max('score__number')).filter(s__lt=75).values('id','name')
+	<QuerySet [{'id': 1, 'name': '李1学生'}, {'id': 2, 'name': '王2学生'}, {'id': 3, 'name': '黄3学生'}, {'id': 4, 'name': '刘4学生'}, {'id': 5, 'name': '李5学生'}]>
+>>>
+8.查询没有学全所有课的同学的id、姓名；
+	>>> Student.objects.annotate(c=Count('score__course')).filter(c=(Course.objects.all().count())).values('id','name')
+	<QuerySet [{'id': 1, 'name': '李1学生'}, {'id': 6, 'name': '陈6学生'}, {'id': 11, 'name': '李11学生'}]>
+	>>> 
+	>>> 
+	>>> Student.objects.annotate(c=Count('score__course')).filter(c__lt=(Course.objects.all().count())).values('id','name')
+	<QuerySet [{'id': 2, 'name': '王2学生'}, {'id': 3, 'name': '黄3学生'}, {'id': 4, 'name': '刘4学生'}, {'id': 5, 'name': '李5学生'}, {'id': 7, 'name': '黄7学生'}, {'id': 8, 'name': '赵8学生'}, {'id': 9, 'name': '陈9学生'}, {'id': 10, 'name': '孙10学生'}, {'id': 12, 'name': '赵12学生'}, {'id': 13, 'name': '钱13学生'}, {'id': 14, 'name': '王14学生'}, {'id': 15, 'name': '李15学生'}, {'id': 16, 'name': '王16学生'}]>
+	>>> 
+
+
+9.查询所有学生的姓名、平均分，并且按照平均分从高到低排序；
+	>>> Student.objects.annotate(sa=Avg('score__number')).order_by('-sa').values('name','sa')
+	<QuerySet [{'name': '王16学生', 'sa': 90.5}, {'name': '李15学生', 'sa': 87.66666666666667}, {'name': '王14学生', 'sa': 81.75}, {'name': '钱13学生', 'sa': 81.4}, {'name': '赵12学生', 'sa': 80.6}, {'name': '李11学生', 'sa': 79.83333333333333}, {'name': '陈9学生', 'sa': 72.2}, {'name': '孙10学生', 'sa': 69.5}, {'name': '赵8学生', 'sa': 69.5}, {'name': '陈6学生', 'sa': 68.16666666666667}, {'name': '黄7学生', 'sa': 67.66666666666667}, {'name': '黄3学生', 'sa': 65.66666666666667}, {'name': '刘4学生', 'sa': 65.2}, {'name': '李5学生', 'sa': 61.75}, {'name': '王2学生', 'sa': 60.5}, {'name': '李1学生', 'sa': 49.0}]>
+	>>> 
+
+10.查询各科成绩的最高和最低分，以如下形式显示：课程ID，课程名称，最高分，最低分；
+	>>> Course.objects.annotate(mi=Min('score__number'),ma=Max('score__number')).values('id','name','mi','ma')
+	<QuerySet [{'id': 1, 'mi': 10.0, 'ma': 84.0, 'name': '语文1'}, {'id': 2, 'mi': 66.0, 'ma': 96.0, 'name': '数学2'}, {'id': 3, 'mi': 52.0, 'ma': 97.0, 'name': '物理3'}, {'id': 4, 'mi': 45.0, 'ma': 81.0, 'name': '化学4'}, {'id': 5, 'mi': 70.0, 'ma': 85.0, 'name': '生物5'}, {'id': 6, 'mi': 51.0, 'ma': 64.0, 'name': '英语6'}]>
+
+
+11.查询每门课程的平均成绩，按照平均成绩进行排序；
+	>>> Course.objects.annotate(sa=Avg('score__number')).order_by('sa').values('name','sa')
+	<QuerySet [{'name': '英语6', 'sa': 57.92307692307692}, {'name': '化学4', 'sa': 63.3}, {'name': '语文1', 'sa': 71.41666666666667}, {'name': '物理3', 'sa': 75.72727272727273}, {'name': '生物5', 'sa': 77.0}, {'name': '数学2', 'sa': 82.72727272727273}]>
+	>>> 
+
+
+
+12.统计总共有多少女生，多少男生；
+	>>> Student.objects.annotate(cb=Count('gender')).filter(gender=0).count()
+	7
+	>>> Student.objects.annotate(cb=Count('gender')).filter(gender=1).count()
+	9
+	>>> Student.objects.aggregate(male=Count('gender',filter=Q(gender=0)),female=Count('gender',filter=Q(gender=1)))
+	{'male': 7, 'female': 9}
+
+
+
+
+
+13.将“黄老师”的每一门课程都在原来的基础之上加5分；
+	>>> Score.objects.filter(course__teacher__name__startswith='黄七').values('course__name','number')
+	<QuerySet [{'number': 66.0, 'course__name': '数学2'}, {'number': 68.0, 'course__name': '数学2'}, {'number': 72.0, 'course__name': '数学2'}, {'number': 76.0, 'course__name': '数学2'}, {'number': 82.0, 'course__name': '数学2'}, {'number': 86.0, 'course__name': '数学2'}, {'number': 88.0, 'course__name': '数学2'}, {'number': 90.0, 'course__name': '数学2'}, {'number': 92.0, 'course__name': '数学2'}, {'number': 94.0, 'course__name': '数学2'}, {'number': 96.0, 'course__name': '数学2'}]>
+	>>> 
+	>>> Score.objects.filter(course__teacher__name__startswith='黄七').update(number=F('number')+5)
+	11
+	>>> Score.objects.filter(course__teacher__name__startswith='黄七').values('course__name','number')
+	<QuerySet [{'number': 71.0, 'course__name': '数学2'}, {'number': 73.0, 'course__name': '数学2'}, {'number': 77.0, 'course__name': '数学2'}, {'number': 81.0, 'course__name': '数学2'}, {'number': 87.0, 'course__name': '数学2'}, {'number': 91.0, 'course__name': '数学2'}, {'number': 93.0, 'course__name': '数学2'}, {'number': 95.0, 'course__name': '数学2'}, {'number': 97.0, 'course__name': '数学2'}, {'number': 99.0, 'course__name': '数学2'}, {'number': 101.0, 'course__name': '数学2'}]>
+	>>> 
+
+
+14.查询两门以上不及格的同学的id、姓名、以及不及格课程数；
+	>>> Student.objects.filter(score__number__lt=60).annotate(c=Count('score__number')).filter(c__gt=1).values('id','name','c')
+	<QuerySet [{'id': 1, 'name': '李1学生', 'c': 4}, {'id': 2, 'name': '王2学生', 'c': 2}, {'id': 4, 'name': '刘4学生', 'c': 2}, {'id': 5, 'name': '李5学生', 'c': 2}]>
+
+
+15.查询每门课的选课人数；
+>>> Course.objects.annotate(c=Count('score__student')).values('name','c')
+<QuerySet [{'c': 12, 'name': '语文1'}, {'c': 11, 'name': '数学2'}, {'c': 11, 'name': '物理3'}, {'c': 10, 'name': '化学4'}, {'c': 10, 'name': '生物5'}, {'c': 13, 'name': '英语6'}]>
+>>> 
+
+
+
+
+问题:
+条件中的引号，什么时候加，什么时候不加？
+filter中的查询条件不用加，过滤值要加
+annotate中的过滤条件要加
+
+
+eq  =  的区别?
+
+django查询数据库不用考虑sql语句的安全性、优化等问题？怎么理解
+
+
+	sql中select * from 写*很浪费查询速度
+
+
+
+
+
+aggretate和annotate的区别：
+>>> Student.objects.filter(score__course__teacher__name__startswith='黄').aggregate(c=Count('score__course'))
+	{'c': 44}
+>>> Student.objects.filter(score__course__teacher__name__startswith='黄').annotate(c=Count('score__course'))
+	<QuerySet [<Student: Student object (1)>, <Student: Student object (2)>, <Student: Student object (4)>, <Student: Student object (6)>, <Student: Student object (9)>, <Student: Student object (11)>, <Student: Student object (12)>, <Student: Student object (13)>, <Student: Student object (14)>, <Student: Student object (15)>, <Student: Student object (16)>, <Student: Student object (5)>, <Student: Student object (8)>, <Student: Student object (3)>, <Student: Student object (7)>, <Student: Student object (10)>]>
+
+
+
+
+
+
+
+
+
+
 
 
 

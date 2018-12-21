@@ -1,0 +1,198 @@
+
+django查询语句可以转成sql语句
+	方法:把查询结果做变量接收，用 变量.query.__str__() 即可查看转换后的sql语句
+
+	s = Info.objects.all().values()
+
+	s.query__str__()
+	输出是把上面的django语句转换成sql数据库语句
+
+	如果查询出来的是值，就转换不了，当s包含count()等时，就输出不了
+		>>> ss2 = Book.objects.filter(author__name='李三').values('title','price')
+		>>> ss2
+		    <QuerySet [{'title': '书二', 'price': Decimal('112.34')}, {'title': '书三', 'price': Decimal('56.09')}, {'title': '书5', 'price': Decimal('98.87')}, {'title': '书6', 'price': Decimal('567.89')}, {'title': '书7', 'price': Decimal('45.32')}]>
+		>>> ss2.query.__str__()
+		    'SELECT `book`.`title`, `book`.`price` FROM `book` INNER JOIN `author_book` ON (`book`.`id` = `author_book`.`book_id`) INNER JOIN `author` ON (`author_book`.`author_id` = `author`.`id`) WHERE `author`.`name` = 李三'
+		>>> ss2.count()
+		    5
+		>>> ss3 = Book.objects.filter(author__name='李三').values('title','price').count()
+		>>> ss3
+		    5
+		>>> ss3.query.__str__()
+		    Traceback (most recent call last):
+		      File "/usr/lib/python3.5/code.py", line 91, in runcode
+			exec(code, self.locals)
+		      File "<console>", line 1, in <module>
+		    AttributeError: 'int' object has no attribute 'query'
+		>>> 
+
+
+F查询
+	1、当条件的两端都是字段的时候，右边的字段需用用F查询，把这个字段用F字母和括号包起来就行
+		当右边是值的时候，直接写值就行
+
+    2、要先导包，from django.db.models import *
+	
+	eg:
+		给所有的price加上5
+		>>> Book.objects.update(price=F('price')+5)
+
+		查询price小于hot_price的记录,price和hot_price是同一张表里面的两个字段
+		>>> Book.objects.filter(price__gt=F('hot_pric')).values('title')
+		    <QuerySet [{'title': '书二'}, {'title': '书四'}, {'title': '书6'}, {'title': '书8'}, {'title': '书9'}]>
+
+	F('字段')	字段要用''
+
+
+Q查询
+	1、弥补查询中的 或、与 操作；
+	
+        与条件	filter(Q(条件1) & Q(条件2))    与条件时，最好是用不同的字段条件，不然表示一个字段同时等于2个值，查不出来结果
+        或条件	filter(Q(条件1) | Q(条件2))
+
+	2、条件中的字段名不用''
+
+
+    3、eg
+        1）查询book表中主键位1和3的数据
+            >>> Book.objects.filter(pk=1,pk=3).values()
+                Traceback (most recent call last):
+                    。。。。。。。。
+                  File "<console>", line 1
+                SyntaxError: keyword argument repeated
+            >>>
+            >>> ss = Book.objects.filter(Q(pk=1) | Q(pk=3)).values('id','title')
+            >>> ss
+                <QuerySet [{'title': '书一', 'id': 1}, {'title': '书三', 'id': 3}]>
+            >>> ss.query.__str__()
+                'SELECT `book`.`id`, `book`.`title` FROM `book` WHERE (`book`.`id` = 1 OR `book`.`id` = 3)'
+            >>>
+
+        2）查询既写了书二，又写了书四的作者
+            >>> Author.objects.filter(book__title='书二').values('name')
+                <QuerySet [{'name': '李三'}, {'name': '黄四'}, {'name': '陈五'}]>
+            >>>
+            >>> Author.objects.filter(book__title='书四').values('name')
+                <QuerySet [{'name': '张二'}, {'name': '黄四'}, {'name': '陈五'}, {'name': '赵七'}]>
+            >>>
+            >>> ss2 = Author.objects.filter(Q(book__title='书四') & Q(book__title='书三')).values('name')
+            >>> ss2
+                <QuerySet []>
+            >>> ss2.query.__str__()
+                'SELECT `author`.`name` FROM `author` INNER JOIN `author_book` ON (`author`.`id` = `author_book`.`author_id`) INNER JOIN `book` ON (`author_book`.`book_id` = `book`.`id`) WHERE (`book`.`title` = 书四 AND `book`.`title` = 书三)'
+            >>>
+            >>> ss3 = Author.objects.filter(book__title='书四').filter(book__title='书三').values('name')
+            >>> ss3
+                <QuerySet [{'name': '张二'}, {'name': '陈五'}]>
+            >>> ss3.query.__str__()
+                'SELECT `author`.`name` FROM `author` INNER JOIN `author_book` ON (`author`.`id` = `author_book`.`author_id`) INNER JOIN `book` ON (`author_book`.`book_id` = `book`.`id`) INNER JOIN `author_book` T4 ON (`author`.`id` = T4.`author_id`) INNER JOIN `book` T5 ON (T4.`book_id` = T5.`id`) WHERE (`book`.`title` = 书四 AND T5.`title` = 书三)'
+            >>>
+
+        3）查询在深圳出版社出版，且价格大于100的书名
+            >>> bs = Book.objects.filter(Q(price__gt=100) & Q(publish__name='深圳出版社')).values('title')
+            >>> bs
+                <QuerySet [{'title': '书二'}, {'title': '书5'}]>
+            >>>
+
+
+
+增
+    新增一条记录，要先实例化一下
+    ad = AuthorDetail()
+    ad.addr = '厦门'
+    ad.save()
+
+
+改
+    两种方法
+    1）先查出来，赋值给一个变量，再改变量的属性
+
+        >>> sa1 = Book.objects.filter(publish__name='深圳出版社')
+        >>> sa1
+            <QuerySet [<Book: Book object (2)>, <Book: Book object (5)>]>
+        >>> sa1.values()
+            <QuerySet [{'title': '书二', 'publish_day': datetime.date(2018, 12, 21), 'id': 2, 'publish_id': 2, 'price': Decimal('117.34'), 'hot_pric': Decimal('99.99')}, {'title': '书5', 'publish_day': datetime.date(2018, 12, 21), 'id': 5, 'publish_id': 2, 'price': Decimal('103.87'), 'hot_pric': Decimal('99.99')}]>
+
+        >>> sa2 = Book.objects.get(pk=2)
+        >>> sa2.price
+            Decimal('117.34')
+        >>> sa2.price = 100.01
+        >>> sa2.save()
+        >>> sa2.price
+            100.01
+
+        >>> sa3 = Book.objects.filter(publish__name='深圳出版社')
+        >>> sa3.values()
+            <QuerySet [{'title': '书二', 'publish_day': datetime.date(2018, 12, 21), 'id': 2, 'publish_id': 2, 'price': Decimal('100.01'), 'hot_pric': Decimal('99.99')}, {'title': '书5', 'publish_day': datetime.date(2018, 12, 21), 'id': 5, 'publish_id': 2, 'price': Decimal('103.87'), 'hot_pric': Decimal('99.99')}]>
+        >>>
+        >>> sa1.values()
+            <QuerySet [{'title': '书二', 'publish_day': datetime.date(2018, 12, 21), 'id': 2, 'publish_id': 2, 'price': Decimal('100.01'), 'hot_pric': Decimal('99.99')}, {'title': '书5', 'publish_day': datetime.date(2018, 12, 21), 'id': 5, 'publish_id': 2, 'price': Decimal('103.87'), 'hot_pric': Decimal('99.99')}]>
+        >>>
+
+    2）update修改
+        >>> Book.objects.filter(pk=1).values('title','price')
+            <QuerySet [{'title': '书一', 'price': Decimal('39.56')}]>
+        >>> Book.objects.filter(pk=1).update(price=80.45)
+            1
+        >>> Book.objects.filter(pk=1).values('title','price')
+            <QuerySet [{'title': '书一', 'price': Decimal('80.45')}]>
+        >>>
+
+        >>> Book.objects.filter(price__gt=500).values('title','price')
+            <QuerySet [{'title': '书四', 'price': Decimal('672.89')}, {'title': '书6', 'price': Decimal('572.89')}, {'title': '书8', 'price': Decimal('925.78')}]>
+        >>> Book.objects.filter(price__gt=500).update(price=600.00)
+            3
+        >>> Book.objects.filter(price__gt=500).values('title','price')
+            <QuerySet [{'title': '书四', 'price': Decimal('600.00')}, {'title': '书6', 'price': Decimal('600.00')}, {'title': '书8', 'price': Decimal('600.00')}]>
+        >>>
+
+
+        不加过滤条件应该就是改所有的数据
+
+
+删除
+    delete()
+
+    建议平时用isDelete字段来做假删除，定期整理，把isDelete=True的数据复制到另一个新表里面，当前这个表里面的数据就可以删除了
+    >>> AuthorDetail.objects.values()
+        <QuerySet [{'id': 1, 'addr': '深圳'}, {'id': 2, 'addr': '北京'}, {'id': 3, 'addr': '广州'}, {'id': 4, 'addr': '武汉'}, {'id': 5, 'addr': '上海'}, {'id': 6, 'addr': '西安'}, {'id': 7, 'addr': '成都'}, {'id': 8, 'addr': '珠海'}, {'id': 9, 'addr': '合肥'}]>
+    >>> AuthorDetail.objects.filter(addr='合肥').delete()
+        (1, {'testmodel.AuthorDetail': 1})
+    >>> AuthorDetail.objects.values()
+        <QuerySet [{'id': 1, 'addr': '深圳'}, {'id': 2, 'addr': '北京'}, {'id': 3, 'addr': '广州'}, {'id': 4, 'addr': '武汉'}, {'id': 5, 'addr': '上海'}, {'id': 6, 'addr': '西安'}, {'id': 7, 'addr': '成都'}, {'id': 8, 'addr': '珠海'}]>
+
+
+
+    >>> AuthorDetail.objects.values()
+        <QuerySet [{'id': 1, 'addr': '深圳'}, {'id': 2, 'addr': '北京'}, {'id': 3, 'addr': '广州'}, {'id': 4, 'addr': '武汉'}, {'id': 5, 'addr': '上海'}, {'id': 6, 'addr': '西安'}, {'id': 7, 'addr': '成都'}, {'id': 8, 'addr': '珠海'}, {'id': 11, 'addr': '天津'}]>
+    >>>
+    >>> ads = AuthorDetail.objects.get(pk=11)
+    >>> ads.addr
+        '天津'
+    >>> ads.delete()
+        (1, {'testmodel.AuthorDetail': 1})
+    >>>
+    >>> ads
+        <AuthorDetail: AuthorDetail object (None)>
+    >>> AuthorDetail.objects.values()
+        <QuerySet [{'id': 1, 'addr': '深圳'}, {'id': 2, 'addr': '北京'}, {'id': 3, 'addr': '广州'}, {'id': 4, 'addr': '武汉'}, {'id': 5, 'addr': '上海'}, {'id': 6, 'addr': '西安'}, {'id': 7, 'addr': '成都'}, {'id': 8, 'addr': '珠海'}]>
+    >>>
+
+
+注意：
+    删除、修改 两个操作都不能用类似User()实例化，要先查出来，再操作
+
+
+
+
+补充
+	做django项目时，models模型尽量要有个字段：isDelete，表示是否删除(true,false)，假删除
+	方便对数据库历史数据的维护	
+	
+	isDelete = False	
+	isDelete = True
+
+
+CASE WHEN	ELSE	END
+HAVING
+

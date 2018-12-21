@@ -195,6 +195,7 @@
 	python3 manage.py migrate
 	无法在数据库中生成models.py里面设计的表时，或修改后执行$ python3 manage.py makemigrations返回No changes detected
 
+
 	先执行		python3 manage.py makemigrations 应用名称
 	再次执行	python3 manage.py migrate
 
@@ -203,6 +204,7 @@
 
 
 
+*/5 * * * * cp -r `ls /home/zelin/django1217/ | grep -v venv | xargs` /var/www/html/myProject/HTML5/python/djangoProject/
 
 
 
