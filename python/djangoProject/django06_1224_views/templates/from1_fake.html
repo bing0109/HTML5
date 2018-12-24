@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form-fake</title>
+</head>
+<body>
+    <h1>复制链正常网页的session，伪造提交</h1>
+    <form action="http://localhost:8000/form1_handle/" method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value="tMP3hrekKLwW4bPp4E4o1XCmfs8XirrIkPRdlxGHV765STooL8YMjGb0wUxrFZeB">
+        <input type="checkbox" name="habit" value="balling"/>打球<br/>
+        <input type="checkbox" name="habit" value="swimming"/>游泳<br/>
+        <input type="checkbox" name="habit" value="climbing"/>爬山<br/>
+        <button type="submit">提交</button>
+    </form>
+</body>
+</html>

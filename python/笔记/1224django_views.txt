@@ -1,0 +1,104 @@
+views
+    逻辑
+        1、models的操作（数据库的增删改查）
+        2、做的逻辑判断
+        3、返回模板
+    对象
+        1、HttpRequest	接收request
+        2、HttpResponse	返回render
+
+    请求的过程中:
+        接收参数
+            request.POST(GET).get('接收字段名')
+            从前端页面里面获取username的参数
+
+            但get只能收取一个参数，遇到checkbox复选框时，就不能用了
+            getlist可以获取一个值的列表，同时获取多个值
+
+
+        csrf(跨站访问请求伪造)跨站攻击
+            技术实现:复制网页源码，形成自己的网页，把请求地址写成远程服务器的，提交后，就可以对远程服务器形成跨站工具
+            django的解决办法
+                1、不要注释settings.py里面MIDDLEWARE=[]中的csrf相关内容
+                2、在网页的提交表单<form>里面添加{% csrf_token %} 解决了csrf_token的简单攻击
+                    问题:django给前端的cookie中的验证value有效期是1年不变，懂前端的能获取到这个值的，依然可以进行类似攻击
+
+            如果注释了settings.py里面的相关内容，将不会进行验证跨站访问，所有的提交都会被接受
+            如果html里面不添加{% csrf_token %},提交的数据将被服务器拒绝
+
+            但这个解决办法是不彻底的，如果将正确访问的网页的源代码复制(可以获取到csrf_token)，再访问服务器，也是可以正常提交数据的，服务器也会接收数据
+
+
+        Cookie的实现：
+            cookie是一种本地的存储技术，有一定的有效期，临时的存储
+            cookie也是一个客户端的页面技术
+            cookie是存在响应里面的，请求的时候可能会跟着请求一起发生
+                写	HttpResponse
+                读	HttpRequest
+
+            设置cookie
+                resp = HttpResponse()
+                resp.set.cookie('username',username)
+
+
+        共享session
+            发生在多个服务器之间，完成一次登录，共享使用的情况下
+            同一个公司，不同的服务器之间的，保证会话状态。例如，登录新浪网页后，可能不同的板块是在不同的服务器上部署的，要保证从首页跳转到各个不同版块后，依然保持登录状态
+            这个技术在python里不是重点，应为这个技术大多用在比较大的项目，大项目目前基本都是jave实现的，python多用在中小型项目，一般不会涉及到多个服务器
+
+
+
+        session
+            python中的session都是通过HttpRequest对象来实现的
+                request.session['字段名']= 字段值
+
+            session是服务端技术，一般用在 一次登录，全页面使用
+
+
+    图片验证码的实现
+        导入pillow 图像处理模块：
+            Image图片	ImageDraw图片画布	ImageFont图片字体
+
+        实现思路：
+            1、背景后面划一些线或点
+            2、在前面画一些字符（汉字编码\u4e00 \u9f）
+
+            Image图片三个参数：
+                1、模式
+                2、图片大小，类型为元组
+                3、北京颜色，类型位元组
+
+                im = Image.new(以上三个参数)
+                draw = Image.draw(im)
+                xy = ....   点的位置
+                fillcolor = ... 点的颜色
+                draw.point(xy,fill=fillcolor)   画点
+                draw.line   画线
+                draw.text   画文本
+                ios = BytesIO() 把画的内容转成字节
+                im.save(ios, 'png') 把图片读取处理存到BytesIO中，存成png格式
+                return HttpResponse(ios.getValue(), 'image/png') 在浏览器页面上以image/png的形式渲染
+
+            图片验证码会对应一个访问地址，在前端页面设置<img src='图片验证码的完整请求地址' />
+
+        补充：做汉字图片验证码的话，建议用 常用汉子Unicode编码库，全部的编码库会有很多不认识的字
+
+
+
+
+
+
+
+补充：
+熟悉python的pyspark的模块
+
+
+
+
+
+
+
+
+
+
+		

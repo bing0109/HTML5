@@ -8,7 +8,7 @@ models
 		DateTimeField(auto_now=True)			日期时间型，auto_now=True表示可以使用当前时间，当前时间会自动加上
 		DateField()					日期型，只有日期
 		TimeField()					时间型，只有时间
-		BolleanField(default=True)			布尔型，default=True表示默认输入是True
+		BooleanField(default=True)			布尔型，default=True表示默认输入是True
 		ImageField(upload_to='media/')			图片，upload_to='media/'表示图片上传到服务器上的地址，用相对路径，项目根目录下的media目录
 		EmailField()					邮箱
 		DecimalField(max_digits=5,decimal_places=2)	小数，max_digits表示数字的总位数，decimal_places表示小数部分的位数，小数点不占位数

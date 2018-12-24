@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form</title>
+</head>
+<body>
+    <h3>1224内容</h3>
+    <p>1、form中复选框用getlist获取</p>
+    <p>2、跨站访问</p>
+    <p>3、cookie和session</p>
+    <p>4、验证码制作</p><br/>
+
+    <!--
+    <div width=300px height=100px>
+        <textarea border="0px" width=auto height=auto>
+            1、form中复选框用getlist获取
+            2、跨站访问
+            3、cookie和session
+            4、验证码制作
+        </textarea>
+    </div>
+    -->
+
+    <form action="/form1_handle/" method="post">
+        {% csrf_token %}
+        <span>用&nbsp&nbsp户&nbsp&nbsp名：</span><input type="text" name="usr" placeholder="请设置用户名"/><br>
+        <span>密&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp码：</span><input type="password" name="pwd" placeholder="请设置密码"/><br>
+        <span>确认密码：</span><input type="password" name="pwd_conf" placeholder="请确认密码" /><br>
+        <span>兴趣爱好：</span>
+        <input type="checkbox" name="habit" value="balling"/>打球
+        <input type="checkbox" name="habit" value="swimming"/>游泳
+        <input type="checkbox" name="habit" value="climbing"/>爬山<br/><br/>
+        <span>验证码</span><input type="text" class="verifyinput" name="verifytext" placeholder="请输入验证码"/>
+        <img name="verifyimg" src="/verfypic/" id="verfyimg" onclick="verify_switch()"/>
+        <a href="#" id="verify_switch" onclick="verify_switch()">换一张</a><br><br>
+        <button type="submit">提交</button>
+    </form>
+</body>
+
+<script>
+     function verify_switch() {
+         /*获取当前时间的毫秒数*/
+         s = new Date().getTime()
+         document.getElementById('verfyimg').src="http://localhost:8000/verfypic/?t="+s
+        }
+
+</script>
+
+</html>

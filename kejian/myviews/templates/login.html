@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="/login_chuli/" method="post">
+        {% csrf_token %}
+        用户名:<input type="text" name="username"/><br/>
+        <input type="checkbox" name="lover" value="抽烟"/>抽烟<br/>
+        <input type="checkbox" name="lover" value="喝酒"/>喝酒<br/>
+        验证码:<input type="text"/><img id="img" src="http://localhost:8000/virify/"/><br/>
+        <a href="#" onclick="ab()">看不清，换一个</a>
+        <button type="submit">提交</button>
+    </form>
+</body>
+    <script>
+        function ab(){
+            s=new Date().getTime()
+            document.getElementById("img").src="http://localhost:8000/virify/?t="+s
+        }
+    </script>
+</html>
