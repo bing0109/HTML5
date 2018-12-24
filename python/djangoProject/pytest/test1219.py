@@ -118,7 +118,7 @@ def calcu4(n):
     num4 = 0
     for k in range(0, n+1):
         if (n-k) % 2 == 0:
-            list4.append([k, (n-k)/2])
+            list4.append([k, int((n-k)/2)])
 
     for i in list4:
         a = Anm(i[0]+i[1], i[1])
@@ -127,4 +127,4 @@ def calcu4(n):
     return int(num4)
 
 
-print(calcu4(26), '----444----')
+print(calcu4(2), '----444----')

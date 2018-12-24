@@ -204,7 +204,9 @@
 
 
 
-*/5 * * * * cp -r `ls /home/zelin/django1217/ | grep -v venv | xargs` /var/www/html/myProject/HTML5/python/djangoProject/
+WSGI：Web Server Gateway Interface。
+    WSGI接口定义非常简单，它只要求Web开发者实现一个函数，就可以响应HTTP请求
+    https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432012393132788f71e0edad4676a3f76ac7776f3a16000
 
 
 

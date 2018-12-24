@@ -60,7 +60,8 @@ class Book(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2)
     publish_day = models.DateField()
     publish = models.ForeignKey(to='Publisher', on_delete=models.CASCADE)
-    hot_pric = models.DecimalField(max_digits=7, decimal_places=2, default=99.99)
+    hot_price = models.DecimalField(max_digits=7, decimal_places=2, default=99.99)
+    isdelete = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'book'
@@ -122,7 +123,12 @@ class Teacher(models.Model):
         db_table = 'teacher'
 
 
-
+# 设置字段可为空，null=True
+# 设置admin后台管理添加字段可为空 blank=True
+class Nulltest(models.Model):
+    attr1 = models.CharField('字段1', max_length=20)
+    attr2 = models.CharField('字段2', max_length=20, null=True)
+    attr3 = models.CharField('字段3', max_length=20, null=True, blank=True)
 
 
 

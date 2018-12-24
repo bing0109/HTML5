@@ -43,3 +43,13 @@ django-关于manage.py migrate无效的问题
 
 	还有一些其他原因参考下面的链接:
 		https://blog.csdn.net/hanglinux/article/details/75645756
+
+
+
+
+https://www.jb51.net/article/63244.htm
+10种检测Python程序运行时间、CPU和内存占用的方法
+
+
+python、django的日志与调试功能
+https://blog.csdn.net/xys430381_1/article/details/78215461

@@ -22,7 +22,7 @@ models
 				$ python3 manage.py createsuperuser
 				Username (leave blank to use 'zelin'): bing
 				Email address: bing@163.com
-				Password: 
+				Password: 123
 				Password (again): 123
 				Superuser created successfully.
 
@@ -356,24 +356,40 @@ class Teacher(models.Model):
 条件中的引号，什么时候加，什么时候不加？
 filter中的查询条件不用加，过滤值要加
 annotate中的过滤条件要加
+Count()/Avg()/Min()/Max()/Sum()等括号中的过滤条件要加''
 
 
-eq  =  的区别?
 
 django查询数据库不用考虑sql语句的安全性、优化等问题？怎么理解
 
+	下面这个查询，用sql的话，普通的可能用到select * from 表 group by... having....，这个写法也浪费效率，转换后发现django是用CASE WHEN写的
+    >>> kst=Book.objects.annotate(c=Count('author',filter=Q(price__lt=200))).filter(c__gt=0).values('title','price','c')
+    >>>
+    >>> kst
+        <QuerySet [{'price': Decimal('80.45'), 'title': '书一', 'c': 3}, {'price': Decimal('100.01'), 'title': '书二', 'c': 3}, {'price': Decimal('61.09'), 'title': '书三', 'c': 4}, {'price': Decimal('103.87'), 'title': '书5', 'c': 3}, {'price': Decimal('50.32'), 'title': '书7', 'c': 4}]>
+    >>>
+    >>> kst.query.__str__()
+        'SELECT `book`.`title`, `book`.`price`, COUNT(CASE WHEN `book`.`price` < 200 THEN `author_book`.`author_id` ELSE NULL END) AS `c` FROM `book` LEFT OUTER JOIN `author_book` ON (`book`.`id` = `author_book`.`book_id`) GROUP BY `book`.`id` HAVING COUNT(CASE WHEN (`book`.`price` < 200) THEN `author_book`.`author_id` ELSE NULL END) > 0 ORDER BY NULL'
+    >>>
 
-	sql中select * from 写*很浪费查询速度
+
+    sql中select * from 写*很浪费查询速度
+    >>> ad=Teacher.objects.all().values()
+    >>> ad
+        <QuerySet [{'id': 1, 'name': '李九老师1'}, {'id': 2, 'name': '黄七老师2'}, {'id': 3, 'name': '陈六老师3'}, {'id': 4, 'name': '黄四老师4'}]>
+    >>> ad.query.__str__()
+        'SELECT `teacher`.`id`, `teacher`.`name` FROM `teacher`'
+    >>>
 
 
 
 
 
 aggretate和annotate的区别：
->>> Student.objects.filter(score__course__teacher__name__startswith='黄').aggregate(c=Count('score__course'))
-	{'c': 44}
->>> Student.objects.filter(score__course__teacher__name__startswith='黄').annotate(c=Count('score__course'))
-	<QuerySet [<Student: Student object (1)>, <Student: Student object (2)>, <Student: Student object (4)>, <Student: Student object (6)>, <Student: Student object (9)>, <Student: Student object (11)>, <Student: Student object (12)>, <Student: Student object (13)>, <Student: Student object (14)>, <Student: Student object (15)>, <Student: Student object (16)>, <Student: Student object (5)>, <Student: Student object (8)>, <Student: Student object (3)>, <Student: Student object (7)>, <Student: Student object (10)>]>
+    >>> Student.objects.filter(score__course__teacher__name__startswith='黄').aggregate(c=Count('score__course'))
+        {'c': 44}
+    >>> Student.objects.filter(score__course__teacher__name__startswith='黄').annotate(c=Count('score__course'))
+        <QuerySet [<Student: Student object (1)>, <Student: Student object (2)>, <Student: Student object (4)>, <Student: Student object (6)>, <Student: Student object (9)>, <Student: Student object (11)>, <Student: Student object (12)>, <Student: Student object (13)>, <Student: Student object (14)>, <Student: Student object (15)>, <Student: Student object (16)>, <Student: Student object (5)>, <Student: Student object (8)>, <Student: Student object (3)>, <Student: Student object (7)>, <Student: Student object (10)>]>
 
 
 

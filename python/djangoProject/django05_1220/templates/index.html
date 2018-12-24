@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>urls中name属性</title>
+</head>
+<body>
+
+<a href="{% url 'to2' %}"><h1>链接到index2页面</h1></a>
+<span>
+    urlpatterns = [
+    path('', learn_views.index),  # new
+    path('admin/', admin.site.urls),
+]
+复制代码
+该path（）传递四个参数，其中两个是必需的：route和view，以及两个可选的：kwargs和name。
+
+route是一个包含UR模式的字符串，在处理请求时，Django从第一个模式开始url patterns并在列表中向下，将所请求的URL与每个模式进行比较，直到找到匹配的模式。
+
+模式不搜索get和post参数或域名，URLconf将查找myapp/
+
+view：当Django找到一个匹配的模式时，它会以一个HttpRequest对象作为第一个参数以及路由中的任何捕获值作为关键字参数来调用指定的视图函数。
+
+kwargs：任意关键字参数可以在字典中传递给目标视图。
+
+name：命名你的URL可以让你从Django其他地方明确的引用它，特别是在模版中，这个强大的功能允许你在只触摸单个文件的情况下对项目的URL模式进行全局更改。
+</span>
+
+
+</body>
+</html>

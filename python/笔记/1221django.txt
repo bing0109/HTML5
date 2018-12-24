@@ -193,6 +193,21 @@ Q查询
 	isDelete = True
 
 
-CASE WHEN	ELSE	END
-HAVING
+设计表格字段允许为空的方法
+    https://www.cnblogs.com/MacoLee/p/5610989.html
+    在字段后定义 null=True 表示允许数据库中字段为空，但在admin后台添加数据时，依然不能填空值，此时需要添加另一个参数 blank=True
+
+    class User(models.Model):
+        username = models.CharField('用户名',max_length=50)
+        password = models.CharField('密码',max_length=255)
+        email = models.EmailField('邮箱',null=True)
+        phone = models.CharField('电话',max_length=11,null=True,blank=True
+
+
+django 导入导出数据
+项目文件夹下
+导出：python3 manage.py dumpdata app名称 > 导出文件名.json
+    eg: python3 manage.py dumpdata testmodel > testmodel.json
+导入：python3 manage.py loaddata 导入文件名.json
+
 
