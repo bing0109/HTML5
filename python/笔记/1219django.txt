@@ -19,7 +19,7 @@ django第三课
 		from hashlib import md5
 		pw = request.POST.get('password')
 		md = md5()
-		md.upadte(pw.encode('utf8'))	#指定一下pw的编码方式，否则可能报错
+		md.update(pw.encode('utf8'))	#指定一下pw的编码方式，否则可能报错
 		pw_md = md.hexdigest()
 		user = User()
 		user.password = pw_md

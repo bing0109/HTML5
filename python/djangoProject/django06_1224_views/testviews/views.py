@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from PIL import Image, ImageDraw, ImageFont
 import random
+import time
+from hashlib import md5
 from io import BytesIO
 
 # Create your views here.
@@ -84,6 +86,12 @@ def verifycode(request):
     # 验证码的值保存到session中
     request.session['verify_text'] = ''.join(results)
 
+    now_time = time.time()
+    ses = md5()
+    ses.update(str(now_time).encode('utf8'))
+    ses_md5 = ses.hexdigest()
+    request.session['session_time'] = ses_md5
+    print(ses_md5, '---------555555------',now_time)
     # 随机生成5条干扰线，放的位置在生成文字后，线条就在文字上层，放在钱就在文字下层
     for i in range(5):
         xyxy = (random.randrange(width), random.randrange(height), random.randrange(width), random.randrange(height))

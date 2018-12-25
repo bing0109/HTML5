@@ -1,0 +1,142 @@
+用django做一个简易博客
+
+功能
+	增加一个博客
+	删除一个博客
+	删除一个博客
+	模糊查询：查询由哪些关键字的博客
+
+	博客表	
+	评论表	一对多	博客表
+	分类表	一对多	博客表
+	标签表	多对多	博客表
+
+
+
+博客表
+	博文标题、发表时间、博文正文、分类
+
+
+1、修改settings.py
+	应用
+	数据库
+	模板
+	资源表
+
+2、设计数据库
+	models.py
+
+3、同步数据库
+	python3 manage.py makemigrations
+	python3 manage.py migrate
+
+
+4、设置页面
+	1、views.py	定义方法
+	2、urls.py	定义链接
+	3、模板
+	
+	redirect:返回已定义好的方法，views中的方法不能直接在views中调用，可以用redirect转向到原来定义好的地址映射到某个方法
+
+5、发表博文
+	views里面做了3个步骤：
+		#把数据库的记录拿出来
+		bos=Bo.objects.all()
+		#位templates建立一个传递参数的字典
+		context = {'bo':bos}
+		#把这个字典当做参数放在render的第三个参数，返回到templates
+		return render(request,'index.html', context)
+	传到模板后，参数主键就是模板的变量名
+	在template可以用哦{% for b in bo%}去遍历获取列表，再用b.title, b.content, b.publisher_time, b.category来调用具体对象的数值
+	输出变量值用{{ b.title }}的格式
+	内容要显示在页面上，就需要用到templates模板
+	可以让return render时，将填写的内容数据传递参数到模板中
+
+
+
+6、删除博文
+	前端需要传送能定位当前记录的参数，否则无法删除
+	
+	需要构造删除的地址，类似localhost:8000/del/1，后面的1是传送的参数	
+	url.py里面地址传参，urls.py前面地址用正则表达式
+		/del/(\d+) 括号里面表示能接收的参数 \d+表示0及所有的正数
+	正则的地址接收参数了，views的方法也要接收参数，在request后面，再加一个参数
+		eg：def delete(request, id)
+	
+	思路整理：
+		点击删除，先提示用户是否确定删除（前端confirm框确认），用户点击确认后，地址带参数（文章记录的id值），后台方法根据获取的id值，获取数据库里面的对象，然后执行delete方法
+
+
+7、修改
+	修改需要一个新界面，即处理修改的界面
+	修改的界面也需要传参，和删除类似，利用用字典
+	
+	思路整理：
+		点击修改，需要一个地址去处理修改的结果，这个地址需要知道修改那条记录，即需要传参（博客的id）
+		传参到后天后，要由一个方法与之对应，接收参数，从数据库中获取相关对象，并把这个对象作为参数传递给前台	{{ boke.title }}
+		显示出来之后，需要提交到后台处理，提交也需要传一个id，这个id可以作为form表单的隐藏框，把这个值传上
+
+
+8、查
+	模糊查询
+		一般是遍历所有字段，把字段涉及到的内容都显示显示出来
+	
+	在查询结果中，把关键字标红，可以在后台进行类似如下处理
+		b.title = b.title.replace(keyword,'<span style="color:red">keyword</span>')
+
+	temlates出现了html代码时，关闭autoescape
+		{% autoespace off %}...代码内容...{% end autoespace %}
+
+
+
+9、分页
+	把数据从数据库取出来后，要用django做一个分页处理
+	from django.core.pageinator import Pageinator
+
+	bos=Bo.objects.all()
+	pages=Pageinator(bos,2) 后面的2表示一页里面由几条数据，前面的bos就是要进行分页的数据对象
+
+	查询某一页的数据
+		pages.page(1)
+	查询总页数
+		pages.num_page
+	页数列表
+		pages.page_range
+
+
+说明，上述利用django对单个表的数据进行增、删、改、查、分页，前台显示等操作，标准完成时间是2.5小时
+
+
+
+
+
+
+补充
+	1、正则表达式的+ *区别在于，*表示前面的字符0个以上，+表示至少一个以上
+	2、快速清除浏览器缓存 Ctrl + F5	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

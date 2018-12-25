@@ -1,3 +1,5 @@
+# coding=utf8
+
 """django06_1224_views URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -17,11 +19,17 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from testviews import views
+from boke1225 import views as bkviews
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('form1/', views.form1),
     url('form1_handle/', views.form1_handle),
-    url('verfypic/', views.verifycode)
+    url('verfypic/', views.verifycode),
+    url('index/(\d*)', bkviews.bk_index),
+    url('new_boke/', bkviews.new_boke),
+    url('new_bk_submit/', bkviews.new_bk_submit),
+    url('ar_delete/(\d*)', bkviews.ar_delete),
+    url('ar_modify/(\d*)', bkviews.ar_modify)
 ]
