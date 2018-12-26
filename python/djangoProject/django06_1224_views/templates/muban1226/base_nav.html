@@ -1,0 +1,55 @@
+{% extends './base.html' %}
+
+{% block pg_header %}
+	<title>生鲜蔬果-用户中心</title>
+
+{% endblock %}
+
+{% block pg_body %}
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到生鲜蔬果!</div>
+			<div class="fr">
+				<div class="login_info fl">
+					欢迎您：<em>张 山</em>
+				</div>
+				<div class="login_btn fl">
+					<a href="/tmp1226/login/">登录</a>
+					<span>|</span>
+					<a href="/tmp1226/register/">注册</a>
+				</div>
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="/tmp1226/userinfo/">用户中心</a>
+					<span>|</span>
+					<a href="cart.html">我的购物车</a>
+					<span>|</span>
+					<a href="user_center_order.html">我的订单</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="/static/1226/images/logo.png"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+		<div class="search_con fr">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>
+	</div>
+
+	<div class="main_con clearfix">
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+				<li><a href="/tmp1226/userinfo/" {% if nav_title == 'info' %}class="active" {% endif %}>· 个人信息</a></li>
+				<li><a href="/tmp1226/userorder/" {% if nav_title == 'order' %}class="active" {% endif %}>· 全部订单</a></li>
+				<li><a href="/tmp1226/usersite/" {% if nav_title == 'site' %}class="active" {% endif %}>· 收货地址</a></li>
+			</ul>
+		</div>
+
+        {% block pg_right %}{% endblock %}
+
+    </div>
+{% endblock %}

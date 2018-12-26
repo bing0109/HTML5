@@ -17,10 +17,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url
+from django.conf.urls import url, include
 from testviews import views
 from boke1225 import views as bkviews
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +29,9 @@ urlpatterns = [
     url('index/(\d*)', bkviews.bk_index),
     url('new_boke/', bkviews.new_boke),
     url('new_bk_submit/', bkviews.new_bk_submit),
-    url('ar_delete/(\d*)', bkviews.ar_delete),
-    url('ar_modify/(\d*)', bkviews.ar_modify)
+    url('ar_delete/(\d*)/', bkviews.ar_delete),
+    url('ar_modify/(\d*)/', bkviews.ar_modify),
+    url('edit_bk_submit/(\d*)/', bkviews.edit_bk_submit),
+    url('search/(\d*)', bkviews.ar_search),
+    url('tmp1226/', include('test_template1226.urls'))
 ]

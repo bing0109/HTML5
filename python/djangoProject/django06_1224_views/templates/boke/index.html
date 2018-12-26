@@ -19,8 +19,9 @@
         <div class="contenttop">
             <div class="logo f_l">个人博客模板古典系列之——江南墨卷</div>
             <div class="search f_r">
-                <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
-                    <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
+                <form action="/search/" method="post" name="searchform" id="searchform">
+                    {% csrf_token %}
+                    <input name="keyboard" id="keyboard" class="input_text" value="{{ se_kw }}" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
                     <input name="show" value="title" type="hidden">
                     <input name="tempid" value="1" type="hidden">
                     <input name="tbname" value="news" type="hidden">
@@ -70,23 +71,35 @@
 
         <div class="bloglist f_l">
             {% for bk in bk_object %}
-            <h3><a href="/jstt/bj/2017-07-13/784.html">{{ bk.ar_title }}</a></h3>
-            <figure><img src="/static/images/img_1.jpg" alt="{{ bk.ar_title }}"></figure>
-            <ul>
-                <p>{{ bk.ar_brief }}</p>
-                <a title="{{ bk.ar_title }}" href="/jstt/bj/2017-07-13/784.html" target="_blank" class="readmore">阅读全文&gt;&gt;</a>
-
-            </ul>
-            <p class="dateview"><span>{{ bk.ar_create_time }}</span><span>作者：{{ bk.author_id__us_nickname }}</span><span>个人博客：[<a href="/jstt/bj/">心得笔记</a>]</span>
-                <span><a href="/ar_modify/{{ bk.id }}" target="_blank" class="">修改</a></span>
-                <span><a href="#" onclick="ar_del({{ bk.id }})" >删除</a></span>
-            </p>
-
+                {% autoescape off %}
+                <h3><a href="#">{{ bk.ar_title }}</a></h3>
+                {% if pgtype == 'index' %}
+                    <figure><img src="/static/images/img_1.jpg" title='{{ bk.ar_title }}'></figure>
+                {% else %}
+                    <figure><img src="/static/images/img_1.jpg" ></figure>
+                {% endif %}
+                <ul>
+                    <p>{{ bk.ar_brief }}</p>
+                    <a href="/jstt/bj/2017-07-13/784.html" target="_blank" class="readmore">阅读全文&gt;&gt;</a>
+                </ul>
+                <p class="dateview"><span>{{ bk.ar_create_time }}</span><span>作者：{{ bk.author_id__us_nickname }}</span><span>个人博客：[<a href="/jstt/bj/">心得笔记</a>]</span>
+                    <span><a href="/ar_modify/{{ bk.id }}" target="_blank" class="">修改</a></span>
+                    <span><a href="#" onclick="ar_del({{ bk.id }})" id='ar_delete'>删除</a></span>
+                </p>
+                {% endautoescape %}
             {% endfor %}
 
             <div>
                 <h3>共{{ total_pgs }}页</h3>
-                <p>{% for p in pgls %}<a href="http://localhost:8000/index/{{p}}">{{ p }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}</p>
+
+                <p>
+                    {% for p in pgls %}
+                        {% if pgtype == 'index' %}
+                            <a href="http://localhost:8000/index/{{p}}">{{ p }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        {% elif pgtype == 'search'  %}
+                            <a href="http://localhost:8000/search/{{p}}" onclick="search_kw('{{ se_kw }}')">{{ p }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                    {% endfor %}</p>
 
             </div>
 
@@ -172,10 +185,36 @@
     function ar_del(ar_id) {
         con = confirm('确认删除此文章吗？')
         if (con==true){
-            location.href='http://localhost:8000/del/'+id
+            location.href='http://localhost:8000/ar_delete/' + ar_id
+            // document.getElementById('ar_delete').href = '/ar_delete/' + ar_id
         }
     }
 
+    function search_kw(kw) {
+
+        let kw_ajax = {'kw_ajax': kw}
+
+        console.log(kw_ajax, '----44444-------')
+        $.ajaxSetup({data:{csrfmiddlewaretoken:'{{ csrf_token }}'}})
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8000/search/2/',
+            // dataType: 'dict',
+            date: kw_ajax,
+            success: function(result) {
+                console.log(result)
+            },
+            error:function (result) {
+                console.log(result)
+            },
+
+            header: { 'X-CSRFToken':{{ csrf_token }}
+        })
+    }
+
+    console.log('{{ se_kw }}','-----------------')
+    
+    
 </script>
 
 </html>

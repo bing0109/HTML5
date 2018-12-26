@@ -1,0 +1,111 @@
+mvt前后端半分离
+templates
+    创建模板：
+        把html文件中共有的代码提取出来，形成新的文件，即模板
+        具体的html文件由自己特定的代码时，可以在模板中开接口 
+            {% block '接口名称' %}
+        所有具体的html文件都可以继承该模板
+            {% extends '模板文件名' %}
+        继承之后，模板的代码就会作用在具体的网页上面来
+        网页自己特有的代码就写在{% block '接口名称' %}{% endblock %}之间就行
+            {% block '接口名称' %}
+                网页自己特有的代码
+            {% endblock %}
+
+
+    一个特定的html文件可以继承多个接口
+    一个模板可以继承另一个模板
+
+    凡是继承过的html文件，代码只能写在接口范围内，接口范围外的代码写了也无效
+
+
+
+    模板可以从后台传参，写循环、写if、输出变量
+        循环：
+            {% for i in ss %}
+                循环代码
+            {% endfor %}
+        
+        条件：
+            {% if condition1 %}
+               ... display 1
+            {% elif condition2 %}
+               ... display 2
+            {% else %}
+               ... display 3
+            {% endif %}
+
+                注意：写类似 if s == 1 的条件时，==两边要由空格
+            
+        变量输出
+            {{ 变量名 }}
+
+        html代码转义
+            {% autoescape off %}要转义的代码{% endatutoescape %}
+                一般要转义的代码里面含有从后台传到前台的html代码，如搜索结果中关键字标红                
+                
+        csrf验证：
+            {% csrf_token %}        
+
+        其他：参考
+            http://www.runoob.com/django/django-template.html
+
+模板思维的好处
+    1、把整个页面进行了合理化的分工
+    2、特效也可以进行合理化分工
+    3、后台部分文件、内容不用重复加载，减少内存占用
+
+
+
+
+项目：
+    1、规范
+        （1）代码管理规范：
+            平台：github、码云
+            文件夹：确定目录，按照模块去分配文件夹
+
+            urls.py的分级管理
+                每个app应用目录下看单独建立一个urls.py，里面对应各个模块自己的urls地址
+                项目文件夹下的urls.py写include
+                    from django.conf.url import urls, include
+                    urls('user/', include('user.urls')),
+                    urls('pay/', include('pay.urls'))
+            
+                user应用文件夹下的urls.py写具体的链接
+                    from . import views
+                    urls('login/', views.login),
+                    urls('register/', views.register),
+                    
+                pay应用文件夹下的urls.py写具体的链接
+                    from . import views
+                    urls('confirm/', views.payconfirm),
+                    urls('shopping/', views.register)
+                   
+                访问页面的时候就要类似如下访问
+                    http://localhost:8000/user/login/
+                    http://localhost:8000/pay/confirm/
+
+            （2）代码命名规范
+                前端：id、class名称不能混了
+                后端：变量和views里面的方法名，类名，字段名等也不能混了
+                先做完功能，再完善具体细节技术，难点
+
+            （3）环境规范
+                开发环境，系统、补丁、软件版本等
+                
+
+            （4）代码逻辑规范
+                1、写一些必要的功能注释
+                2、注意编码格式
+
+            （5）数据库的设计
+                
+            （6）其他：
+                遇到问题先百度，尽量自己研究
+
+
+
+
+
+
+

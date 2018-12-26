@@ -53,3 +53,13 @@ https://www.jb51.net/article/63244.htm
 
 python、django的日志与调试功能
 https://blog.csdn.net/xys430381_1/article/details/78215461
+
+
+django模板应用实例
+http://www.runoob.com/django/django-template.html
+
+
+
+django、ajax的结合？
+
+
