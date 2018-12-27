@@ -87,17 +87,30 @@ def ar_search(request, pg_id):
     # try:
     #     kw = request.POST.get('keyboard')
     #     print(kw, '----try----')
+    #
     # except Exception:
-    #     kw = request.GET.get('kw_ajax')
+    #     kw = request.POST.get('kw_ajax')
     #     print(kw, '------except----')
-    kw = request.POST.get('keyboard')
-    # if request.is_ajax():
-    kw2 = request.POST.get('kw_ajax')
 
-    print(kw2, '======kw2======')
-    if kw is None:
-        kw = kw2
-        print(kw, '------5555kw----')
+    if request.method == 'GET':
+        kw = request.GET.get('keyboard')
+        # if kw is None:
+        #     kw = request.GET.get('kw_ajax')
+        # pg_id = request.GET.get('pg_id')
+        print(kw, '---kw--get---')
+
+    if request.is_ajax():
+        kw = request.GET.get('kw_ajax')
+        pg_id = request.GET.get('pgid')
+        if kw is None:
+            kw = request.POST.get('kw_ajax')
+            pg_id = request.GET.get('pgid')
+            print('----ajax--post----')
+        print(kw, pg_id, '---kw--ajax---')
+
+    if request.method == 'POST':
+        kw = request.POST.get('keyboard')
+        print(kw, '---kw--post---')
 
     s_article = Article.objects.filter(Q(ar_title__contains=kw) | Q(ar_brief__contains=kw) | Q(ar_content__contains=kw)).order_by('-ar_create_time')
 
