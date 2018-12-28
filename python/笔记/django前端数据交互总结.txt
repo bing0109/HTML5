@@ -1,4 +1,175 @@
 django与前端数据交互总结
 
+1、通过form表单提交，由get或post两种方式
+	c. html网页代码	：
+        <form action='/地址/' method='post'>
+            <input name='name1'> 
+            <button>等表单数据
+        </form>
+    b. 无需js代码
+    
+    c. django views.py中
+        request.POST.get('提交表单的字段名,eg：name1')
+        request.GET.get('提交表单的字段名,eg：name1')
+        request.GET.getlist('提交表单的字段名,eg：name1')
+
+2、通过a链接的url请求
+    a. html网页代码
+        <a href="/地址/地址参数/?key1='val1'&key2='val2'" ></a>
+    b. 无需js代码
+    
+    c. urls.py中
+        url(r'地址/(\d+)/', views.func1)
+            (\d+)指匹配正则表达式并获取值，传参到函数func1中
+
+    d. django views.py中
+        def func1(request,key):
+            # key即 地址参数
+            var1 = key      # key='地址参数'
+            var2 = request.GET.get('key1')
+            var3 = request.GET.get('key2')
 
 
+3、通过ajax传参，需要引用jquery
+    1）ajax-get方式，把要访问的数据放在url中
+        a. html网页代码
+            <input onclick='func2(key,key1,key2)' ></a>
+
+        b. js代码
+            <script>
+                function func2(key,key1,key1) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/访问地址/'+key+'/?var1='+key1+'&var2='+key2,     //把要访问的数据放在url中
+                        datatype: 'json',                    //datatype是表示后台返回的数据类型，json/text/html/xml,json/text/html/xml,
+                                                             //jquery跨站请求，数据类型设置为json会访问失败，设置成jsonp能访问成功,参考12.12的ajax的实例
+                        data：{}                              //date是ajax要传给后台的参数，用字典,
+                        success: function(data){
+                            成功，返回数据data的处理
+                        },
+                        error: function(data){
+                            失败，返回数据data的处理
+                        },
+                    })
+                }
+            </script>
+
+
+        c. urls.py中
+            url(r'地址/(\d*)/', views.func1)
+                (\d+)指匹配正则表达式并获取值，传参到函数func1中
+
+
+        d. django views.py中
+            def func1(request,key):
+                var1 = key      # key即url中传进来的地址参数
+                var1 = request.GET.get('key1')
+                var2 = request.GET.get('key2')
+
+
+    2）ajax-get方式，把要访问的数据放在data中
+        a. html网页代码
+            <input onclick='func2(key,key1,key2)' ></a>
+
+        b. js代码
+            <script>
+                function func2(key,key1,key2) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/访问地址/',     把要访问的数据放在url中
+                        datatype: 'json',                    //datatype是表示后台返回的数据类型
+                        data：{                              //date是ajax要传给后台的参数，用字典
+                            var： key,
+                            key1: var1,
+                            key2: var2
+                        },
+                        success: function(data){
+                            成功，后台返回数据data的处理
+                        },
+                        error: function(data){
+                            失败，返回数据data的处理
+                        },
+                    })
+                }
+            </script>
+
+
+        c. urls.py中
+            url(r'地址/(\d*)/', views.func2)
+                (\d+)指匹配正则表达式并获取值，传参到函数func2中
+
+        d. django views.py中
+            def func2(request,key):
+                # 这个案例中，就没有传地址参数key进来了
+                var1 = request.GET.get('key')      # key已经不是通过url传进来的了，而是通过ajax传进来的
+                var1 = request.GET.get('key1')
+                var2 = request.GET.get('key2')
+
+
+
+    3）ajax-post方式，把要访问的数据放在data中
+        a. html网页代码
+            <input onclick='func2(key,key1,key2)' ></a>
+
+        b. js代码
+            <script>
+                function func2(key,key1,key2) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/访问地址/',
+                        async: false,                         //把异步机制改成同步，这个可改，可不改，一般用于在a链接和ajax一起用的时候
+                        datatype: 'json',                    //datatype是表示后台返回的数据类型
+                        data：{                              //date是ajax要传给后台的参数，用字典
+                            var： key,
+                            key1: var1,
+                            key2: var2
+                        },
+                        success: function(data){
+                            成功，后台返回数据data的处理
+                        },
+                        error: function(data){
+                            失败，返回数据data的处理
+                        },
+                    })
+                }
+            </script>
+
+        c. urls.py中
+            url(r'地址/(\d*)/', views.func2)
+                (\d+)指匹配正则表达式并获取值，传参到函数func2中
+
+        d. django views.py中
+            def func2(request,key):
+                # 这个案例中，就没有传地址参数key进来了
+                var1 = request.POST.get('key')      # key已经不是通过url传进来的了，而是通过ajax传进来的
+                var1 = request.POST.get('key1')
+                var2 = request.POST.get('key2')
+
+
+
+
+
+JS函数中，修改页面元素的方法
+    jquery方法
+        $('#aaa').href = pg_url                 # 修改id为aaa的元素的href
+        $('h4').text('这是h4标签，通过标签名改的文本')
+        $('h5:eq(1)').text("h5标签，通过$('标签:eq(索引值)')即可获取指定标签的第 索引值 个标签")
+        $('.p1').css({backgroundColor:'green'})         # 修改class为 p1的元素的css样式
+        $('input').val('输入框的值用val()设置')
+        $('img').attr('src','../backgroundpic/9.jpg')
+        /*animate动画特效*/
+		$('#img2').animate({width:'200px',height:'200px'},3000)
+
+    window.location.href = pg_url    //这行可以单独改变页面，页面url链接更新,并访问
+
+
+    ajax返回参数data
+        document.body.innerHTML=data      //这行可以单独改变页面，页面url链接为a.href的/search/#/
+    ajax一般是进行局部更新
+
+
+
+参考:
+/var/www/html/myProject/HTML5/python/djangoProject/django06_1224_views/boke1225/views.py中的def ar_search
+/var/www/html/myProject/HTML5/python/djangoProject/django06_1224_views/templates/boke/index.html中的js函数
+1212/1213的笔记
