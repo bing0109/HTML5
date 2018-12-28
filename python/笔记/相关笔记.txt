@@ -59,7 +59,17 @@ django模板应用实例
 http://www.runoob.com/django/django-template.html
 
 
+a标签中href调用js的几种方法
+https://blog.csdn.net/best_luxi/article/details/45062301
 
 django、ajax的结合？
 
+
+https://www.cnblogs.com/ailhc/p/6586465.html
+	git添加公钥后报错sign_and_send_pubkey: signing failed: agent refused operation的解决办法
+　　在服务器添加完公钥后报错
+        sign_and_send_pubkey: signing failed: agent refused operation
+    这个时候我们只要执行下
+        eval "$(ssh-agent -s)"
+        ssh-add
 

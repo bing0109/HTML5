@@ -8,11 +8,12 @@ from django.core.paginator import Paginator
 # Create your views here.
 
 
-def bk_index(request, pgid):
-    if pgid == '':
-        pgid = 1
+def bk_index(request, pg_id):
+    if pg_id == '':
+        pg_id = 1
 
     # bks = Article.objects.all().order_by('-ar_create_time').values('id', 'ar_title', 'ar_brief', 'ar_create_time', 'author_id__us_nickname')
+
     bks = Article.objects.all().order_by('-ar_create_time')
     print(bks, '----4-------')              # 刷新一次，打印了多次？？？？？？？
     print(sys.getsizeof(bks), '------getsizeof bks----------')
@@ -20,13 +21,13 @@ def bk_index(request, pgid):
     pages = Paginator(bks, 2)
     print('---------3333------------')       # 刷新一次，打印了多次？？？？？？？
     # 获取第id页的数据
-    index_page_obj = pages.page(int(pgid))
+    index_page_obj = pages.page(int(pg_id))
     # 获取页数的列表
     page_list = pages.page_range
     # 获取总页数
     total_pages = pages.num_pages
     # 为render创建一个传递参数的字典
-    context = {'bk_object': index_page_obj, 'total_pgs': total_pages, 'pgls': page_list, 'pgtype': 'index'}
+    context = {'bk_object': index_page_obj, 'pg_id': pg_id, 'total_pgs': total_pages, 'pgls': page_list, 'pgtype': 'index'}
     # 把字典作为render的第三个参数传递给前端
     return render(request, 'boke/index.html', context)
 
@@ -82,35 +83,43 @@ def edit_bk_submit(request, ar_id):
 
 def ar_search(request, pg_id):
     if pg_id == '':
-        pg_id = 1
+        pg_id = request.GET.get('pg_id')
+        print(pg_id, '---pg_id--get---')
+        if pg_id is None:
+            pg_id = request.POST.get('pg_id')
+            print(pg_id, '---pg_id--post---')
+            if pg_id is None:
+                pg_id = 1
+                print(pg_id, '---pg_id--give---')
+    else:
+        print(pg_id, '---pg_id--url----')
 
-    # try:
-    #     kw = request.POST.get('keyboard')
-    #     print(kw, '----try----')
-    #
-    # except Exception:
-    #     kw = request.POST.get('kw_ajax')
-    #     print(kw, '------except----')
-
-    if request.method == 'GET':
-        kw = request.GET.get('keyboard')
-        # if kw is None:
-        #     kw = request.GET.get('kw_ajax')
-        # pg_id = request.GET.get('pg_id')
-        print(kw, '---kw--get---')
-
-    if request.is_ajax():
-        kw = request.GET.get('kw_ajax')
-        pg_id = request.GET.get('pgid')
-        if kw is None:
-            kw = request.POST.get('kw_ajax')
-            pg_id = request.GET.get('pgid')
-            print('----ajax--post----')
-        print(kw, pg_id, '---kw--ajax---')
-
-    if request.method == 'POST':
-        kw = request.POST.get('keyboard')
+    kw = request.GET.get('keyword')
+    print(kw, '---kw--get---')
+    if kw is None:
+        kw = request.POST.get('keyword')
         print(kw, '---kw--post---')
+
+    # if request.method == 'GET':
+    #     kw = request.GET.get('keyword')
+    #     # if kw is None:
+    #     #     kw = request.GET.get('kw_ajax')
+    #     # pg_id = request.GET.get('pg_id')
+    #     print(kw, '---kw--get---')
+    #
+    # if request.is_ajax():
+    #     kw = request.GET.get('keyword')
+    #     pg_id = request.GET.get('pgid')
+    #     if kw is None:
+    #         kw = request.POST.get('keyword')
+    #         pg_id = request.POST.get('pgid')
+    #         print('----ajax--post----')
+    #     print(kw, pg_id, '---kw--ajax---')
+    #
+    # if request.method == 'POST':
+    #     kw = request.POST.get('keyword')
+    #     # pg_id = request.POST.get('pgid')
+    #     print(kw, '---kw--post---')
 
     s_article = Article.objects.filter(Q(ar_title__contains=kw) | Q(ar_brief__contains=kw) | Q(ar_content__contains=kw)).order_by('-ar_create_time')
 
@@ -128,7 +137,7 @@ def ar_search(request, pg_id):
     # 获取总页数
     total_pages = pages.num_pages
     # 为render创建一个传递参数的字典
-    context = {'bk_object': index_page_obj, 'se_kw': kw, 'total_pgs': total_pages, 'pgls': page_list, 'pgtype': 'search'}
+    context = {'bk_object': index_page_obj, 'se_kw': kw, 'pg_id': pg_id, 'total_pgs': total_pages, 'pgls': page_list, 'pgtype': 'search'}
     # 把字典作为render的第三个参数传递给前端
 
     return render(request, 'boke/index.html', context)

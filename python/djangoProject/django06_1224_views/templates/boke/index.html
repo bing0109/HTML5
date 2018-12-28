@@ -21,7 +21,7 @@
             <div class="search f_r">
                 <form action="/search/" method="post" name="searchform" id="searchform">
                     {% csrf_token %}
-                    <input name="keyboard" id="keyboard" class="input_text" value="{{ se_kw }}" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
+                    <input name="keyword" id="keyboard" class="input_text" value="{{ se_kw }}" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
                     <!--<input name="show" value="title" type="hidden">-->
                     <!--<input name="tempid" value="1" type="hidden">-->
                     <!--<input name="tbname" value="news" type="hidden">-->
@@ -90,21 +90,21 @@
             {% endfor %}
 
             <div>
-                <h3>共{{ total_pgs }}页</h3>
+                <h3>共{{ total_pgs }}页，当前第{{pg_id}}页</h3>
                 <h4>search时，链接里面直接传参，跳转</h4>
                 <p>
                     {% for p in pgls %}
                         {% if pgtype == 'index' %}
                             <a href="http://localhost:8000/index/{{p}}">{{ p }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         {% elif pgtype == 'search'  %}
-                            <a href='/search/{{ p }}/?keyboard={{ se_kw }}' id="ar_pgid">{{ p }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href='/search/{{ p }}/?keyword={{ se_kw }}' id="ar_pgid">{{ p }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {% endif %}
                     {% endfor %}
-                </p>
+                </p><br><br>
 
-                <a href=javascript:search_kw_get('博客','2',this) >跳转到第2页，用ajax-get传参，获取数据，再更新a链接，再跳转</a>&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
-                <a href="/search/2/" onclick="search_kw_post('博客','2',this)" >跳转到第2页，用ajax-post传参，获取数据，再更新a链接，再跳转</a>&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
-                <a href="/search/2/" onclick="search_kw3('博客')" >跳转到第2页，用href和ajax同时传参，接收数据，并跳转</a>&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+                <a href="javascript:void(0);" id="a_1" onclick="search_kw_get('博客','2',this)" >跳转到第2页，用ajax-get传参，成功后，再更新a链接，再跳转，会向django请求两次</a>&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+                <a href="#" id="a_2" onclick="search_kw_post('博客','2',this)" >跳转到第2页，用ajax-post传参，获取数据，再更新a链接，再跳转，会向django请求两次</a>&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+                <a href="/search/2/" id="a_3" onclick="search_kw3('博客')" >跳转到第2页，用href和ajax同时传参，接收数据，并跳转，还没实现</a>&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
 
             </div>
 
@@ -197,23 +197,24 @@
 
 
     function search_kw_get(kw, pgid, ob) {
-        var pg_url = '/search/'+ pgid + '/?kw_ajax=' + kw
+        let pg_url = '/search/'+ pgid + '/?keyword=' + kw
         // document.getElementById('ar_pgid').href = pg_url
-        var kw_ajax = {'kw_ajax': kw, 'pgid': pgid}
+        let kw_ajax = {'keyword': kw, 'pgid': pgid}
         console.log(pg_url, kw_ajax, '----get ajax-------')
 
         $.ajax({
             type: 'GET',
-            url: '/search/'+ pgid + '/?kw_ajax=' + kw,
-            // url: '/search/'+ pgid + '/',
-            dataType: 'json',
+            url: '/search/',
+            // url: pg_url          //参数可以放在url中，也可以放在data中
+            // dataType: 'json',
             data: kw_ajax,
-            async: false,        //把异步机制改成同步
-            success: function(result) {
-                console.log(result)
-                ob.href = result
+            // async: false,        //把异步机制改成同步
+            success: function(result){
+                console.log('success',ob.href)
+                ob.href = pg_url                //标签里面的href设置了void(0),表示不跳转，所以，这里设置不生效，如果不是设置不跳转，把异步改成同步后，也是可以改a.href再来跳转的
+                window.location.href = pg_url   //直接更新页面的链接就能跳转
             },
-            error:function (result) {
+            error:function(result){
                 console.log('fail')
             },
         })
@@ -221,11 +222,11 @@
     }
 
 
-    function search_kw_post(kw, id) {
+    function search_kw_post(kw, pgid, ob) {
+        let pg_url = '/search/'+ pgid + '/?keyword=' + kw
+        let kw_ajax = {'keyword': kw, 'pg_id': pgid}
 
-        let kw_ajax = {'kw_ajax': kw, 'pgid': id}
-
-        console.log(kw_ajax, '----44444-------')
+        console.log(kw_ajax, ob.href, '----ajax-post-------')
         $.ajaxSetup({data:{csrfmiddlewaretoken:'{{ csrf_token }}'}})
         $.ajax({
             type: 'POST',
@@ -234,9 +235,12 @@
             data: kw_ajax,
             async: false,                   //把异步机制改成同步
             success: function(result) {
-                console.log('success')
+                // ob.href = pg_url                 //这行可以单独改变页面，页面url更新
+                console.log('success', ob.href)
+                window.location.href = pg_url    //这行可以单独改变页面，页面url链接更新,先访问/search/#，再访问pg_url
+                // document.body.innerHTML=result      //这行可以单独改变页面，页面url链接为a.href的/search/#/
             },
-            error:function (result) {
+            error:function(result) {
                 console.log('fail')
             },
             // header: { 'X-CSRFToken':{{ csrf_token }} }
@@ -247,7 +251,7 @@
 
     function search_kw3(kw,pgid) {
 
-        let kw_ajax = {'kw_ajax': kw, 'pgid':pgid}
+        let kw_ajax = {'keyword': kw, 'pgid':pgid}
 
         console.log(kw_ajax, '----search_kw3-------')
         $.ajaxSetup({data:{csrfmiddlewaretoken:'{{ csrf_token }}'}})
@@ -256,7 +260,7 @@
             url: '/search/',
             // dataType: 'dict',
             data: kw_ajax,
-            async: false,   //把异步机制改成同步
+            // async: false,   //把异步机制改成同步
             success: function(result) {
                 console.log(result)
             },
