@@ -1,7 +1,7 @@
 git init
 git config --global user.name 'dc03'
 git config --global user.email 'dc03@163.com'
-ssh-keygen -t rsa -C "dc03@163.com"
+ssh-keygen -t rsa -C "zl03@qq.com"
 
 git remote add origin 'git@github.com:bing0109/HTML5.git'
 git remote add origin 'git@github.com:bing0109/careertest.git'
@@ -21,3 +21,10 @@ git config --global user.mail 'testmail@qq.com'
 
 
 
+https://www.cnblogs.com/ailhc/p/6586465.html
+git添加公钥后报错sign_and_send_pubkey: signing failed: agent refused operation的解决办法
+　　在服务器添加完公钥后报错
+	sign_and_send_pubkey: signing failed: agent refused operation
+　　这个时候我们只要执行下
+	eval "$(ssh-agent -s)"
+	ssh-add
