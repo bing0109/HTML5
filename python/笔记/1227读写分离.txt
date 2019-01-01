@@ -21,18 +21,37 @@
             2、两个库插入两条不同的数据
             3、修改settings.py
                     复制一个数据库设置，在default之后粘贴
-                    把复制后的数据库别名改一下
+                    把复制后的数据库别名改一下，改成dbwrite
                 
-                在数据库配置下面加一句话
+                在settings.py 下面加一句话
                     DATABASE_ROUTERS=[
                         routers.MyRouter.MyReadWrite        //类的路径
                     ]
+					即相当于建立routers文件夹，再在下面建立Router文件，在文件里面建一个类，类名是MyReadWriter
+					类里面写两个方法：
+						def db_for_read(self,model,**hints):
+							return 'defautl'
+							
+						def db_for_write(self,model,**hints):
+							return 'dbwrite'
+				
+			4、验证
+				两个数据库分别插入不同的数据，
+					User.objects.values()	读取到的是default的数据库里面的数据
+					
+					user=User()
+					user.name='abcede'
+					user.save()			写入dbwrite数据库
+					
+			5、设置数据库同步
 
 
 
+参考资料
+https://www.cnblogs.com/thismyblogs/p/9855801.html
 
 
-
+django mysql数据库要用5.6以上版本
 
 
 
