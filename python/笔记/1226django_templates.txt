@@ -19,6 +19,19 @@ templates
     凡是继承过的html文件，代码只能写在接口范围内，接口范围外的代码写了也无效
 
 
+    新页面中，由新的样式或js脚本的
+        style样式可以写在{% block pg_head %}里面，或在里面调用自己写的css文件
+        script脚本可以写在{% block pg_body %}中的末尾，或者在末尾调用自己写的js文件
+        
+            1.都写在html里是性能最优的方案。
+            2.都写在html里是可维护性最差的方案。
+            3.分开写在js、css、html是可维护性最有的方案。
+            4.分开写在js、css、html是性能最差的方案。
+            5.折中一下，不可复用的js和css直接写在html中。
+            6.再优化下，把js都打包在一个文件里，css也打包在一个文件，减少http请求。
+                http://www.imooc.com/wenda/detail/421869
+
+
 
     模板可以从后台传参，写循环、写if、输出变量
         循环：
