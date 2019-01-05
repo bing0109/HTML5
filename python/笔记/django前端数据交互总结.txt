@@ -167,6 +167,9 @@ JS函数中，修改页面元素的方法
         document.body.innerHTML=data      //这行可以单独改变页面，页面url链接为a.href的/search/#/
     ajax一般是进行局部更新
 
+    dataType: 'json'，时，接收后台返回的return JsonResponse(context)  ，其中，context是组装的字典
+    dataType: 'text'，时，接收后台返回的return HttpResponse(context)
+        参考https://blog.csdn.net/qq_39640877/article/details/80566584
 
 
 参考:

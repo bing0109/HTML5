@@ -32,6 +32,7 @@ django第三课
 3、为当前项目创建用户，django创建的
 	python3 manag.py createsuperuser
 	在myslq-auth_user表中，会存储这个用户和密码，密码应该是经过算法加密后再次进行加密处理(如切片等)的
+	应用文件夹下的admin.py中加表，可以在admin里面进行管理
 
 
 补充：
